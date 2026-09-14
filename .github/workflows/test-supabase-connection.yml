@@ -1,0 +1,27 @@
+name: Test Supabase connection
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  select-one:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Run read-only connection check
+        env:
+          SUPABASE_DEV_DB_HOST: ${{ secrets.SUPABASE_DEV_DB_HOST }}
+          SUPABASE_DEV_DB_PORT: ${{ secrets.SUPABASE_DEV_DB_PORT }}
+          SUPABASE_DEV_DB_NAME: ${{ secrets.SUPABASE_DEV_DB_NAME }}
+          SUPABASE_DEV_DB_USER: ${{ secrets.SUPABASE_DEV_DB_USER }}
+          SUPABASE_DEV_DB_PASSWORD: ${{ secrets.SUPABASE_DEV_DB_PASSWORD }}
+        run: python scripts/check_supabase_connection.py

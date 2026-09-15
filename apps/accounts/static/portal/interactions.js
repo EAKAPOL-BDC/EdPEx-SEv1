@@ -42,7 +42,7 @@
   document.addEventListener('change', preview);
   document.addEventListener('submit', event => {
     const form = event.target;
-    if (!form.matches('main form') || event.defaultPrevented) return;
+    if (!form.matches('main form') || form.method.toLowerCase() !== 'post' || event.defaultPrevented) return;
     if (form.getAttribute('aria-busy') === 'true') { event.preventDefault(); return; }
     if (form.querySelector('.danger') && !window.confirm(english() ?
       'Revoke this role? The history will be retained.' : 'ต้องการเพิกถอนบทบาทนี้หรือไม่? ประวัติเดิมจะยังคงอยู่')) {

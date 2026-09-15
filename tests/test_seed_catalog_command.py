@@ -1,5 +1,5 @@
 from io import StringIO
-from unittest.mock import patch
+from unittest.mock import patch, ANY
 from django.core.management import call_command
 from django.test import SimpleTestCase
 from apps.catalog.management.commands.seed_catalog import Command
@@ -18,5 +18,5 @@ class SeedCommandTests(SimpleTestCase):
         with patch(module + 'AccessScope.objects.get') as scope, patch(module + 'get_user_model') as user, patch(module + 'seed_catalog', return_value={'created_instruments': 6}) as seed:
             output = StringIO()
             call_command('seed_catalog', '--scope-id', 'scope', '--actor-user-id', '1', '--catalog-version', '1.1', stdout=output)
-            seed.assert_called_once_with(scope.return_value, user.return_value.objects.get.return_value, version='1.1')
+            seed.assert_called_once_with(scope.return_value, user.return_value.objects.get.return_value, version='1.1', progress=ANY)
             self.assertIn('Created 6 draft instrument versions', output.getvalue())

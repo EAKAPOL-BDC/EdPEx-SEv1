@@ -20,3 +20,12 @@ python -m unittest discover -s tests -p "test_m0*.py" -v
 These commands do not load Django settings, contact Supabase, or seed a database.
 The English content remains pending translation and semantic review. F06 has no
 evidence upload or reviewer workflow; examples and development plans are optional.
+
+M1 adds Django models, migrations, scoped permissions, version history, reviewed
+translation bundles, calendars, populations, provenance, and audit events.
+See [โครงสร้าง M1 และวิธีทดสอบ PostgreSQL ชั่วคราว](docs/m1-schema-th.md)
+for table descriptions, the decision to preserve Django auth.User, and empty/legacy
+migration tests. M1 has not been migrated to Supabase or deployed.
+
+PR #3 review fixes and their PostgreSQL regression coverage are described in
+[ข้อค้นพบ → วิธีแก้ → ไฟล์ → tests](docs/pr3-fixes-th.md).

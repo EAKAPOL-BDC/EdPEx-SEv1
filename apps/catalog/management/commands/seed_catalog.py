@@ -12,13 +12,13 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument("--scope-id", required=True)
         parser.add_argument("--actor-user-id", required=True, type=int)
-        parser.add_argument("--version", default="1.1")
+        parser.add_argument("--catalog-version", default="1.1")
 
     def handle(self, *args, **options):
         try:
             scope = AccessScope.objects.get(pk=options["scope_id"])
             actor = get_user_model().objects.get(pk=options["actor_user_id"])
-            result = seed_catalog(scope, actor, version=options["version"])
+            result = seed_catalog(scope, actor, version=options["catalog_version"])
         except (ValidationError, PermissionDenied, AccessScope.DoesNotExist, get_user_model().DoesNotExist) as exc:
             raise CommandError(str(exc)) from exc
         self.stdout.write(self.style.SUCCESS(f"Created {result['created_instruments']} draft instrument versions; no content published."))

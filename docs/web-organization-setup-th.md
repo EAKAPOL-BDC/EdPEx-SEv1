@@ -110,3 +110,11 @@ CI ใช้ `python manage.py test --settings=edpex.testing` กับ PostgreS
 ข้อความระบบอยู่ใน apps/accounts/locale/en/LC_MESSAGES/django.po พร้อมไฟล์ compiled django.mo
 ชื่อองค์กรที่ผู้ดูแลกรอกคงตามต้นฉบับ ไม่สร้างคำแปลทางการโดยอัตโนมัติ
 วันที่สิ้นสุดในฟอร์มใช้ ค.ศ. และเวลา Asia/Bangkok ทั้งสองภาษา
+
+## นำเข้าคลังแบบฟอร์มฉบับร่าง
+
+ใช้ `python manage.py seed_catalog --scope-id <scope UUID> --actor-user-id <user ID> --catalog-version 1.1`
+คำสั่งนี้เขียนนิยามแบบฟอร์มลงฐานที่เชื่อมอยู่ แต่ไม่เผยแพร่ ต้องมี `catalog.edit` ในขอบเขตนั้น
+ตรวจรูปแบบคำสั่งโดยไม่เขียนฐานข้อมูลด้วย `python manage.py seed_catalog --help`
+ใช้ `--catalog-version` แทน `--version` ในตัวอย่าง Blueprint เพราะ Django สงวน `--version` ไว้แสดงรุ่น Django
+ไม่แก้ไฟล์ต้นฉบับ Blueprint เพื่อรักษาค่า checksum ที่ใช้นำเข้า

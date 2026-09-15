@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.utils import translation
+from django.utils.cache import patch_vary_headers
 from .models import UserPreference
 
 
@@ -17,4 +18,7 @@ class PortalLanguageMiddleware:
             locale = 'th'
         with translation.override(locale):
             request.LANGUAGE_CODE = locale
-            return self.get_response(request)
+            response = self.get_response(request)
+            response["Content-Language"] = locale
+            patch_vary_headers(response, ("Cookie",))
+            return response

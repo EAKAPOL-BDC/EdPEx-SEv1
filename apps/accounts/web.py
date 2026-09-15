@@ -18,7 +18,10 @@ class MemberForm(forms.Form):
 class GrantForm(forms.Form):
     membership = forms.ModelChoiceField(label=_("สมาชิก"), queryset=Membership.objects.none())
     role = forms.ModelChoiceField(label=_("บทบาท"), queryset=Role.objects.none())
-    active_until = forms.DateTimeField(label=_("สิ้นสุดสิทธิ์ (ค.ศ. เวลาไทย เช่น 2027-09-30 17:00)"), required=False)
+    active_until = forms.DateTimeField(
+        label=_("วันและเวลาสิ้นสุดสิทธิ์"), required=False,
+        widget=forms.DateTimeInput(format="%Y-%m-%dT%H:%M", attrs={
+            "type": "datetime-local", "step": "60", "aria-describedby": "expiry-help"}))
     include_descendants = forms.BooleanField(label=_("รวมขอบเขตย่อย"), required=False)
 
     def __init__(self, *args, scope, **kwargs):

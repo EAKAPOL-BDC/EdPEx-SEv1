@@ -125,3 +125,18 @@ class PortalTests(TestCase):
         self.assertEqual(UserPreference.objects.get(user=self.user).preferred_locale,'en')
         self.client.post('/language/', {'language':'th'})
         self.assertContains(self.client.get('/workspace/'), 'ยังไม่มีขอบเขตงาน')
+
+    def test_expiry_picker_uses_thailand_time_and_preserves_invalid_form_value(self):
+        from datetime import timedelta
+        from apps.accounts.web import GrantForm
+        field = GrantForm.base_fields['active_until']
+        expiry = field.clean('2027-09-30T17:00')
+        self.assertEqual(expiry.utcoffset(), timedelta(hours=7))
+        self.assertEqual(expiry.hour, 17)
+        self.assertIsNone(field.clean(''))
+        from django.core.exceptions import ValidationError
+        with self.assertRaises(ValidationError):
+            field.clean('not-a-date')
+        rendered = field.widget.render('active_until', expiry)
+        self.assertIn('type="datetime-local"', rendered)
+        self.assertIn('2027-09-30T17:00', rendered)

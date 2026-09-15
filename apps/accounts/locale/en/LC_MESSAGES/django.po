@@ -205,3 +205,6 @@ msgstr "Organizational Excellence Information System"
 
 msgid "มาสคอต NEXORA"
 msgstr "NEXORA mascot"
+
+msgid "วันและเวลาสิ้นสุดสิทธิ์"
+msgstr "Access expiry date and time"

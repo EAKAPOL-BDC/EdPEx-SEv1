@@ -28,6 +28,7 @@ document.addEventListener('submit', async (event) => {
         if (field) { field.value = previous.value; if ('checked' in field) field.checked = previous.checked; }
       }
     });
+    document.dispatchEvent(new Event('portal:updated'));
     document.querySelector(`[data-language-form] button[value="${button.value}"]`)?.focus({preventScroll:true});
   } catch {
     alert(document.documentElement.lang === 'en' ? 'Unable to change language. Your inputs are retained. Please try again.' : 'เปลี่ยนภาษาไม่สำเร็จ ข้อมูลที่กรอกยังอยู่ กรุณาลองอีกครั้ง');

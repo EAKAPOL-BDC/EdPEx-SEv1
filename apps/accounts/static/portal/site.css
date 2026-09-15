@@ -31,3 +31,5 @@ footer{color:#554d60;font-size:14px}footer span{font-size:13px}
 @media(max-width:760px){.header-inner{padding:10px 20px;gap:12px}.brand-institution{font-size:13px}.nexora-hero{grid-template-columns:1fr;padding:24px}.nexora-mascot{max-width:200px}.organization-line{font-size:15px}.panel{padding:22px}.history-panel{padding:0}}
 
 .developer-credit{margin:16px auto 0;padding-top:14px;border-top:1px solid var(--line);max-width:780px;font-size:14px;line-height:1.8}.developer-credit p{margin:0}.developer-credit strong{color:var(--ink);font-weight:600}.copyright{margin:10px 0 0;font-size:13px;color:var(--muted)}
+
+[hidden]{display:none!important}.expiry-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.expiry-actions button{font-size:13px;min-height:40px;padding:8px 12px}.grant-preview{background:#f2edf7;border-left:3px solid var(--gold);border-radius:8px;padding:12px 14px;margin:16px 0 0;font-size:14px;overflow-wrap:anywhere}input[type=datetime-local]{min-width:0;color-scheme:light}

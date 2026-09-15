@@ -39,7 +39,7 @@ class PortalTests(TestCase):
         self.assertFalse(RoleAssignment.objects.exists())
 
     def test_home_login_logout_and_safe_next(self):
-        self.assertContains(self.client.get('/'), 'ร่วมพัฒนาการศึกษา')
+        self.assertContains(self.client.get('/'), 'ระบบสารสนเทศขับเคลื่อนองค์กรสู่ความเป็นเลิศ')
         self.assertRedirects(self.client.get('/workspace/'), '/login/?next=/workspace/')
         response = self.client.post('/login/?next=https://example.org/', {'username':'member', 'password':'long-test-password'})
         self.assertRedirects(response, '/workspace/')
@@ -112,9 +112,9 @@ class PortalTests(TestCase):
 
     def test_language_switch_persists_without_granting_access(self):
         from apps.accounts.models import UserPreference
-        self.assertContains(self.client.get('/', HTTP_ACCEPT_LANGUAGE='en'), 'ร่วมพัฒนาการศึกษา')
+        self.assertContains(self.client.get('/', HTTP_ACCEPT_LANGUAGE='en'), 'ระบบสารสนเทศขับเคลื่อนองค์กรสู่ความเป็นเลิศ')
         self.assertEqual(self.client.post('/language/', {'language':'en'}).status_code,200)
-        self.assertContains(self.client.get('/'), 'Working together for education')
+        self.assertContains(self.client.get('/'), 'Organizational Excellence Information System')
         self.assertContains(self.client.get('/'), 'lang="en"')
         self.client.force_login(self.user)
         self.client.post('/language/', {'language':'en'})

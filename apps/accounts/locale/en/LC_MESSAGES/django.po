@@ -187,3 +187,21 @@ msgstr ""
 
 msgid "ชื่อองค์กรแสดงตามต้นฉบับที่บันทึกไว้"
 msgstr "Organization names are shown as originally recorded."
+
+msgid "วิทยาลัยการศึกษา มหาวิทยาลัยพะเยา"
+msgstr "School of Education University of Phayao"
+
+msgid "เชื่อมโยงข้อมูล ขับเคลื่อนองค์กร สู่ความเป็นเลิศ"
+msgstr "Connecting data. Driving organizations toward excellence."
+
+msgid "เข้าสู่ระบบ NEXORA"
+msgstr "Sign in to NEXORA"
+
+msgid "เน็กซอรา"
+msgstr "Pronounced nek-sor-ra"
+
+msgid "ระบบสารสนเทศขับเคลื่อนองค์กรสู่ความเป็นเลิศ"
+msgstr "Organizational Excellence Information System"
+
+msgid "มาสคอต NEXORA"
+msgstr "NEXORA mascot"

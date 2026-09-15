@@ -134,7 +134,8 @@ def approve_period(actor, period, *, reason):
 
 @transaction.atomic
 def freeze_population(actor, snapshot):
-    # Match member save's lock ordering: snapshot then member rows.
+    # Members lock all affected snapshots before changing membership. Holding
+    # this row stabilizes the count without acquiring member-row locks.
     snapshot = PopulationSnapshot.objects.select_for_update().get(pk=snapshot.pk)
     _authorize(actor, snapshot)
     if snapshot.status != PopulationSnapshot.Status.DRAFT:
@@ -144,7 +145,8 @@ def freeze_population(actor, snapshot):
     if not snapshot.source_id:
         raise ValidationError("Identify the actual source of this population before freezing.")
     actual = dict(snapshot.members.values("group__code").annotate(total=Count("id")).values_list("group__code", "total"))
-    if actual and any(actual.get(code, 0) != count for code, count in snapshot.counts_by_group.items()):
+    has_roster = snapshot.source.source_type == DataSource.Type.RAW or bool(actual)
+    if has_roster and any(actual.get(code, 0) != count for code, count in snapshot.counts_by_group.items()):
         raise ValidationError("Member rows do not match the declared complete population counts.")
     if set(actual) - set(snapshot.counts_by_group):
         raise ValidationError("A population member's group is missing from the declared counts.")

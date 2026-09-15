@@ -4,6 +4,7 @@ import hashlib
 import json
 
 from django.core.exceptions import ValidationError
+from django.core import signing
 from django.db import transaction
 from django.utils import timezone
 
@@ -81,6 +82,43 @@ def _locked_translation(actor, entry, action):
     return ContentTranslation.objects.select_for_update().select_related("bundle__instrument_version__instrument__scope").get(pk=entry.pk)
 
 
+def _review_payload(actor, entry, original, translated, kind):
+    """Bind the submitted review to the exact pair shown, its row and its reviewer."""
+    return {
+        "kind": kind, "actor": str(actor.pk), "id": str(entry.pk),
+        "revision": entry.review_revision,
+        "source_hash": source_hash(original), "translation_hash": source_hash(translated),
+    }
+
+
+def _check_review_token(token, expected):
+    try:
+        submitted = signing.loads(token, salt="catalog.review.v1")
+    except (signing.BadSignature, TypeError, ValueError):
+        raise ValidationError("The reviewed snapshot is invalid; reopen the current source and translation.")
+    if submitted != expected:
+        raise ValidationError("The source or translation changed; reopen and review the new snapshot.")
+
+
+def _review_snapshot(actor, entry, original, translated, kind):
+    payload = _review_payload(actor, entry, original, translated, kind)
+    return {
+        "source_text": original, "translation_text": translated,
+        "review_revision": entry.review_revision,
+        "reviewed_token": signing.dumps(payload, salt="catalog.review.v1"),
+    }
+
+
+@transaction.atomic
+def translation_review_snapshot(actor, entry):
+    """Show this pair together; the client must return its token without refreshing it."""
+    entry = _locked_translation(actor, entry, "translation.review")
+    original = source_texts(entry.bundle.instrument_version).get(entry.content_key)
+    if original is None:
+        raise ValidationError("Only current respondent content may be reviewed.")
+    return _review_snapshot(actor, entry, original, entry.text, "translation")
+
+
 @transaction.atomic
 def edit_translation(actor, entry, text):
     entry = _locked_translation(actor, entry, "catalog.edit")
@@ -91,24 +129,28 @@ def edit_translation(actor, entry, text):
     entry.text, entry.status, entry.source_hash = text, "needs_review", source_hash(original)
     entry.reviewed_by, entry.reviewed_at = None, None
     entry.save()
+    entry.refresh_from_db(fields=["review_revision"])
     _audit(actor, version, "catalog.translation_updated", content_key=entry.content_key, locale=entry.locale)
     return entry
 
 
 @transaction.atomic
-def approve_translation(actor, entry):
+def approve_translation(actor, entry, *, reviewed_token):
     entry = _locked_translation(actor, entry, "translation.review")
     version = entry.bundle.instrument_version
     original = source_texts(version).get(entry.content_key)
     if original is None or entry.source_hash != source_hash(original) or not entry.text.strip():
         raise ValidationError("Translation must be nonempty and refer to the current source.")
+    _check_review_token(reviewed_token, _review_payload(actor, entry, original, entry.text, "translation"))
     if entry.status == "stale":
         raise ValidationError("Revise stale translations before requesting another review.")
     if entry.locale == "th" and entry.text != original:
         raise ValidationError("Thai text must match the reviewed Thai source.")
     entry.status, entry.reviewed_by, entry.reviewed_at = "approved", actor, timezone.now()
     entry.save()
-    _audit(actor, version, "catalog.translation_approved", content_key=entry.content_key, locale=entry.locale)
+    _audit(actor, version, "catalog.translation_approved", content_key=entry.content_key, locale=entry.locale,
+           revision=entry.review_revision, source_hash=entry.source_hash, checksum=source_hash(entry.text))
+    entry.refresh_from_db(fields=["review_revision"])
     return entry
 
 
@@ -198,8 +240,11 @@ def clone_instrument_version(actor, source, new_version):
         for question in binding.questions.all():
             BindingQuestion.objects.create(binding=new_binding, question=question_map[question.pk])
     # Explicit re-review preserves history and avoids carrying approval into a changed version.
-    for old_bundle in source.translation_bundles.all():
-        new_bundle = TranslationBundle.objects.create(instrument_version=target, bundle_version=old_bundle.bundle_version + "-copy")
+    reserved_codes = set(source.translation_bundles.values_list("bundle_version", flat=True))
+    for old_bundle in source.translation_bundles.order_by("bundle_version"):
+        code = _clone_bundle_code(old_bundle.bundle_version, reserved_codes)
+        reserved_codes.add(code)
+        new_bundle = TranslationBundle.objects.create(instrument_version=target, bundle_version=code)
         for entry in old_bundle.translations.all():
             ContentTranslation.objects.create(bundle=new_bundle, content_key=entry.content_key, locale=entry.locale,
                 text=entry.text, status="needs_review", source_hash=entry.source_hash, source_metadata=copy.deepcopy(entry.source_metadata))
@@ -207,23 +252,45 @@ def clone_instrument_version(actor, source, new_version):
     return target
 
 
-def _label_audit(actor, label, action):
+def _clone_bundle_code(original, reserved):
+    """Fresh target versions are private to this transaction; reserve all sibling IDs."""
+    max_length = TranslationBundle._meta.get_field("bundle_version").max_length
+    sequence = 1
+    while True:
+        suffix = "-copy" if sequence == 1 else f"-copy-{sequence}"
+        candidate = original[:max_length - len(suffix)] + suffix
+        if candidate not in reserved:
+            return candidate
+        sequence += 1
+
+
+def _label_audit(actor, label, action, **metadata):
     from apps.auditlog.services import record_event
     record_event(organization=label.scope.organization, actor=actor, action=action,
         object_type="catalog.LocalizedLabel", object_id=str(label.pk),
-        metadata={"scope_id": str(label.scope_id), "version": label.version, "content_key": label.key, "status": label.status})
+        metadata={"scope_id": str(label.scope_id), "version": label.version, "content_key": label.key, "status": label.status, **metadata})
 
 
 @transaction.atomic
-def review_localized_label(actor, label):
+def localized_label_review_snapshot(actor, label):
+    label = LocalizedLabel.objects.select_for_update().select_related("scope").get(pk=label.pk)
+    require_permission(actor, "translation.review", label.scope)
+    return _review_snapshot(actor, label, label.source_th, label.text_en, "label")
+
+
+@transaction.atomic
+def review_localized_label(actor, label, *, reviewed_token):
     label = LocalizedLabel.objects.select_for_update().select_related("scope").get(pk=label.pk)
     require_permission(actor, "translation.review", label.scope)
     if label.published or not label.source_th.strip() or not label.text_en.strip():
         raise ValidationError("Only an unpublished, complete TH/EN label pair can be reviewed.")
+    _check_review_token(reviewed_token, _review_payload(actor, label, label.source_th, label.text_en, "label"))
     label.source_hash, label.status = source_hash(label.source_th), "approved"
     label.reviewed_by, label.reviewed_at = actor, timezone.now()
     label.save()
-    _label_audit(actor, label, "catalog.label_approved")
+    _label_audit(actor, label, "catalog.label_approved", revision=label.review_revision,
+                 source_hash=label.source_hash, checksum=source_hash(label.text_en))
+    label.refresh_from_db(fields=["review_revision"])
     return label
 
 

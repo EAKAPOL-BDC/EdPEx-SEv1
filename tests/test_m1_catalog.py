@@ -20,10 +20,11 @@ from apps.catalog.services import (
     approve_translation, clone_instrument_version, edit_translation,
     publish_bundle, publish_instrument_version, respondent_text, source_texts, update_question,
     review_localized_label, publish_localized_label, localized_label_text,
+    translation_review_snapshot, localized_label_review_snapshot,
 )
 
 
-class CatalogBehaviorTests(TestCase):
+class CatalogFixtures:
     @classmethod
     def setUpTestData(cls):
         cls.actor = get_user_model().objects.create_user(username="catalog-editor")
@@ -52,16 +53,18 @@ class CatalogBehaviorTests(TestCase):
 
     def publish(self, version, bundle):
         for entry in bundle.translations.all():
-            approve_translation(self.actor, entry)
+            approve_translation(self.actor, entry, reviewed_token=translation_review_snapshot(self.actor, entry)["reviewed_token"])
         bundle = publish_bundle(self.actor, bundle)
         return publish_instrument_version(self.actor, version), bundle
 
+
+class CatalogBehaviorTests(CatalogFixtures, TestCase):
     def test_cross_user_and_scope_are_denied_for_mutation_and_reads(self):
         version, question, bundle = self.instrument()
         with self.assertRaises(PermissionDenied):
             update_question(self.other, question, text_th="Unauthorized")
         with self.assertRaises(PermissionDenied):
-            approve_translation(self.other, bundle.translations.first())
+            approve_translation(self.other, bundle.translations.first(), reviewed_token="unauthorized")
         version, bundle = self.publish(version, bundle)
         with self.assertRaises(PermissionDenied):
             respondent_text(self.other, bundle, f"{question.question_id}.text", "en")
@@ -74,7 +77,7 @@ class CatalogBehaviorTests(TestCase):
         with self.assertRaises(ValidationError):
             respondent_text(self.actor, bundle, f"{question.question_id}.text", "en")
         for entry in bundle.translations.exclude(locale="en"):
-            approve_translation(self.actor, entry)
+            approve_translation(self.actor, entry, reviewed_token=translation_review_snapshot(self.actor, entry)["reviewed_token"])
         with self.assertRaises(ValidationError):
             publish_bundle(self.actor, bundle)
         with self.assertRaises(DatabaseError), transaction.atomic():
@@ -82,20 +85,21 @@ class CatalogBehaviorTests(TestCase):
 
     def test_source_change_invalidates_approval_including_raw_sql(self):
         version, question, bundle = self.instrument()
-        entry = approve_translation(self.actor, bundle.translations.get(content_key=f"{question.question_id}.text", locale="en"))
+        entry = bundle.translations.get(content_key=f"{question.question_id}.text", locale="en")
+        entry = approve_translation(self.actor, entry, reviewed_token=translation_review_snapshot(self.actor, entry)["reviewed_token"])
         Question.objects.filter(pk=question.pk).update(text_th="เนื้อหาใหม่")
         entry.refresh_from_db()
         self.assertEqual(entry.status, "stale")
         self.assertIsNone(entry.reviewed_by_id)
         with self.assertRaises(ValidationError):
-            approve_translation(self.actor, entry)
+            approve_translation(self.actor, entry, reviewed_token=translation_review_snapshot(self.actor, entry)["reviewed_token"])
         entry = edit_translation(self.actor, entry, "Revised translation")
-        self.assertEqual(approve_translation(self.actor, entry).status, "approved")
+        self.assertEqual(approve_translation(self.actor, entry, reviewed_token=translation_review_snapshot(self.actor, entry)["reviewed_token"]).status, "approved")
 
     def test_version_source_metadata_change_invalidates_bilingual_review(self):
         version, question, bundle = self.instrument()
         for entry in bundle.translations.all():
-            approve_translation(self.actor, entry)
+            approve_translation(self.actor, entry, reviewed_token=translation_review_snapshot(self.actor, entry)["reviewed_token"])
         InstrumentVersion.objects.filter(pk=version.pk).update(group_codes=["C2.2"], source_metadata={"changed_context": True})
         self.assertFalse(bundle.translations.exclude(status="stale").exists())
         self.assertFalse(bundle.translations.filter(reviewed_by__isnull=False).exists())
@@ -186,16 +190,16 @@ class CatalogBehaviorTests(TestCase):
         with self.assertRaises(ValidationError):
             localized_label_text(self.actor, label, "en")
         with self.assertRaises(PermissionDenied):
-            review_localized_label(self.other, label)
+            review_localized_label(self.other, label, reviewed_token="unauthorized")
         with self.assertRaises(ValidationError):
             publish_localized_label(self.actor, label)
-        label = publish_localized_label(self.actor, review_localized_label(self.actor, label))
+        label = publish_localized_label(self.actor, review_localized_label(self.actor, label, reviewed_token=localized_label_review_snapshot(self.actor, label)["reviewed_token"]))
         self.assertEqual(localized_label_text(self.actor, label, "en"), "Fiscal year")
         with self.assertRaises(DatabaseError), transaction.atomic():
             LocalizedLabel.objects.filter(pk=label.pk).update(text_en="Changed after publication")
         newer = LocalizedLabel.objects.create(scope=self.scope, namespace=label.namespace, key=label.key, version="2",
             source_th=label.source_th, text_en="Fiscal reporting year", source_hash=label.source_hash)
-        review_localized_label(self.actor, newer)
+        review_localized_label(self.actor, newer, reviewed_token=localized_label_review_snapshot(self.actor, newer)["reviewed_token"])
         LocalizedLabel.objects.filter(pk=newer.pk).update(source_th="ปีงบประมาณใหม่")
         newer.refresh_from_db()
         self.assertEqual(newer.status, "stale")

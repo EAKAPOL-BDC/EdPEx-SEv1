@@ -26,3 +26,6 @@ translation bundles, calendars, populations, provenance, and audit events.
 See [โครงสร้าง M1 และวิธีทดสอบ PostgreSQL ชั่วคราว](docs/m1-schema-th.md)
 for table descriptions, the decision to preserve Django auth.User, and empty/legacy
 migration tests. M1 has not been migrated to Supabase or deployed.
+
+PR #3 review fixes and their PostgreSQL regression coverage are described in
+[ข้อค้นพบ → วิธีแก้ → ไฟล์ → tests](docs/pr3-fixes-th.md).

@@ -305,6 +305,7 @@ class TranslationBundle(ValidatedModel):
 
 
 class ContentTranslation(ValidatedModel):
+    review_revision = models.PositiveBigIntegerField(default=1, editable=False)
     bundle = models.ForeignKey(TranslationBundle, on_delete=models.PROTECT, related_name="translations")
     content_key = models.CharField(max_length=160)
     locale = models.CharField(max_length=2, choices=[("th", "ไทย"), ("en", "English")])
@@ -343,6 +344,7 @@ LABEL_NAMESPACES = ("ui", "group", "calendar", "indicator", "notification", "exp
 
 class LocalizedLabel(ValidatedModel):
     """Versioned system/group/calendar labels; respondent instrument bundles remain separate."""
+    review_revision = models.PositiveBigIntegerField(default=1, editable=False)
     scope = models.ForeignKey("accounts.AccessScope", on_delete=models.PROTECT)
     namespace = models.CharField(max_length=20, choices=[(item, item) for item in LABEL_NAMESPACES])
     key = models.CharField(max_length=160)

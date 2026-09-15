@@ -213,7 +213,11 @@ class CollectionRound(DomainRecord):
             raise ValidationError("Collection timestamps must be timezone-aware.")
         from apps.accounts.permissions import has_active_membership
 
-        if not has_active_membership(self.owner, self.scope):
+        previous = type(self).objects.filter(pk=self.pk).values("owner_id", "scope_id").first()
+        assigning_owner = previous is None or (previous["owner_id"], previous["scope_id"]) != (self.owner_id, self.scope_id)
+        # Validate membership when assigning a person, not when closing their
+        # historical work after departure. Services still authorize the actor.
+        if assigning_owner and not has_active_membership(self.owner, self.scope):
             raise ValidationError({"owner": "Round owner must be an active member of this organization."})
         if self.population_snapshot_id:
             if self.population_snapshot.collection_round_id != self.pk or self.population_snapshot.status != PopulationSnapshot.Status.FROZEN:
@@ -269,6 +273,17 @@ class RoundInstrument(DomainRecord):
             raise ValidationError("Instrument and round must share the same scope.")
         if self.translation_bundle.instrument_version_id != self.instrument_version_id:
             raise ValidationError("Translation bundle must belong to the selected instrument version.")
+        previous = type(self).objects.filter(pk=self.pk).values(
+            "collection_round_id", "instrument_version_id", "translation_bundle_id",
+        ).first()
+        selected = (self.collection_round_id, self.instrument_version_id, self.translation_bundle_id)
+        changing_selection = previous is None or selected != tuple(previous[field] for field in (
+            "collection_round_id", "instrument_version_id", "translation_bundle_id",
+        ))
+        from apps.catalog.models import InstrumentVersion
+
+        if changing_selection and InstrumentVersion.objects.filter(pk=self.instrument_version_id, status="retired").exists():
+            raise ValidationError("Retired versions cannot be selected for a new round binding.")
         if self.collection_round.status != CollectionRound.Status.DRAFT:
             previous = type(self).objects.filter(pk=self.pk).first()
             if previous:
@@ -387,7 +402,11 @@ class PopulationSnapshot(DomainRecord):
     def save(self, *args, **kwargs):
         if self._state.adding and self.status != self.Status.DRAFT:
             raise ValidationError("Create the draft snapshot first.")
-        return super().save(*args, **kwargs)
+        with transaction.atomic():
+            # PostgreSQL UPDATE locks this row before its round guard runs.
+            # Keep ORM edits in the same order as freeze and direct SQL edits.
+            type(self).objects.select_for_update().filter(pk=self.pk).first()
+            return super().save(*args, **kwargs)
 
     def delete(self, *args, **kwargs):
         if type(self).objects.filter(pk=self.pk, status=self.Status.FROZEN).exists():
@@ -410,7 +429,30 @@ class PopulationMember(DomainRecord):
         return self.snapshot.collection_round.scope
 
     def lock_dependencies(self):
-        self.snapshot = PopulationSnapshot.objects.select_for_update().get(pk=self.snapshot_id)
+        # save/delete hold the member row first, so its persisted source cannot
+        # change while we acquire both parent locks in a deterministic order.
+        source_id = type(self).objects.filter(pk=self.pk).values_list("snapshot_id", flat=True).first()
+        snapshot_ids = {self.snapshot_id}
+        if source_id:
+            snapshot_ids.add(source_id)
+        snapshots = {
+            snapshot.pk: snapshot
+            for snapshot in PopulationSnapshot.objects.select_for_update().filter(
+                pk__in=snapshot_ids
+            ).order_by("pk")
+        }
+        if len(snapshots) != len(snapshot_ids):
+            raise ValidationError("Population snapshot no longer exists.")
+        self.snapshot = snapshots[self.snapshot_id]
+        if any(snapshot.status == PopulationSnapshot.Status.FROZEN for snapshot in snapshots.values()):
+            raise ValidationError("Members of a frozen snapshot cannot be changed.")
+
+    def save(self, *args, **kwargs):
+        with transaction.atomic():
+            # Direct PostgreSQL UPDATE acquires the member tuple before firing
+            # its parent-lock trigger. Match that order to avoid lock inversion.
+            type(self).objects.select_for_update().filter(pk=self.pk).first()
+            return super().save(*args, **kwargs)
 
     def clean(self):
         super().clean()
@@ -430,9 +472,13 @@ class PopulationMember(DomainRecord):
             self.unchanged(previous)
 
     def delete(self, *args, **kwargs):
-        if PopulationSnapshot.objects.filter(pk=self.snapshot_id, status=PopulationSnapshot.Status.FROZEN).exists():
-            raise ValidationError("Members of a frozen snapshot are retained.")
-        return super().delete(*args, **kwargs)
+        with transaction.atomic():
+            current = type(self).objects.select_for_update().filter(pk=self.pk).first()
+            if current is not None:
+                # A caller may hold an instance predating an earlier move.
+                self.snapshot_id = current.snapshot_id
+                self.lock_dependencies()
+            return super().delete(*args, **kwargs)
 
 
 class ResponsibilityAssignment(DomainRecord):
@@ -456,9 +502,11 @@ class ResponsibilityAssignment(DomainRecord):
 
         if self.collection_round_id and self.collection_round.scope_id != self.scope_id:
             raise ValidationError("Responsibility and round must share a scope.")
+        previous = type(self).objects.filter(pk=self.pk).values("scope_id", "primary_id", "backup_id").first()
         for field in ("primary", "backup"):
             user = getattr(self, field)
-            if user is not None and not has_active_membership(user, self.scope):
+            assigning_person = previous is None or previous["scope_id"] != self.scope_id or previous[field + "_id"] != getattr(self, field + "_id")
+            if assigning_person and user is not None and not has_active_membership(user, self.scope):
                 raise ValidationError({field: "Responsible users must be active members of this organization."})
         if self.primary_id == self.backup_id:
             raise ValidationError("Primary and backup must be different users.")

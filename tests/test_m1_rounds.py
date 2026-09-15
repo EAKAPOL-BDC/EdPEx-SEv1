@@ -15,7 +15,7 @@ from apps.catalog.models import (
     ContentTranslation, Instrument, InstrumentContent, InstrumentVersion,
     Question, TranslationBundle, source_hash,
 )
-from apps.catalog.services import approve_translation, publish_bundle, publish_instrument_version, source_texts
+from apps.catalog.services import approve_translation, publish_bundle, publish_instrument_version, source_texts, translation_review_snapshot
 from apps.rounds.models import (
     Calendar, CollectionRound, DataSource, PopulationMember, PopulationSnapshot,
     ReportingPeriod, RespondentGroup, ResponsibilityAssignment, RoundInstrument,
@@ -88,7 +88,8 @@ class RoundDomainTests(TestCase):
                 entry = ContentTranslation.objects.create(bundle=bundle, content_key=key, locale=locale,
                     text=original if locale == "th" else "Self-report test wording, no mandatory evidence.", source_hash=source_hash(original))
                 if publish:
-                    approve_translation(self.actor, entry)
+                    preview = translation_review_snapshot(self.actor, entry)
+                    approve_translation(self.actor, entry, reviewed_token=preview["reviewed_token"])
         if publish:
             bundle = publish_bundle(self.actor, bundle)
             version = publish_instrument_version(self.actor, version)

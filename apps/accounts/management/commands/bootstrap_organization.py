@@ -23,11 +23,11 @@ class Command(BaseCommand):
         # Serialize competing bootstraps of the same organization on PostgreSQL.
         if connection.vendor == 'postgresql':
             with connection.cursor() as cursor:
-                cursor.execute('SELECT pg_advisory_xact_lock(%s)', [options['organization_id'].int % (2**63 - 1)])
+                cursor.execute('SELECT pg_advisory_xact_lock(%s)', [578344221877])
         actor = get_user_model().objects.filter(username=options['username'], is_active=True, is_superuser=True).first()
         if actor is None:
             raise CommandError('An existing active Django superuser must be explicitly named.')
-        if not options['name'].strip() or not options['reason'].strip():
+        if not options['name'].strip() or not options['reason'].strip() or len(options['reason']) > 500:
             raise CommandError('Organization name and authorization reason must not be blank.')
         org = Organization.objects.filter(pk=options['organization_id']).first()
         if org:

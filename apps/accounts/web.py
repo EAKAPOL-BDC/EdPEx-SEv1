@@ -1,3 +1,4 @@
+from django.utils.translation import gettext_lazy as _
 """Organization portal; every scope and mutation uses persisted permissions."""
 from django import forms
 from django.contrib import messages
@@ -11,14 +12,14 @@ from .services import assign_role, revoke_role, add_member
 
 
 class MemberForm(forms.Form):
-    username = forms.CharField(label="ชื่อผู้ใช้ที่มีอยู่แล้ว", max_length=150)
+    username = forms.CharField(label=_("ชื่อผู้ใช้ที่มีอยู่แล้ว"), max_length=150)
 
 
 class GrantForm(forms.Form):
-    membership = forms.ModelChoiceField(label="สมาชิก", queryset=Membership.objects.none())
-    role = forms.ModelChoiceField(label="บทบาท", queryset=Role.objects.none())
-    active_until = forms.DateTimeField(label="สิ้นสุดสิทธิ์ (เวลาไทย เช่น 2027-09-30 17:00)", required=False)
-    include_descendants = forms.BooleanField(label="รวมขอบเขตย่อย", required=False)
+    membership = forms.ModelChoiceField(label=_("สมาชิก"), queryset=Membership.objects.none())
+    role = forms.ModelChoiceField(label=_("บทบาท"), queryset=Role.objects.none())
+    active_until = forms.DateTimeField(label=_("สิ้นสุดสิทธิ์ (ค.ศ. เวลาไทย เช่น 2027-09-30 17:00)"), required=False)
+    include_descendants = forms.BooleanField(label=_("รวมขอบเขตย่อย"), required=False)
 
     def __init__(self, *args, scope, **kwargs):
         super().__init__(*args, **kwargs)
@@ -62,9 +63,9 @@ def members(request, scope_id):
                 else:
                     return redirect('portal-members', scope_id=scope.pk)
             except ValidationError as exc:
-                form.add_error(None, '; '.join(exc.messages))
+                form.add_error(None, _('ไม่สามารถบันทึกได้ กรุณาตรวจข้อมูลที่กรอก'))
             else:
-                messages.success(request, 'บันทึกเรียบร้อยแล้ว')
+                messages.success(request, _('บันทึกเรียบร้อยแล้ว'))
                 return redirect('portal-members', scope_id=scope.pk)
     grants = RoleAssignment.objects.filter(scope=scope).select_related('membership__user', 'role').order_by('-created_at')
     return render(request, 'portal/members.html', {'scope': scope, 'member_form': member_form,
@@ -78,5 +79,20 @@ def revoke(request, scope_id, assignment_id):
     require_permission(request.user, 'role.manage', scope)
     grant = get_object_or_404(RoleAssignment, pk=assignment_id, scope=scope)
     revoke_role(actor=request.user, assignment=grant)
-    messages.success(request, 'เพิกถอนสิทธิ์แล้ว ประวัติเดิมยังคงอยู่')
+    messages.success(request, _('เพิกถอนสิทธิ์แล้ว ประวัติเดิมยังคงอยู่'))
     return redirect('portal-members', scope_id=scope.pk)
+
+
+@require_POST
+def language(request):
+    from django.conf import settings
+    from django.http import JsonResponse
+    from .services import set_portal_language
+    locale = request.POST.get('language')
+    if locale not in {'th', 'en'}:
+        return JsonResponse({'error': 'unsupported_language'}, status=400)
+    if request.user.is_authenticated:
+        set_portal_language(actor=request.user, locale=locale)
+    response = JsonResponse({'language': locale})
+    response.set_cookie(settings.LANGUAGE_COOKIE_NAME, locale, samesite='Lax', secure=request.is_secure())
+    return response

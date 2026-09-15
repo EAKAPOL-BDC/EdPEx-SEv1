@@ -1,0 +1,189 @@
+#
+msgid ""
+msgstr ""
+"Language: en\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "วิทยาลัยการศึกษา"
+msgstr "College of Education"
+
+msgid "วิทยาลัยการศึกษา · มหาวิทยาลัยพะเยา"
+msgstr "College of Education · University of Phayao"
+
+msgid "ข้ามไปเนื้อหา"
+msgstr "Skip to content"
+
+msgid "เมนูหลัก"
+msgstr "Main navigation"
+
+msgid "พื้นที่ทำงาน"
+msgstr "Workspace"
+
+msgid "ออกจากระบบ"
+msgstr "Sign out"
+
+msgid "เข้าสู่ระบบ"
+msgstr "Sign in"
+
+msgid "พัฒนาคุณภาพการศึกษาร่วมกัน"
+msgstr "Improving education together"
+
+msgid "ร่วมพัฒนาการศึกษา"
+msgstr "Working together for education"
+
+msgid "สู่ความเป็นเลิศ"
+msgstr "Towards excellence"
+
+msgid "พื้นที่ทำงาน EdPEx ของวิทยาลัยการศึกษา มหาวิทยาลัยพะเยา"
+msgstr "EdPEx workspace for the College of Education, University of Phayao"
+
+msgid "เข้าสู่พื้นที่ทำงาน →"
+msgstr "Open workspace →"
+
+msgid "เริ่มต้นใช้งาน"
+msgstr "Getting started"
+
+msgid ""
+"เข้าสู่ระบบด้วยบัญชีที่ผู้ดูแลจัดเตรียมให้ เพื่อดูองค์กร ขอบเขต "
+"และสิทธิ์ของคุณ"
+msgstr ""
+"Sign in with the account provided by your administrator to view your "
+"organization, scopes and permissions."
+
+msgid ""
+"ระบบอยู่ระหว่างเตรียมใช้งาน "
+"ส่วนแบบฟอร์มและแดชบอร์ดจะเปิดให้บริการในระยะถัดไป"
+msgstr ""
+"The system is being prepared for use. Forms and dashboards will be available"
+" in a later phase."
+
+msgid "เข้าสู่ระบบ EdPEx"
+msgstr "Sign in to EdPEx"
+
+msgid "ใช้บัญชีเดียวกับที่ผู้ดูแลจัดเตรียมให้"
+msgstr "Use the existing account provided by your administrator."
+
+msgid "พื้นที่ทำงานของคุณ"
+msgstr "Your workspace"
+
+msgid "สวัสดี"
+msgstr "Hello"
+
+msgid "เลือกขอบเขตงานที่คุณได้รับมอบหมาย"
+msgstr "Choose a scope assigned to you."
+
+msgid "สิทธิ์ที่ได้รับ"
+msgstr "Granted permissions"
+
+msgid "จัดการสมาชิกและบทบาท"
+msgstr "Manage members and roles"
+
+msgid "ยังไม่มีขอบเขตงานที่ได้รับมอบหมาย"
+msgstr "No work scope has been assigned yet"
+
+msgid ""
+"บัญชีของคุณเข้าสู่ระบบได้แล้ว กรุณาติดต่อผู้ดูแลองค์กรเพื่อรับสิทธิ์ใช้งาน"
+msgstr ""
+"Your account can sign in. Contact your organization administrator for "
+"access."
+
+msgid "← พื้นที่ทำงาน"
+msgstr "← Workspace"
+
+msgid "สมาชิกและบทบาท"
+msgstr "Members and roles"
+
+msgid "1. เพิ่มสมาชิกองค์กร"
+msgstr "1. Add an organization member"
+
+msgid "ระบุชื่อบัญชีที่มีอยู่แล้ว การเพิ่มสมาชิกยังไม่มอบสิทธิ์ทำงาน"
+msgstr ""
+"Enter an existing username. Membership alone does not grant work "
+"permissions."
+
+msgid "เพิ่มสมาชิก"
+msgstr "Add member"
+
+msgid "2. มอบบทบาทในขอบเขตนี้"
+msgstr "2. Assign a role in this scope"
+
+msgid ""
+"มอบได้เฉพาะสิทธิ์และระยะเวลาที่คุณมีอยู่ "
+"ช่องสิ้นสุดว่างหมายถึงไม่กำหนดวันสิ้นสุด"
+msgstr ""
+"You may delegate only permissions and durations you hold. A blank end date "
+"means no expiration."
+
+msgid "มอบบทบาท"
+msgstr "Assign role"
+
+msgid "ประวัติการมอบบทบาทในขอบเขตนี้"
+msgstr "Role assignment history in this scope"
+
+msgid "ผู้ใช้"
+msgstr "User"
+
+msgid "บทบาท"
+msgstr "Role"
+
+msgid "เริ่ม / สิ้นสุด"
+msgstr "Start / end"
+
+msgid "รวมขอบเขตย่อย"
+msgstr "Include descendant scopes"
+
+msgid "การเพิกถอน"
+msgstr "Revocation"
+
+msgid "เพิกถอนแล้ว"
+msgstr "Revoked"
+
+msgid "เพิกถอนบทบาทนี้"
+msgstr "Revoke this role"
+
+msgid "ยังไม่มีรายการ"
+msgstr "No entries yet"
+
+msgid "ใช่"
+msgstr "Yes"
+
+msgid "ไม่ใช่"
+msgstr "No"
+
+msgid "ไม่กำหนด"
+msgstr "No expiration"
+
+msgid "ชื่อผู้ใช้ที่มีอยู่แล้ว"
+msgstr "Existing username"
+
+msgid "สมาชิก"
+msgstr "Member"
+
+msgid "สิ้นสุดสิทธิ์ (ค.ศ. เวลาไทย เช่น 2027-09-30 17:00)"
+msgstr "Access ends (C.E., Bangkok time, e.g. 2027-09-30 17:00)"
+
+msgid "บันทึกเรียบร้อยแล้ว"
+msgstr "Saved successfully"
+
+msgid "เพิกถอนสิทธิ์แล้ว ประวัติเดิมยังคงอยู่"
+msgstr "Access revoked. The original history is retained."
+
+msgid "ไม่พบชื่อผู้ใช้ที่เปิดใช้งาน กรุณาตรวจชื่อผู้ใช้กับผู้ดูแลบัญชี"
+msgstr ""
+"Active username not found. Check the username with the account "
+"administrator."
+
+msgid "สมาชิกนี้ถูกระงับแล้ว ต้องทบทวนการคืนสิทธิ์แยกต่างหาก"
+msgstr ""
+"This membership is suspended. Reinstatement requires a separate review."
+
+msgid "ไม่สามารถบันทึกได้ กรุณาตรวจข้อมูลที่กรอก"
+msgstr "Unable to save. Please check the entered values."
+
+msgid "คุณไม่มีสิทธิ์ดำเนินการนี้ในขอบเขตที่เลือก"
+msgstr ""
+"You do not have permission to perform this action in the selected scope."
+
+msgid "ชื่อองค์กรแสดงตามต้นฉบับที่บันทึกไว้"
+msgstr "Organization names are shown as originally recorded."

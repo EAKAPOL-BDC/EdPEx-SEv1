@@ -4,6 +4,7 @@ from django.contrib.auth import get_user_model
 from django.core.exceptions import PermissionDenied, ValidationError
 from django.db import transaction
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 
 from apps.auditlog.services import record_event
 
@@ -83,11 +84,23 @@ def add_member(*, actor, scope, username):
     require_permission(actor, "role.manage", scope)
     user = get_user_model().objects.filter(username=username, is_active=True).first()
     if user is None:
-        raise ValidationError("ไม่พบชื่อผู้ใช้ที่เปิดใช้งาน กรุณาตรวจชื่อผู้ใช้กับผู้ดูแลบัญชี")
+        raise ValidationError(_("ไม่พบชื่อผู้ใช้ที่เปิดใช้งาน กรุณาตรวจชื่อผู้ใช้กับผู้ดูแลบัญชี"))
     member, created = Membership.objects.get_or_create(user=user, organization=scope.organization)
     if not member.is_active:
-        raise ValidationError("สมาชิกนี้ถูกระงับแล้ว ต้องทบทวนการคืนสิทธิ์แยกต่างหาก")
+        raise ValidationError(_("สมาชิกนี้ถูกระงับแล้ว ต้องทบทวนการคืนสิทธิ์แยกต่างหาก"))
     if created:
         record_event(scope.organization, actor, "membership.created", "Membership", member.pk,
                      metadata={"scope_id": str(scope.pk), "membership_id": str(member.pk)})
     return member
+
+
+def set_portal_language(*, actor, locale):
+    """Own UI preference only; does not grant or require business action permissions."""
+    if locale not in {'th', 'en'} or not getattr(actor, 'is_authenticated', False):
+        raise PermissionDenied('Invalid language preference request.')
+    if not get_user_model().objects.filter(pk=actor.pk, is_active=True).exists():
+        raise PermissionDenied('Inactive account.')
+    preference, _ = UserPreference.objects.get_or_create(user=actor)
+    preference.preferred_locale = locale
+    preference.save()
+    return preference

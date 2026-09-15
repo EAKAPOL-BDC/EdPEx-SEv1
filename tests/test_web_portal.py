@@ -109,3 +109,19 @@ class PortalTests(TestCase):
             'role':Role.objects.get(code='organization-manager-v1').pk})
         self.assertEqual(response.status_code,403)
         self.assertEqual(RoleAssignment.objects.filter(membership=member).count(),1)
+
+    def test_language_switch_persists_without_granting_access(self):
+        from apps.accounts.models import UserPreference
+        self.assertContains(self.client.get('/', HTTP_ACCEPT_LANGUAGE='en'), 'ร่วมพัฒนาการศึกษา')
+        self.assertEqual(self.client.post('/language/', {'language':'en'}).status_code,200)
+        self.assertContains(self.client.get('/'), 'Working together for education')
+        self.assertContains(self.client.get('/'), 'lang="en"')
+        self.client.force_login(self.user)
+        self.client.post('/language/', {'language':'en'})
+        self.assertEqual(UserPreference.objects.get(user=self.user).preferred_locale,'en')
+        self.assertContains(self.client.get('/workspace/'), 'No work scope has been assigned yet')
+        self.assertFalse(RoleAssignment.objects.exists())
+        self.assertEqual(self.client.post('/language/', {'language':'fr'}).status_code,400)
+        self.assertEqual(UserPreference.objects.get(user=self.user).preferred_locale,'en')
+        self.client.post('/language/', {'language':'th'})
+        self.assertContains(self.client.get('/workspace/'), 'ยังไม่มีขอบเขตงาน')

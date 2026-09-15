@@ -29,3 +29,5 @@ footer{color:#554d60;font-size:14px}footer span{font-size:13px}
 .brand-tagline{font-size:17px;margin:22px 0}.nexora-mascot{display:block;width:100%;height:auto;max-width:340px;justify-self:center}
 .edpex-context{border-top:1px solid var(--line);padding-top:18px;margin-bottom:0;color:var(--muted);font-size:15px}
 @media(max-width:760px){.header-inner{padding:10px 20px;gap:12px}.brand-institution{font-size:13px}.nexora-hero{grid-template-columns:1fr;padding:24px}.nexora-mascot{max-width:200px}.organization-line{font-size:15px}.panel{padding:22px}.history-panel{padding:0}}
+
+.developer-credit{margin:16px auto 0;padding-top:14px;border-top:1px solid var(--line);max-width:780px;font-size:14px;line-height:1.8}.developer-credit p{margin:0}.developer-credit strong{color:var(--ink);font-weight:600}.copyright{margin:10px 0 0;font-size:13px;color:var(--muted)}

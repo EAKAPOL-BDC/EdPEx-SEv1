@@ -1,0 +1,32 @@
+{
+  "catalog_version": "1.1",
+  "blueprint_version": "1.2",
+  "status": "M0_offline_catalog",
+  "database_contacted": false,
+  "source_documents": [
+    {
+      "path": "docs/source/EdPEx_System_Blueprint_v1.md",
+      "sha256": "16bf0acaa52766357a3e9f07e61c255da6e7c609c96fab5e9069ccc6524a9458",
+      "lines": 1076
+    },
+    {
+      "path": "docs/source/EdPEx_6_Instruments.md",
+      "sha256": "42a6fff4fc2c4503fa639ba54a88b43d40ad5cba17a4711f592718ac46e7d895",
+      "lines": 580
+    }
+  ],
+  "counts": {
+    "questions": 190,
+    "indicators": 63,
+    "formulas": 20,
+    "groups": 17,
+    "blueprint_sections": 33
+  },
+  "source_location_policy": "docs/source is a directory. Root source files retained; supplied copies preserved byte-for-byte.",
+  "limitations": [
+    "Official indicator names need the referenced PDF; no invented original titles.",
+    "English instrument translations and semantic approval remain M3 deliverables.",
+    "Runtime forms, formula execution, six UI prototypes and database seeding are not implemented by this catalog.",
+    "Original unnumbered ancillary fields are preserved in instrument_sections.json; assign new implementation field IDs separately from baseline IDs."
+  ]
+}

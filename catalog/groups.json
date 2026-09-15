@@ -1,0 +1,206 @@
+[
+  {
+    "code": "C1",
+    "label": {
+      "th": "ปริญญาตรี",
+      "en": null
+    },
+    "active": true,
+    "source": {
+      "path": "docs/source/EdPEx_6_Instruments.md",
+      "line": 38
+    }
+  },
+  {
+    "code": "C2.1",
+    "label": {
+      "th": "บัณฑิตศึกษาชาวไทย",
+      "en": null
+    },
+    "active": true,
+    "source": {
+      "path": "docs/source/EdPEx_6_Instruments.md",
+      "line": 38
+    }
+  },
+  {
+    "code": "C2.2",
+    "label": {
+      "th": "บัณฑิตศึกษาชาวต่างชาติ",
+      "en": null
+    },
+    "active": true,
+    "source": {
+      "path": "docs/source/EdPEx_6_Instruments.md",
+      "line": 38
+    }
+  },
+  {
+    "code": "C3.1",
+    "label": {
+      "th": "ผู้เรียน Non-degree",
+      "en": null
+    },
+    "active": true,
+    "source": {
+      "path": "docs/source/EdPEx_6_Instruments.md",
+      "line": 38
+    }
+  },
+  {
+    "code": "C4.1",
+    "label": {
+      "th": "ผู้ให้ทุนวิจัยภาครัฐ",
+      "en": null
+    },
+    "active": true,
+    "source": {
+      "path": "docs/source/EdPEx_6_Instruments.md",
+      "line": 108
+    }
+  },
+  {
+    "code": "C5.1",
+    "label": {
+      "th": "ผู้รับบริการภาครัฐ",
+      "en": null
+    },
+    "active": true,
+    "source": {
+      "path": "docs/source/EdPEx_6_Instruments.md",
+      "line": 108
+    }
+  },
+  {
+    "code": "C5.2",
+    "label": {
+      "th": "บุคคลทั่วไปหรือครู",
+      "en": null
+    },
+    "active": true,
+    "source": {
+      "path": "docs/source/EdPEx_6_Instruments.md",
+      "line": 108
+    }
+  },
+  {
+    "code": "C5.3",
+    "label": {
+      "th": "ชุมชน",
+      "en": null
+    },
+    "active": true,
+    "source": {
+      "path": "docs/source/EdPEx_6_Instruments.md",
+      "line": 108
+    }
+  },
+  {
+    "code": "S1",
+    "label": {
+      "th": "ผู้ปกครอง",
+      "en": null
+    },
+    "active": true,
+    "source": {
+      "path": "docs/source/EdPEx_6_Instruments.md",
+      "line": 108
+    }
+  },
+  {
+    "code": "S3-1",
+    "label": {
+      "th": "ศิษย์เก่าปริญญาตรี",
+      "en": null
+    },
+    "active": true,
+    "source": {
+      "path": "docs/source/EdPEx_6_Instruments.md",
+      "line": 108
+    }
+  },
+  {
+    "code": "S3-2",
+    "label": {
+      "th": "ศิษย์เก่าบัณฑิตศึกษา",
+      "en": null
+    },
+    "active": true,
+    "source": {
+      "path": "docs/source/EdPEx_6_Instruments.md",
+      "line": 108
+    }
+  },
+  {
+    "code": "CO-1",
+    "label": {
+      "th": "คณะร่วมผลิต",
+      "en": null
+    },
+    "active": true,
+    "source": {
+      "path": "docs/source/EdPEx_6_Instruments.md",
+      "line": 108
+    }
+  },
+  {
+    "code": "CO-2",
+    "label": {
+      "th": "คู่ความร่วมมือในประเทศมี MOU",
+      "en": null
+    },
+    "active": true,
+    "source": {
+      "path": "docs/source/EdPEx_6_Instruments.md",
+      "line": 108
+    }
+  },
+  {
+    "code": "CO-3",
+    "label": {
+      "th": "คู่ความร่วมมือต่างประเทศมี MOU",
+      "en": null
+    },
+    "active": true,
+    "source": {
+      "path": "docs/source/EdPEx_6_Instruments.md",
+      "line": 108
+    }
+  },
+  {
+    "code": "CO-4",
+    "label": {
+      "th": "แหล่งฝึกปี 1–3 และเครือข่ายตามโครงร่าง",
+      "en": null
+    },
+    "active": true,
+    "source": {
+      "path": "docs/source/EdPEx_6_Instruments.md",
+      "line": 108
+    }
+  },
+  {
+    "code": "ST1",
+    "label": {
+      "th": "สายวิชาการ",
+      "en": null
+    },
+    "active": true,
+    "source": {
+      "path": "docs/source/EdPEx_6_Instruments.md",
+      "line": 148
+    }
+  },
+  {
+    "code": "ST2",
+    "label": {
+      "th": "สายสนับสนุน",
+      "en": null
+    },
+    "active": true,
+    "source": {
+      "path": "docs/source/EdPEx_6_Instruments.md",
+      "line": 148
+    }
+  }
+]

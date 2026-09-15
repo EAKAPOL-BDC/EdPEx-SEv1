@@ -1,0 +1,3 @@
+# Supplied source documents must retain their exact bytes across checkouts.
+/docs/source/EdPEx_System_Blueprint_v1.md -text
+/docs/source/EdPEx_6_Instruments.md -text

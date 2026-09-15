@@ -34,3 +34,18 @@ migration tests. M1 has not been migrated to Supabase or deployed.
 
 PR #3 review fixes and their PostgreSQL regression coverage are described in
 [ข้อค้นพบ → วิธีแก้ → ไฟล์ → tests](docs/pr3-fixes-th.md).
+
+M2 now has an offline, server-side calculation core for the 20 formula templates
+in version 1.1. It includes CAL-01–18 fixtures, typed answer/status validation,
+frozen population inputs, latest submitted revision selection, F05 deduplication,
+and safe pooling of disjoint groups. The catalog adapter checks all 63 indicator
+bindings, including their group and dimension variants.
+
+```text
+python -m unittest tests.test_m0_catalog tests.test_m0_bindings tests.test_m0_source_semantics tests.test_m2_golden tests.test_m2_validation
+```
+
+See [แกนคำนวณ M2: ผลทดสอบและขอบเขตการใช้งาน](docs/m2-calculation-core-th.md).
+This increment performs no migrations or seeding and adds no public endpoint.
+Persisted calculation runs/manifests, permissions, approval, historical imports,
+and annual aggregation still require implementation before M2 is complete.

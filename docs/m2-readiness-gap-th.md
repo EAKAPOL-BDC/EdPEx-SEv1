@@ -1,5 +1,10 @@
 # ตรวจช่องว่างก่อนพัฒนาระบบคำนวณ M2
 
+> อัปเดตหลังรายงานฐานนี้: เพิ่มแกนคำนวณและ CAL-01–18 แล้ว ดู
+> [ผลทดสอบและขอบเขตแกนคำนวณ](m2-calculation-core-th.md)
+> ข้อความ “ยังไม่มี engine” ด้านล่างบรรยาย commit ที่ตรวจเดิม ไม่ใช่สถานะล่าสุด
+> ส่วน calculation run/source manifest ที่บันทึกถาวร สิทธิ์ และงาน M2 ส่วนอื่นยังไม่เสร็จ
+
 วันที่ตรวจ: 2026-09-15 UTC  
 โค้ดที่ตรวจ: `11e21f65831eba7a445e7c78b4bfdba68e9c0f2e` บน `feat/web-organization-access`  
 ฐานข้อกำหนด: `docs/source/EdPEx_System_Blueprint_v1.md` System Blueprint 1.2 และ `docs/source/EdPEx_6_Instruments.md` 1.1  

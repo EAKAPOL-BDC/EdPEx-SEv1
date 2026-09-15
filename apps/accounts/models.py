@@ -15,6 +15,7 @@ ALLOWED_PERMISSIONS = frozenset({
     "responsibility.manage", "source.manage", "audit.read", "self.read",
     "self.write", "role.manage",
     "calculation.run", "calculation.source", "calculation.validate",
+    "selfassessment.assign", "result.submit", "result.review", "result.approve",
 })
 
 

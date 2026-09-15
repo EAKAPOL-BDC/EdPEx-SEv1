@@ -3,9 +3,18 @@ import uuid
 from django.contrib.auth import get_user_model
 from django.core.management.base import BaseCommand, CommandError
 from django.db import transaction, connection
-from apps.accounts.models import Organization, AccessScope, Membership, Role, RoleAssignment, ALLOWED_PERMISSIONS
+from apps.accounts.models import Organization, AccessScope, Membership, Role, RoleAssignment
 from apps.auditlog.models import AuditEvent
 from apps.auditlog.services import record_event
+
+
+# Stable initial administrative permissions. Adding an application action must
+# never silently grant source access or result approval to new administrators.
+BOOTSTRAP_PERMISSIONS = frozenset({
+    'catalog.read', 'catalog.edit', 'catalog.publish', 'catalog.archive', 'translation.review',
+    'calendar.manage', 'round.manage', 'population.manage', 'responsibility.manage',
+    'source.manage', 'audit.read', 'self.read', 'self.write', 'role.manage',
+})
 
 
 class Command(BaseCommand):
@@ -46,14 +55,14 @@ class Command(BaseCommand):
             raise CommandError('Name already exists. Reuse the original organization ID; do not create a duplicate.')
         self.stdout.write(f"Organization: {options['name']} / {options['organization_id']}")
         self.stdout.write(f"Initial administrator: {actor.get_username()}; scope: organization; descendants: yes")
-        self.stdout.write('Permissions: ' + ', '.join(sorted(ALLOWED_PERMISSIONS)))
+        self.stdout.write('Permissions: ' + ', '.join(sorted(BOOTSTRAP_PERMISSIONS)))
         if not options['apply']:
             self.stdout.write('PREVIEW ONLY. No data written. Review and repeat with --apply to initialize.')
             return
         org = Organization.objects.create(id=options['organization_id'], name=options['name'])
         scope = AccessScope.objects.create(organization=org, code='organization', name=org.name)
         member = Membership.objects.create(user=actor, organization=org)
-        presets = {'organization-manager-v1': sorted(ALLOWED_PERMISSIONS),
+        presets = {'organization-manager-v1': sorted(BOOTSTRAP_PERMISSIONS),
                    'catalog-reader-v1': ['catalog.read'],
                    'self-service-v1': ['self.read', 'self.write']}
         roles = {}

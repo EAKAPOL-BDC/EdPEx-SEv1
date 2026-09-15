@@ -1,0 +1,15 @@
+{% extends 'portal/base.html' %}
+{% block content %}
+<p><a href="{% url 'self-assessment-list' %}">{% if LANGUAGE_CODE == 'en' %}My self-assessments{% else %}แบบประเมินตนเองของฉัน{% endif %}</a></p>
+<h1>F06 · {{ schema.round }}</h1>
+<p>{% if LANGUAGE_CODE == 'en' %}Self-report only. No assessor scoring or mandatory evidence. Examples and development plans are optional.{% else %}เป็นการรายงานตนเอง ไม่มีการให้คะแนนโดยผู้ประเมินและไม่บังคับแนบหลักฐาน ตัวอย่างพฤติกรรมและแผนพัฒนาเลือกกรอกได้{% endif %}</p>
+<p>{% if LANGUAGE_CODE == 'en' %}Duties{% else %}หน้าที่รับผิดชอบ{% endif %}: {{ schema.duties }}</p>
+<p>{% if LANGUAGE_CODE == 'en' %}Saved revision{% else %}รุ่นคำตอบที่บันทึก{% endif %}: {{ schema.revision }} · {% if schema.status == 'submitted' %}{% if LANGUAGE_CODE == 'en' %}Submitted{% else %}ส่งแล้ว{% endif %}{% elif schema.status == 'draft' %}{% if LANGUAGE_CODE == 'en' %}Draft{% else %}ฉบับร่าง{% endif %}{% else %}{% if LANGUAGE_CODE == 'en' %}Not started{% else %}ยังไม่เริ่ม{% endif %}{% endif %}</p>
+<p>{% if schema.completeness == 'complete' %}{% if LANGUAGE_CODE == 'en' %}Score questions complete{% else %}ตอบข้อคะแนนครบแล้ว{% endif %}{% else %}{% if LANGUAGE_CODE == 'en' %}Some score questions are incomplete{% else %}ข้อคะแนนยังไม่ครบทุกข้อ{% endif %}{% endif %}</p>
+{% for instruction in schema.instructions %}<p>{{ instruction|linebreaksbr }}</p>{% endfor %}
+{% if not schema.editable %}<p class="notice">{% if LANGUAGE_CODE == 'en' %}This form is currently read-only.{% else %}ขณะนี้เปิดอ่านคำตอบได้อย่างเดียว{% endif %}</p>{% endif %}
+<form method="post">{% csrf_token %}{{ form.non_field_errors }}{% for hidden in form.hidden_fields %}{{ hidden }}{% endfor %}
+{% for field in form.visible_fields %}<div class="field"><label for="{{ field.id_for_label }}">{{ field.label }}</label>{{ field }}{% if field.help_text %}<p>{{ field.help_text }}</p>{% endif %}{{ field.errors }}</div>{% endfor %}
+{% if schema.editable %}<p><button type="submit" name="action" value="draft">{% if LANGUAGE_CODE == 'en' %}Save draft{% else %}บันทึกฉบับร่าง{% endif %}</button>
+<button type="submit" name="action" value="submitted">{% if LANGUAGE_CODE == 'en' %}Submit self-report{% else %}ส่งคำตอบประเมินตนเอง{% endif %}</button></p>{% endif %}</form>
+{% endblock %}

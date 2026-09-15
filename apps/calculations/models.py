@@ -162,3 +162,62 @@ class CalculationRequest(SnapshotRecord):
             raise ValidationError("Request must point to a complete run of its round.")
         if self.request_hash != self.run.input_hash:
             raise ValidationError("Request hash does not match its run.")
+
+
+class StoredSourceSelection(SnapshotRecord):
+    """Attestation that all series of one F06 binding came from the stored source adapter."""
+    run = models.OneToOneField(CalculationRun, on_delete=models.PROTECT, related_name='stored_source')
+    round_instrument = models.ForeignKey('rounds.RoundInstrument', on_delete=models.PROTECT, related_name='stored_calculations')
+    source_kind = models.CharField(max_length=32, default='f06_revisions')
+
+    class Meta:
+        default_permissions = ()
+
+    def clean(self):
+        if self.run.status != 'complete' or self.run.collection_round_id != self.round_instrument.collection_round_id:
+            raise ValidationError('Stored source selection must match a complete run of its round.')
+        if self.source_kind != 'f06_revisions' or self.round_instrument.instrument_version.instrument.code != 'F06':
+            raise ValidationError('Unsupported stored source adapter.')
+
+
+class ResultReviewRequest(SnapshotRecord):
+    run = models.OneToOneField(CalculationRun, on_delete=models.PROTECT, related_name='review_request')
+    requested_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT, related_name='+')
+    reason = models.TextField()
+    review_token = models.CharField(max_length=64, validators=[HASH])
+
+    class Meta:
+        default_permissions = ()
+
+    def clean(self):
+        if self.run.status != 'complete' or not StoredSourceSelection.objects.filter(run=self.run).exists():
+            raise ValidationError('Review requires a sealed calculation from the database source adapter.')
+        if not self.reason.strip() or len(self.reason) > 2000:
+            raise ValidationError('Record a review reason, up to 2000 characters.')
+        if self.review_token != digest({'run_id': str(self.run_id), 'input_hash': self.run.input_hash, 'result_hash': self.run.result_hash}):
+            raise ValidationError('Review token does not match the sealed result set.')
+
+
+class ResultDecision(SnapshotRecord):
+    review = models.OneToOneField(ResultReviewRequest, on_delete=models.PROTECT, related_name='decision')
+    actor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT, related_name='+')
+    outcome = models.CharField(max_length=12, choices=[('approved', 'approved'), ('returned', 'returned')])
+    reason = models.TextField()
+    reviewed_token = models.CharField(max_length=64, validators=[HASH])
+    previous_approval = models.ForeignKey('self', on_delete=models.PROTECT, null=True, blank=True, related_name='successors')
+
+    class Meta:
+        default_permissions = ()
+        constraints = [models.CheckConstraint(condition=models.Q(outcome__in=['approved', 'returned']), name='result_decision_outcome')]
+
+    def clean(self):
+        if self.actor_id in {self.review.requested_by_id, self.review.run.created_by_id}:
+            raise ValidationError('A different person must review the aggregate results.')
+        if not self.reason.strip() or len(self.reason) > 2000 or self.reviewed_token != self.review.review_token:
+            raise ValidationError('Record a reason and the exact reviewed result token.')
+        if self.previous_approval_id:
+            previous = self.previous_approval
+            if (self.outcome != 'approved' or previous.outcome != 'approved'
+                    or previous.review.run.stored_source.round_instrument_id != self.review.run.stored_source.round_instrument_id
+                    or previous.review.run.cutoff > self.review.run.cutoff):
+                raise ValidationError('Correction must retain the previous approval of this source stream.')

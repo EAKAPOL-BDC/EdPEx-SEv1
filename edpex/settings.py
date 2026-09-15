@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     "apps.rounds",
     "apps.auditlog",
     "apps.calculations",
+    "apps.selfassessments",
 ]
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",

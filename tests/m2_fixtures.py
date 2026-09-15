@@ -26,7 +26,7 @@ def grant(user, scope, actions, code):
     return RoleAssignment.objects.create(membership=membership, scope=scope, role=role)
 
 
-def scenario():
+def scenario(*, status="closed", extra_f06=False):
     actor = get_user_model().objects.create_user(username="synthetic-calculation-operator")
     org = Organization.objects.create(name="Synthetic calculation organization")
     scope = AccessScope.objects.create(organization=org, code="SYNTHETIC", name="Synthetic scope")
@@ -50,7 +50,7 @@ def scenario():
     catalog = Catalog()
     scales = {s["scale_id"]: s for s in json.loads((CATALOG_DIR / "scales.json").read_text())}
     versions, round_instruments, bindings = {}, {}, {}
-    for instrument_code, codes in (("F06", ("7.4-3", "7.3-43")), ("F02", ("7.2-13", "7.2-17")), ("F05", ("7.3-44", "7.3-49"))):
+    for instrument_code, codes in (("F06", ("7.4-3", "7.3-43", "7.3-54") if extra_f06 else ("7.4-3", "7.3-43")), ("F02", ("7.2-13", "7.2-17")), ("F05", ("7.3-44", "7.3-49"))):
         instrument = Instrument.objects.create(scope=scope, code=instrument_code)
         version = InstrumentVersion.objects.create(instrument=instrument, version="1.1", title_th="Synthetic "+instrument_code,
             assessment_method="self_report" if instrument_code=="F06" else "verified_activity" if instrument_code=="F05" else "survey",
@@ -92,8 +92,10 @@ def scenario():
         round_instruments[instrument_code] = RoundInstrument.objects.create(collection_round=collection_round,
             instrument_version=version, translation_bundle=bundle, context="synthetic-"+instrument_code)
     collection_round = transition_round(actor, collection_round, "ready")
-    collection_round = transition_round(actor, collection_round, "open")
-    collection_round = transition_round(actor, collection_round, "closed", reason="Synthetic manual close")
+    if status in {"open", "closed"}:
+        collection_round = transition_round(actor, collection_round, "open")
+    if status == "closed":
+        collection_round = transition_round(actor, collection_round, "closed", reason="Synthetic manual close")
     return SimpleNamespace(actor=actor, org=org, scope=scope, round=collection_round, groups=groups,
         versions=versions, round_instruments=round_instruments, bindings=bindings, cutoff=now-timedelta(minutes=10), catalog=catalog)
 

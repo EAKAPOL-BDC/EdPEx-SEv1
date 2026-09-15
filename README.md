@@ -50,5 +50,8 @@ The next increment adds internal persisted calculation runs, source/definition
 snapshots, checksums, replay, scoped source/run/validation permissions, and
 transactional idempotency. See [รอบคำนวณและการตรวจผลย้อนหลัง](docs/m2-snapshots-th.md).
 It includes additive migrations but does not apply them to Supabase automatically.
-Live collection adapters, approval, historical imports, public endpoints and annual
-aggregation remain pending before the full M2 milestone is complete.
+The F06 increment adds owner-only draft/submitted revisions, frozen duties and expected
+levels, a stored-response calculation adapter, and independent aggregate approval/return
+with retained correction history. See [F06 intake and result review](docs/f06-stored-collection-th.md).
+Anonymous F01–F04 collection, verified F05 intake, historical imports, publication and annual
+aggregation remain pending before the full M2/M4 milestones are complete.

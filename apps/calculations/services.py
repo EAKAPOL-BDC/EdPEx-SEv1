@@ -259,11 +259,18 @@ def _result_manifest(results):
     return [{"series_key": key, "result_hash": checksum} for key, checksum in sorted(results)]
 
 
-@transaction.atomic
 def record_calculation(actor, *, round_id, inputs, cutoff, idempotency_key, dry_run=False):
+    """Trusted typed-source intake retains its separate source permission."""
+    return _record_calculation(actor, round_id=round_id, inputs=inputs, cutoff=cutoff,
+        idempotency_key=idempotency_key, dry_run=dry_run,
+        permissions=("calculation.run", "calculation.source"))
+
+
+@transaction.atomic
+def _record_calculation(actor, *, round_id, inputs, cutoff, idempotency_key, dry_run=False, permissions):
     collection_round = CollectionRound.objects.select_for_update(of=("self",)).select_related(
         "scope__organization", "period__calendar", "population_snapshot").get(pk=round_id)
-    for permission in ("calculation.run", "calculation.source"):
+    for permission in permissions:
         require_permission(actor, permission, collection_round.scope)
     if collection_round.status not in {"closed", "review", "approved"}:
         raise ValidationError("Close collection before creating a calculation snapshot.")
@@ -288,7 +295,7 @@ def record_calculation(actor, *, round_id, inputs, cutoff, idempotency_key, dry_
     if previous_request and previous_request.request_hash != input_hash:
         raise IdempotencyConflict("This key was used for different sources, definitions or cutoff.")
     existing = CalculationRun.objects.filter(collection_round=collection_round, input_hash=input_hash, status="complete").first()
-    for permission in ("calculation.run", "calculation.source"):
+    for permission in permissions:
         require_permission(actor, permission, collection_round.scope)
     if dry_run:
         return RunReceipt(str(existing.pk) if existing else None, input_hash, len(prepared), "dry_run", existing is not None)
@@ -318,7 +325,7 @@ def record_calculation(actor, *, round_id, inputs, cutoff, idempotency_key, dry_
     CalculationRequest.objects.create(collection_round=collection_round, actor=actor, idempotency_key=idempotency_key,
                                        request_hash=input_hash, run=run)
     _audit(actor, collection_round, "calculation.requested", run.pk, checksum=input_hash, status="reused" if existing else "created")
-    for permission in ("calculation.run", "calculation.source"):
+    for permission in permissions:
         require_permission(actor, permission, collection_round.scope)
     return RunReceipt(str(run.pk), input_hash, run.result_count, run.status, existing is not None)
 

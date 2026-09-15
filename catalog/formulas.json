@@ -1,0 +1,422 @@
+[
+  {
+    "formula_id": "SAT_TOP2",
+    "formula_version": "1.1",
+    "definition_th": "S/C ที่เป็นร้อยละ: คะแนน 4–5 / คะแนน 1–5 ×100",
+    "source": {
+      "path": "docs/source/EdPEx_System_Blueprint_v1.md",
+      "line": 290
+    },
+    "blueprint_requirements": [
+      11,
+      12,
+      33
+    ],
+    "execution_status": "specification_only_M2_pending",
+    "zero_denominator": {
+      "status": "no_valid_data",
+      "value": null
+    },
+    "rounding": "display_only_2_decimals",
+    "missing_is_zero": false
+  },
+  {
+    "formula_id": "DIS_YES",
+    "formula_version": "1.1",
+    "definition_th": "D: Y/(Y+N)×100 โดย NA/missing/not_shown ไม่ใช่ N",
+    "source": {
+      "path": "docs/source/EdPEx_System_Blueprint_v1.md",
+      "line": 291
+    },
+    "blueprint_requirements": [
+      11,
+      12,
+      33
+    ],
+    "execution_status": "specification_only_M2_pending",
+    "zero_denominator": {
+      "status": "no_valid_data",
+      "value": null
+    },
+    "rounding": "display_only_2_decimals",
+    "missing_is_zero": false
+  },
+  {
+    "formula_id": "MEAN_5",
+    "formula_version": "1.1",
+    "definition_th": "การแนะนำ 7.2-25/34/35/36 และ 7.4-2: ค่าเฉลี่ยคะแนนเต็ม 5",
+    "source": {
+      "path": "docs/source/EdPEx_System_Blueprint_v1.md",
+      "line": 292
+    },
+    "blueprint_requirements": [
+      11,
+      12,
+      33
+    ],
+    "execution_status": "specification_only_M2_pending",
+    "zero_denominator": {
+      "status": "no_valid_data",
+      "value": null
+    },
+    "rounding": "display_only_2_decimals",
+    "missing_is_zero": false
+  },
+  {
+    "formula_id": "ENG_3",
+    "formula_version": "1.1",
+    "definition_th": "7.2-24,7.3-37: E ครบสามข้อและ mean≥4 / ผู้ตอบครบสาม ×100",
+    "source": {
+      "path": "docs/source/EdPEx_System_Blueprint_v1.md",
+      "line": 293
+    },
+    "blueprint_requirements": [
+      11,
+      12,
+      33
+    ],
+    "execution_status": "specification_only_M2_pending",
+    "zero_denominator": {
+      "status": "no_valid_data",
+      "value": null
+    },
+    "rounding": "display_only_2_decimals",
+    "missing_is_zero": false
+  },
+  {
+    "formula_id": "PAIR_MEAN_TOP",
+    "formula_version": "1.1",
+    "definition_th": "7.3-36: S05/S06 ครบและ mean≥4 / ผู้ตอบครบคู่ ×100",
+    "source": {
+      "path": "docs/source/EdPEx_System_Blueprint_v1.md",
+      "line": 294
+    },
+    "blueprint_requirements": [
+      11,
+      12,
+      33
+    ],
+    "execution_status": "specification_only_M2_pending",
+    "zero_denominator": {
+      "status": "no_valid_data",
+      "value": null
+    },
+    "rounding": "display_only_2_decimals",
+    "missing_is_zero": false
+  },
+  {
+    "formula_id": "HAPPINESS_10",
+    "formula_version": "1.1",
+    "definition_th": "7.3-38: mean H01 รวมคะแนน 0 เป็นค่าจริง",
+    "source": {
+      "path": "docs/source/EdPEx_System_Blueprint_v1.md",
+      "line": 295
+    },
+    "blueprint_requirements": [
+      11,
+      12,
+      33
+    ],
+    "execution_status": "specification_only_M2_pending",
+    "zero_denominator": {
+      "status": "no_valid_data",
+      "value": null
+    },
+    "rounding": "display_only_2_decimals",
+    "missing_is_zero": false
+  },
+  {
+    "formula_id": "DIMENSION_SAT",
+    "formula_version": "1.1",
+    "definition_th": "7.3-39: G01–G07 แยก ไม่ใช้ G08 ในคะแนน",
+    "source": {
+      "path": "docs/source/EdPEx_System_Blueprint_v1.md",
+      "line": 296
+    },
+    "blueprint_requirements": [
+      11,
+      12,
+      33
+    ],
+    "execution_status": "specification_only_M2_pending",
+    "zero_denominator": {
+      "status": "no_valid_data",
+      "value": null
+    },
+    "rounding": "display_only_2_decimals",
+    "missing_is_zero": false
+  },
+  {
+    "formula_id": "ADMIN_MEAN",
+    "formula_version": "1.1",
+    "definition_th": "7.4-13/14/18A–C: อย่างน้อย 4/5 ข้อ เฉลี่ยรายคนก่อนเฉลี่ยคน",
+    "source": {
+      "path": "docs/source/EdPEx_System_Blueprint_v1.md",
+      "line": 297
+    },
+    "blueprint_requirements": [
+      11,
+      12,
+      33
+    ],
+    "execution_status": "specification_only_M2_pending",
+    "zero_denominator": {
+      "status": "no_valid_data",
+      "value": null
+    },
+    "rounding": "display_only_2_decimals",
+    "missing_is_zero": false
+  },
+  {
+    "formula_id": "ETHICS_TOP",
+    "formula_version": "1.1",
+    "definition_th": "7.4-15: ET ครบสี่ mean≥4 / ผู้ตอบครบสี่ ×100",
+    "source": {
+      "path": "docs/source/EdPEx_System_Blueprint_v1.md",
+      "line": 298
+    },
+    "blueprint_requirements": [
+      11,
+      12,
+      33
+    ],
+    "execution_status": "specification_only_M2_pending",
+    "zero_denominator": {
+      "status": "no_valid_data",
+      "value": null
+    },
+    "rounding": "display_only_2_decimals",
+    "missing_is_zero": false
+  },
+  {
+    "formula_id": "K_EXTERNAL",
+    "formula_version": "1.1",
+    "definition_th": "7.4-8/10/12: K00=เคย, K01–02 ถูกทั้งหมด, K03–06 ถูก≥3; หารผู้ตอบ K00–06 ครบ",
+    "source": {
+      "path": "docs/source/EdPEx_System_Blueprint_v1.md",
+      "line": 299
+    },
+    "blueprint_requirements": [
+      11,
+      12,
+      33
+    ],
+    "execution_status": "specification_only_M2_pending",
+    "zero_denominator": {
+      "status": "no_valid_data",
+      "value": null
+    },
+    "rounding": "display_only_2_decimals",
+    "missing_is_zero": false
+  },
+  {
+    "formula_id": "SELF_VISION",
+    "formula_version": "1.1",
+    "definition_th": "7.4-3: F06-K01–02 ครบ ทุกข้อ≥4 / ผู้ตอบครบคู่ ×100",
+    "source": {
+      "path": "docs/source/EdPEx_System_Blueprint_v1.md",
+      "line": 300
+    },
+    "blueprint_requirements": [
+      11,
+      12,
+      33
+    ],
+    "execution_status": "specification_only_M2_pending",
+    "zero_denominator": {
+      "status": "no_valid_data",
+      "value": null
+    },
+    "rounding": "display_only_2_decimals",
+    "missing_is_zero": false
+  },
+  {
+    "formula_id": "SELF_VALUES",
+    "formula_version": "1.1",
+    "definition_th": "7.4-4: F06-K03–06 ครบ ทุกข้อ≥4 / ผู้ตอบครบสี่ ×100",
+    "source": {
+      "path": "docs/source/EdPEx_System_Blueprint_v1.md",
+      "line": 301
+    },
+    "blueprint_requirements": [
+      11,
+      12,
+      33
+    ],
+    "execution_status": "specification_only_M2_pending",
+    "zero_denominator": {
+      "status": "no_valid_data",
+      "value": null
+    },
+    "rounding": "display_only_2_decimals",
+    "missing_is_zero": false
+  },
+  {
+    "formula_id": "SELF_BEHAVIOUR",
+    "formula_version": "1.1",
+    "definition_th": "7.4-6: รายค่านิยม FREQ 4–5/ผู้ตอบคะแนน; รวมต้องตอบสี่ครบและผ่านทุกข้อ",
+    "source": {
+      "path": "docs/source/EdPEx_System_Blueprint_v1.md",
+      "line": 302
+    },
+    "blueprint_requirements": [
+      11,
+      12,
+      33
+    ],
+    "execution_status": "specification_only_M2_pending",
+    "zero_denominator": {
+      "status": "no_valid_data",
+      "value": null
+    },
+    "rounding": "display_only_2_decimals",
+    "missing_is_zero": false
+  },
+  {
+    "formula_id": "SELF_COMPETENCY",
+    "formula_version": "1.1",
+    "definition_th": "7.3-50/51: ST1 ครบห้า/ST2 ครบเก้า เฉลี่ยคนก่อนเฉลี่ยคน",
+    "source": {
+      "path": "docs/source/EdPEx_System_Blueprint_v1.md",
+      "line": 303
+    },
+    "blueprint_requirements": [
+      11,
+      12,
+      33
+    ],
+    "execution_status": "specification_only_M2_pending",
+    "zero_denominator": {
+      "status": "no_valid_data",
+      "value": null
+    },
+    "rounding": "display_only_2_decimals",
+    "missing_is_zero": false
+  },
+  {
+    "formula_id": "SELF_DIMENSION",
+    "formula_version": "1.1",
+    "definition_th": "7.3-54/55: ค่าเฉลี่ยราย M/SO ของผู้ที่เกี่ยวข้องและมีคะแนน ไม่รวมคน NA และแสดงจำนวนแต่ละสถานะ",
+    "source": {
+      "path": "docs/source/EdPEx_System_Blueprint_v1.md",
+      "line": 304
+    },
+    "blueprint_requirements": [
+      11,
+      12,
+      33
+    ],
+    "execution_status": "specification_only_M2_pending",
+    "zero_denominator": {
+      "status": "no_valid_data",
+      "value": null
+    },
+    "rounding": "display_only_2_decimals",
+    "missing_is_zero": false
+  },
+  {
+    "formula_id": "SELF_DIGITAL_POP",
+    "formula_version": "1.1",
+    "definition_th": "7.3-43: ตอบครบ D01–05 ทุกข้อ≥3 / ประชากรต้องประเมินทั้งหมด ×100",
+    "source": {
+      "path": "docs/source/EdPEx_System_Blueprint_v1.md",
+      "line": 305
+    },
+    "blueprint_requirements": [
+      11,
+      12,
+      33
+    ],
+    "execution_status": "specification_only_M2_pending",
+    "zero_denominator": {
+      "status": "no_valid_data",
+      "value": null
+    },
+    "rounding": "display_only_2_decimals",
+    "missing_is_zero": false
+  },
+  {
+    "formula_id": "TRAINING_HOURS",
+    "formula_version": "1.1",
+    "definition_th": "7.3-44: ชั่วโมงอบรมจริงที่ตรวจรับ ไม่ซ้ำ / ประชากรบุคลากรทั้งหมด",
+    "source": {
+      "path": "docs/source/EdPEx_System_Blueprint_v1.md",
+      "line": 306
+    },
+    "blueprint_requirements": [
+      11,
+      12,
+      33
+    ],
+    "execution_status": "specification_only_M2_pending",
+    "zero_denominator": {
+      "status": "no_valid_data",
+      "value": null
+    },
+    "rounding": "display_only_2_decimals",
+    "missing_is_zero": false
+  },
+  {
+    "formula_id": "TRAINING_PEOPLE",
+    "formula_version": "1.1",
+    "definition_th": "7.3-45/46/48: คนไม่ซ้ำที่อบรมหมวดนั้น >0 ชม. / ประชากร ×100",
+    "source": {
+      "path": "docs/source/EdPEx_System_Blueprint_v1.md",
+      "line": 307
+    },
+    "blueprint_requirements": [
+      11,
+      12,
+      33
+    ],
+    "execution_status": "specification_only_M2_pending",
+    "zero_denominator": {
+      "status": "no_valid_data",
+      "value": null
+    },
+    "rounding": "display_only_2_decimals",
+    "missing_is_zero": false
+  },
+  {
+    "formula_id": "SAFETY_ANY",
+    "formula_version": "1.1",
+    "definition_th": "7.3-47: คนไม่ซ้ำอบรมอย่างน้อยหนึ่งด้าน S/H/E / ประชากร ×100 พร้อมแยกสามด้าน",
+    "source": {
+      "path": "docs/source/EdPEx_System_Blueprint_v1.md",
+      "line": 308
+    },
+    "blueprint_requirements": [
+      11,
+      12,
+      33
+    ],
+    "execution_status": "specification_only_M2_pending",
+    "zero_denominator": {
+      "status": "no_valid_data",
+      "value": null
+    },
+    "rounding": "display_only_2_decimals",
+    "missing_is_zero": false
+  },
+  {
+    "formula_id": "STUDY_VISIT",
+    "formula_version": "1.1",
+    "definition_th": "7.3-49: คนไม่ซ้ำที่ดูงานภายนอกตามหลักฐานตรวจรับ / ประชากร ×100",
+    "source": {
+      "path": "docs/source/EdPEx_System_Blueprint_v1.md",
+      "line": 309
+    },
+    "blueprint_requirements": [
+      11,
+      12,
+      33
+    ],
+    "execution_status": "specification_only_M2_pending",
+    "zero_denominator": {
+      "status": "no_valid_data",
+      "value": null
+    },
+    "rounding": "display_only_2_decimals",
+    "missing_is_zero": false
+  }
+]

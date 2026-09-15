@@ -1,0 +1,19 @@
+{
+  "access": "server_only_never_include_in_respondent_schema",
+  "instruments": [
+    "F01",
+    "F02"
+  ],
+  "instrument_version": "1.1",
+  "correct_options": {
+    "K01": "B",
+    "K02": "A",
+    "K03": "C",
+    "K04": "B",
+    "K05": "A",
+    "K06": "D"
+  },
+  "unknown_U_score": 0,
+  "blank": "missing",
+  "F06_uses_this_key": false
+}

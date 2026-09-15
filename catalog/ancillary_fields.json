@@ -1,0 +1,102 @@
+{
+  "status": "implementation_field_keys_not_new_baseline_question_ids",
+  "fields": [
+    {
+      "field_key": "development.actual_visit_hours",
+      "source": {
+        "path": "docs/source/EdPEx_6_Instruments.md",
+        "line": 289
+      },
+      "type": "decimal",
+      "minimum": 0,
+      "separate_from": "F05-P03"
+    },
+    {
+      "field_key": "development.external_visit",
+      "source": {
+        "path": "docs/source/EdPEx_6_Instruments.md",
+        "line": 299
+      },
+      "type": "boolean",
+      "used_by": [
+        "7.3-49"
+      ]
+    },
+    {
+      "field_key": "development.session_key",
+      "source": {
+        "path": "docs/source/EdPEx_6_Instruments.md",
+        "line": 293
+      },
+      "type": "context_reference",
+      "purpose": "no_person_activity_session_duplicates"
+    },
+    {
+      "field_key": "survey.same_incident_question_id",
+      "source": {
+        "path": "docs/source/EdPEx_6_Instruments.md",
+        "line": 71
+      },
+      "type": "question_reference",
+      "required": false,
+      "instruments": [
+        "F01"
+      ],
+      "purpose": "reuse_same_incident_details_without_reasking"
+    },
+    {
+      "field_key": "survey.last_service_month",
+      "source": {
+        "path": "docs/source/EdPEx_6_Instruments.md",
+        "line": 111
+      },
+      "type": "month_year",
+      "required_if": "F02-P04=month_year",
+      "unknown_option": "cannot_recall"
+    },
+    {
+      "field_key": "self.expected_level",
+      "source": {
+        "path": "docs/source/EdPEx_6_Instruments.md",
+        "line": 334
+      },
+      "type": "integer_scale",
+      "range": [
+        1,
+        5
+      ],
+      "frozen_before_round": true
+    },
+    {
+      "field_key": "self.optional_example",
+      "source": {
+        "path": "docs/source/EdPEx_6_Instruments.md",
+        "line": 334
+      },
+      "type": "text",
+      "required": false,
+      "affects_score": false
+    },
+    {
+      "field_key": "self.optional_development_plan",
+      "source": {
+        "path": "docs/source/EdPEx_6_Instruments.md",
+        "line": 403
+      },
+      "type": "structured_optional",
+      "required": false,
+      "affects_submission": false,
+      "source_text_th": "แบบบันทึก: รหัสบุคลากร | ด้านที่ต้องพัฒนา | คะแนนปัจจุบัน | ระดับที่คาดหวัง | กิจกรรมพัฒนา | ผู้สนับสนุน | กำหนดเสร็จ | สิ่งที่ต้องการทำได้หลังพัฒนา | วันประเมินซ้ำ | ผลหลังพัฒนา"
+    },
+    {
+      "field_key": "self.applicability_reason",
+      "source": {
+        "path": "docs/source/EdPEx_6_Instruments.md",
+        "line": 353
+      },
+      "type": "text",
+      "required_if": "self_declared_not_applicable",
+      "external_approval": false
+    }
+  ]
+}

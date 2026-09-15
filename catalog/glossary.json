@@ -1,0 +1,122 @@
+[
+  {
+    "th": "การประเมินตนเอง",
+    "en": "Self-assessment",
+    "status": "needs_review",
+    "official_name": false
+  },
+  {
+    "th": "ไม่เกี่ยวข้อง",
+    "en": "Not applicable",
+    "status": "needs_review",
+    "official_name": false
+  },
+  {
+    "th": "ยังประเมินตนเองไม่ได้",
+    "en": "Unable to self-assess",
+    "status": "needs_review",
+    "official_name": false
+  },
+  {
+    "th": "ไม่ทราบ",
+    "en": "Do not know",
+    "status": "needs_review",
+    "official_name": false
+  },
+  {
+    "th": "ข้อมูลขาด",
+    "en": "Missing data",
+    "status": "needs_review",
+    "official_name": false
+  },
+  {
+    "th": "ยังไม่มีข้อมูลที่ใช้คำนวณ",
+    "en": "No valid data",
+    "status": "needs_review",
+    "official_name": false
+  },
+  {
+    "th": "ปกปิดผล",
+    "en": "Suppressed",
+    "status": "needs_review",
+    "official_name": false
+  },
+  {
+    "th": "รับรองผลรวม",
+    "en": "Aggregate result approval",
+    "status": "needs_review",
+    "official_name": false
+  },
+  {
+    "th": "เผยแพร่ผล",
+    "en": "Result publication",
+    "status": "needs_review",
+    "official_name": false
+  },
+  {
+    "th": "ปีงบประมาณ",
+    "en": "Fiscal year",
+    "status": "needs_review",
+    "official_name": false
+  },
+  {
+    "th": "ปีการศึกษา",
+    "en": "Academic year",
+    "status": "needs_review",
+    "official_name": false
+  },
+  {
+    "th": "ปีปฏิทิน",
+    "en": "Calendar year",
+    "status": "needs_review",
+    "official_name": false
+  },
+  {
+    "th": "ช่วงรายงาน",
+    "en": "Reporting period",
+    "status": "needs_review",
+    "official_name": false
+  },
+  {
+    "th": "ช่วงเปิดรับข้อมูล",
+    "en": "Collection window",
+    "status": "needs_review",
+    "official_name": false
+  },
+  {
+    "th": "ระดับคาดหวัง",
+    "en": "Expected level",
+    "status": "needs_review",
+    "official_name": false
+  },
+  {
+    "th": "หลักฐาน F05",
+    "en": "F05 evidence",
+    "status": "needs_review",
+    "official_name": false
+  },
+  {
+    "th": "กลุ่มผู้ตอบ",
+    "en": "Respondent group",
+    "status": "needs_review",
+    "official_name": false
+  },
+  {
+    "th": "ตัวตั้ง",
+    "en": "Numerator",
+    "status": "needs_review",
+    "official_name": false
+  },
+  {
+    "th": "ตัวหาร",
+    "en": "Denominator",
+    "status": "needs_review",
+    "official_name": false
+  },
+  {
+    "th": "ส่งแล้วแต่ข้อมูลไม่ครบ",
+    "en": "Submitted with incomplete data",
+    "status": "needs_review",
+    "official_name": false
+  }
+]

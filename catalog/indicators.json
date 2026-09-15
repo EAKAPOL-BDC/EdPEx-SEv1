@@ -1,0 +1,3162 @@
+[
+  {
+    "code": "7.2-1",
+    "original_name": null,
+    "original_name_status": "awaiting_original_indicator_PDF_not_supplied",
+    "display_name": {
+      "th": "การดำเนินการโดยรวมของวิทยาลัยการศึกษา",
+      "en": null
+    },
+    "display_name_status": "derived_from_instrument_not_official_PDF_title",
+    "unit": "percent",
+    "direction": "increase",
+    "assessment_method": "survey",
+    "instrument_version": "1.1",
+    "owner": null,
+    "target": null,
+    "comparator": null,
+    "binding": {
+      "indicator_code": "7.2-1",
+      "source_question_ids": [
+        "F01-S01"
+      ],
+      "formula_id": "SAT_TOP2",
+      "formula_version": "1.1",
+      "group_codes": [
+        "C1",
+        "C2.1"
+      ]
+    },
+    "blueprint_requirements": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      24,
+      25,
+      26,
+      28,
+      31,
+      33
+    ]
+  },
+  {
+    "code": "7.2-10",
+    "original_name": null,
+    "original_name_status": "awaiting_original_indicator_PDF_not_supplied",
+    "display_name": {
+      "th": "การบริหารจัดการหลักสูตร",
+      "en": null
+    },
+    "display_name_status": "derived_from_instrument_not_official_PDF_title",
+    "unit": "percent",
+    "direction": "decrease",
+    "assessment_method": "survey",
+    "instrument_version": "1.1",
+    "owner": null,
+    "target": null,
+    "comparator": null,
+    "binding": {
+      "indicator_code": "7.2-10",
+      "source_question_ids": [
+        "F01-D03"
+      ],
+      "formula_id": "DIS_YES",
+      "formula_version": "1.1",
+      "group_codes": [
+        "C1",
+        "C2.1"
+      ]
+    },
+    "blueprint_requirements": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      24,
+      25,
+      26,
+      28,
+      31,
+      33
+    ]
+  },
+  {
+    "code": "7.2-11",
+    "original_name": null,
+    "original_name_status": "awaiting_original_indicator_PDF_not_supplied",
+    "display_name": {
+      "th": "บริการโดยรวมที่ได้รับจากวิทยาลัยฯ ในหลักสูตรนี้",
+      "en": null
+    },
+    "display_name_status": "derived_from_instrument_not_official_PDF_title",
+    "unit": "percent",
+    "direction": "increase",
+    "assessment_method": "survey",
+    "instrument_version": "1.1",
+    "owner": null,
+    "target": null,
+    "comparator": null,
+    "binding": {
+      "indicator_code": "7.2-11",
+      "source_question_ids": [
+        "F01-S09"
+      ],
+      "formula_id": "SAT_TOP2",
+      "formula_version": "1.1",
+      "group_codes": [
+        "C2.2",
+        "C3.1"
+      ]
+    },
+    "blueprint_requirements": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      24,
+      25,
+      26,
+      28,
+      31,
+      33
+    ]
+  },
+  {
+    "code": "7.2-12",
+    "original_name": null,
+    "original_name_status": "awaiting_original_indicator_PDF_not_supplied",
+    "display_name": {
+      "th": "บริการโดยรวมของวิทยาลัยฯ ในหลักสูตรนี้",
+      "en": null
+    },
+    "display_name_status": "derived_from_instrument_not_official_PDF_title",
+    "unit": "percent",
+    "direction": "decrease",
+    "assessment_method": "survey",
+    "instrument_version": "1.1",
+    "owner": null,
+    "target": null,
+    "comparator": null,
+    "binding": {
+      "indicator_code": "7.2-12",
+      "source_question_ids": [
+        "F01-D05"
+      ],
+      "formula_id": "DIS_YES",
+      "formula_version": "1.1",
+      "group_codes": [
+        "C2.2",
+        "C3.1"
+      ]
+    },
+    "blueprint_requirements": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      24,
+      25,
+      26,
+      28,
+      31,
+      33
+    ]
+  },
+  {
+    "code": "7.2-13",
+    "original_name": null,
+    "original_name_status": "awaiting_original_indicator_PDF_not_supplied",
+    "display_name": {
+      "th": "โดยรวม ท่านพึงพอใจต่อบริการและการประสานงานที่ได้รับจากวิทยาลัยฯ ในบริบทข้างต้นเพียงใด",
+      "en": null
+    },
+    "display_name_status": "derived_from_instrument_not_official_PDF_title",
+    "unit": "percent",
+    "direction": "increase",
+    "assessment_method": "survey",
+    "instrument_version": "1.1",
+    "owner": null,
+    "target": null,
+    "comparator": null,
+    "binding": {
+      "indicator_code": "7.2-13",
+      "source_question_ids": [
+        "F02-S01"
+      ],
+      "formula_id": "SAT_TOP2",
+      "formula_version": "1.1",
+      "group_codes": [
+        "C5.3"
+      ],
+      "shared_source_with": "7.2-17"
+    },
+    "blueprint_requirements": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      24,
+      25,
+      26,
+      28,
+      31,
+      33
+    ]
+  },
+  {
+    "code": "7.2-14",
+    "original_name": null,
+    "original_name_status": "awaiting_original_indicator_PDF_not_supplied",
+    "display_name": {
+      "th": "สิ่งสนับสนุนการเรียนรู้โดยรวม เช่น อาคาร สถานที่ ความสะอาด และความปลอดภัย",
+      "en": null
+    },
+    "display_name_status": "derived_from_instrument_not_official_PDF_title",
+    "unit": "percent",
+    "direction": "increase",
+    "assessment_method": "survey",
+    "instrument_version": "1.1",
+    "owner": null,
+    "target": null,
+    "comparator": null,
+    "binding": {
+      "indicator_code": "7.2-14",
+      "source_question_ids": [
+        "F01-S08"
+      ],
+      "formula_id": "SAT_TOP2",
+      "formula_version": "1.1",
+      "group_codes": [
+        "C1",
+        "C2.1"
+      ]
+    },
+    "blueprint_requirements": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      24,
+      25,
+      26,
+      28,
+      31,
+      33
+    ]
+  },
+  {
+    "code": "7.2-15",
+    "original_name": null,
+    "original_name_status": "awaiting_original_indicator_PDF_not_supplied",
+    "display_name": {
+      "th": "สิ่งสนับสนุนการเรียนรู้",
+      "en": null
+    },
+    "display_name_status": "derived_from_instrument_not_official_PDF_title",
+    "unit": "percent",
+    "direction": "decrease",
+    "assessment_method": "survey",
+    "instrument_version": "1.1",
+    "owner": null,
+    "target": null,
+    "comparator": null,
+    "binding": {
+      "indicator_code": "7.2-15",
+      "source_question_ids": [
+        "F01-D04"
+      ],
+      "formula_id": "DIS_YES",
+      "formula_version": "1.1",
+      "group_codes": [
+        "C1",
+        "C2.1"
+      ]
+    },
+    "blueprint_requirements": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      24,
+      25,
+      26,
+      28,
+      31,
+      33
+    ]
+  },
+  {
+    "code": "7.2-17",
+    "original_name": null,
+    "original_name_status": "awaiting_original_indicator_PDF_not_supplied",
+    "display_name": {
+      "th": "โดยรวม ท่านพึงพอใจต่อบริการและการประสานงานที่ได้รับจากวิทยาลัยฯ ในบริบทข้างต้นเพียงใด",
+      "en": null
+    },
+    "display_name_status": "derived_from_instrument_not_official_PDF_title",
+    "unit": "percent",
+    "direction": "increase",
+    "assessment_method": "survey",
+    "instrument_version": "1.1",
+    "owner": null,
+    "target": null,
+    "comparator": null,
+    "binding": {
+      "indicator_code": "7.2-17",
+      "source_question_ids": [
+        "F02-S01"
+      ],
+      "formula_id": "SAT_TOP2",
+      "formula_version": "1.1",
+      "group_codes": [
+        "C4.1",
+        "C5.1",
+        "C5.2",
+        "C5.3"
+      ]
+    },
+    "blueprint_requirements": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      24,
+      25,
+      26,
+      28,
+      31,
+      33
+    ]
+  },
+  {
+    "code": "7.2-18",
+    "original_name": null,
+    "original_name_status": "awaiting_original_indicator_PDF_not_supplied",
+    "display_name": {
+      "th": "ในช่วงที่ประเมิน ท่านมีประสบการณ์ที่ทำให้ไม่พึงพอใจต่อบริการหรือการประสานงานดังกล่าวหรือไม่",
+      "en": null
+    },
+    "display_name_status": "derived_from_instrument_not_official_PDF_title",
+    "unit": "percent",
+    "direction": "decrease",
+    "assessment_method": "survey",
+    "instrument_version": "1.1",
+    "owner": null,
+    "target": null,
+    "comparator": null,
+    "binding": {
+      "indicator_code": "7.2-18",
+      "source_question_ids": [
+        "F02-D01"
+      ],
+      "formula_id": "DIS_YES",
+      "formula_version": "1.1",
+      "group_codes": [
+        "C4.1",
+        "C5.1",
+        "C5.2",
+        "C5.3"
+      ]
+    },
+    "blueprint_requirements": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      24,
+      25,
+      26,
+      28,
+      31,
+      33
+    ]
+  },
+  {
+    "code": "7.2-19",
+    "original_name": null,
+    "original_name_status": "awaiting_original_indicator_PDF_not_supplied",
+    "display_name": {
+      "th": "โดยรวม ท่านพึงพอใจต่อบริการและการประสานงานที่ได้รับจากวิทยาลัยฯ ในบริบทข้างต้นเพียงใด",
+      "en": null
+    },
+    "display_name_status": "derived_from_instrument_not_official_PDF_title",
+    "unit": "percent",
+    "direction": "increase",
+    "assessment_method": "survey",
+    "instrument_version": "1.1",
+    "owner": null,
+    "target": null,
+    "comparator": null,
+    "binding": {
+      "indicator_code": "7.2-19",
+      "source_question_ids": [
+        "F02-S01"
+      ],
+      "formula_id": "SAT_TOP2",
+      "formula_version": "1.1",
+      "group_codes": [
+        "S1",
+        "S3-1",
+        "S3-2",
+        "CO-1",
+        "CO-2",
+        "CO-3",
+        "CO-4"
+      ]
+    },
+    "blueprint_requirements": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      24,
+      25,
+      26,
+      28,
+      31,
+      33
+    ]
+  },
+  {
+    "code": "7.2-2",
+    "original_name": null,
+    "original_name_status": "awaiting_original_indicator_PDF_not_supplied",
+    "display_name": {
+      "th": "การบริหารจัดการหลักสูตรที่ศึกษา",
+      "en": null
+    },
+    "display_name_status": "derived_from_instrument_not_official_PDF_title",
+    "unit": "percent",
+    "direction": "increase",
+    "assessment_method": "survey",
+    "instrument_version": "1.1",
+    "owner": null,
+    "target": null,
+    "comparator": null,
+    "binding": {
+      "indicator_code": "7.2-2",
+      "source_question_ids": [
+        "F01-S02"
+      ],
+      "formula_id": "SAT_TOP2",
+      "formula_version": "1.1",
+      "group_codes": [
+        "C1",
+        "C2.1"
+      ]
+    },
+    "blueprint_requirements": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      24,
+      25,
+      26,
+      28,
+      31,
+      33
+    ]
+  },
+  {
+    "code": "7.2-20",
+    "original_name": null,
+    "original_name_status": "awaiting_original_indicator_PDF_not_supplied",
+    "display_name": {
+      "th": "ในช่วงที่ประเมิน ท่านมีประสบการณ์ที่ทำให้ไม่พึงพอใจต่อบริการหรือการประสานงานดังกล่าวหรือไม่",
+      "en": null
+    },
+    "display_name_status": "derived_from_instrument_not_official_PDF_title",
+    "unit": "percent",
+    "direction": "decrease",
+    "assessment_method": "survey",
+    "instrument_version": "1.1",
+    "owner": null,
+    "target": null,
+    "comparator": null,
+    "binding": {
+      "indicator_code": "7.2-20",
+      "source_question_ids": [
+        "F02-D01"
+      ],
+      "formula_id": "DIS_YES",
+      "formula_version": "1.1",
+      "group_codes": [
+        "S1",
+        "S3-1",
+        "S3-2",
+        "CO-1",
+        "CO-2",
+        "CO-3",
+        "CO-4"
+      ]
+    },
+    "blueprint_requirements": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      24,
+      25,
+      26,
+      28,
+      31,
+      33
+    ]
+  },
+  {
+    "code": "7.2-24",
+    "original_name": null,
+    "original_name_status": "awaiting_original_indicator_PDF_not_supplied",
+    "display_name": {
+      "th": "ฉันรู้สึกเป็นส่วนหนึ่งของวิทยาลัยการศึกษา / ฉันภูมิใจที่เป็นผู้เรียนของวิทยาลัยการศึกษา / ฉันตั้งใจมีส่วนร่วมกับกิจกรรมหรือความร่วมมือของวิทยาลัยฯ ต่อไปเมื่อมีโอกาส",
+      "en": null
+    },
+    "display_name_status": "derived_from_instrument_not_official_PDF_title",
+    "unit": "percent",
+    "direction": "increase",
+    "assessment_method": "survey",
+    "instrument_version": "1.1",
+    "owner": null,
+    "target": null,
+    "comparator": null,
+    "binding": {
+      "indicator_code": "7.2-24",
+      "source_question_ids": [
+        "F01-E01",
+        "F01-E02",
+        "F01-E03"
+      ],
+      "formula_id": "ENG_3",
+      "formula_version": "1.1",
+      "group_codes": [
+        "C1",
+        "C2.1"
+      ]
+    },
+    "blueprint_requirements": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      24,
+      25,
+      26,
+      28,
+      31,
+      33
+    ]
+  },
+  {
+    "code": "7.2-25",
+    "original_name": null,
+    "original_name_status": "awaiting_original_indicator_PDF_not_supplied",
+    "display_name": {
+      "th": "ฉันจะแนะนำวิทยาลัยฯ ให้เพื่อนหรือคนรู้จักมาศึกษาหรือใช้บริการที่เหมาะกับความต้องการของเขา",
+      "en": null
+    },
+    "display_name_status": "derived_from_instrument_not_official_PDF_title",
+    "unit": "score_5",
+    "direction": "increase",
+    "assessment_method": "survey",
+    "instrument_version": "1.1",
+    "owner": null,
+    "target": null,
+    "comparator": null,
+    "binding": {
+      "indicator_code": "7.2-25",
+      "source_question_ids": [
+        "F01-R01"
+      ],
+      "formula_id": "MEAN_5",
+      "formula_version": "1.1",
+      "group_codes": [
+        "C1",
+        "C2.1"
+      ]
+    },
+    "blueprint_requirements": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      24,
+      25,
+      26,
+      28,
+      31,
+      33
+    ]
+  },
+  {
+    "code": "7.2-3",
+    "original_name": null,
+    "original_name_status": "awaiting_original_indicator_PDF_not_supplied",
+    "display_name": {
+      "th": "บริการทางการศึกษาที่ได้รับจากวิทยาลัยฯ",
+      "en": null
+    },
+    "display_name_status": "derived_from_instrument_not_official_PDF_title",
+    "unit": "percent",
+    "direction": "increase",
+    "assessment_method": "survey",
+    "instrument_version": "1.1",
+    "owner": null,
+    "target": null,
+    "comparator": null,
+    "binding": {
+      "indicator_code": "7.2-3",
+      "source_question_ids": [
+        "F01-S03"
+      ],
+      "formula_id": "SAT_TOP2",
+      "formula_version": "1.1",
+      "group_codes": [
+        "C1",
+        "C2.1"
+      ]
+    },
+    "blueprint_requirements": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      24,
+      25,
+      26,
+      28,
+      31,
+      33
+    ]
+  },
+  {
+    "code": "7.2-34",
+    "original_name": null,
+    "original_name_status": "awaiting_original_indicator_PDF_not_supplied",
+    "display_name": {
+      "th": "ฉันจะแนะนำวิทยาลัยฯ ให้บุคคลหรือหน่วยงานอื่นใช้บริการหรือร่วมงานที่เหมาะกับความต้องการ",
+      "en": null
+    },
+    "display_name_status": "derived_from_instrument_not_official_PDF_title",
+    "unit": "score_5",
+    "direction": "increase",
+    "assessment_method": "survey",
+    "instrument_version": "1.1",
+    "owner": null,
+    "target": null,
+    "comparator": null,
+    "binding": {
+      "indicator_code": "7.2-34",
+      "source_question_ids": [
+        "F02-R01"
+      ],
+      "formula_id": "MEAN_5",
+      "formula_version": "1.1",
+      "group_codes": [
+        "S1",
+        "S3-1",
+        "S3-2",
+        "CO-1",
+        "CO-2",
+        "CO-3",
+        "CO-4"
+      ]
+    },
+    "blueprint_requirements": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      24,
+      25,
+      26,
+      28,
+      31,
+      33
+    ]
+  },
+  {
+    "code": "7.2-35",
+    "original_name": null,
+    "original_name_status": "awaiting_original_indicator_PDF_not_supplied",
+    "display_name": {
+      "th": "ฉันจะแนะนำวิทยาลัยฯ ให้บุคคลหรือหน่วยงานอื่นใช้บริการหรือร่วมงานที่เหมาะกับความต้องการ",
+      "en": null
+    },
+    "display_name_status": "derived_from_instrument_not_official_PDF_title",
+    "unit": "score_5",
+    "direction": "increase",
+    "assessment_method": "survey",
+    "instrument_version": "1.1",
+    "owner": null,
+    "target": null,
+    "comparator": null,
+    "binding": {
+      "indicator_code": "7.2-35",
+      "source_question_ids": [
+        "F02-R01"
+      ],
+      "formula_id": "MEAN_5",
+      "formula_version": "1.1",
+      "group_codes": [
+        "C4.1",
+        "C5.1",
+        "C5.2",
+        "C5.3"
+      ]
+    },
+    "blueprint_requirements": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      24,
+      25,
+      26,
+      28,
+      31,
+      33
+    ]
+  },
+  {
+    "code": "7.2-36",
+    "original_name": null,
+    "original_name_status": "awaiting_original_indicator_PDF_not_supplied",
+    "display_name": {
+      "th": "ฉันจะแนะนำวิทยาลัยฯ ให้เพื่อนหรือคนรู้จักมาศึกษาหรือใช้บริการที่เหมาะกับความต้องการของเขา",
+      "en": null
+    },
+    "display_name_status": "derived_from_instrument_not_official_PDF_title",
+    "unit": "score_5",
+    "direction": "increase",
+    "assessment_method": "survey",
+    "instrument_version": "1.1",
+    "owner": null,
+    "target": null,
+    "comparator": null,
+    "binding": {
+      "indicator_code": "7.2-36",
+      "source_question_ids": [
+        "F01-R01"
+      ],
+      "formula_id": "MEAN_5",
+      "formula_version": "1.1",
+      "group_codes": [
+        "C2.2",
+        "C3.1"
+      ]
+    },
+    "blueprint_requirements": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      24,
+      25,
+      26,
+      28,
+      31,
+      33
+    ]
+  },
+  {
+    "code": "7.2-4",
+    "original_name": null,
+    "original_name_status": "awaiting_original_indicator_PDF_not_supplied",
+    "display_name": {
+      "th": "กิจกรรมเสริมหลักสูตรที่เข้าร่วม",
+      "en": null
+    },
+    "display_name_status": "derived_from_instrument_not_official_PDF_title",
+    "unit": "percent",
+    "direction": "increase",
+    "assessment_method": "survey",
+    "instrument_version": "1.1",
+    "owner": null,
+    "target": null,
+    "comparator": null,
+    "binding": {
+      "indicator_code": "7.2-4",
+      "source_question_ids": [
+        "F01-S04"
+      ],
+      "formula_id": "SAT_TOP2",
+      "formula_version": "1.1",
+      "group_codes": [
+        "C1",
+        "C2.1"
+      ]
+    },
+    "blueprint_requirements": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      24,
+      25,
+      26,
+      28,
+      31,
+      33
+    ]
+  },
+  {
+    "code": "7.2-5",
+    "original_name": null,
+    "original_name_status": "awaiting_original_indicator_PDF_not_supplied",
+    "display_name": {
+      "th": "ระบบการให้คำปรึกษาของวิทยาลัยฯ",
+      "en": null
+    },
+    "display_name_status": "derived_from_instrument_not_official_PDF_title",
+    "unit": "percent",
+    "direction": "increase",
+    "assessment_method": "survey",
+    "instrument_version": "1.1",
+    "owner": null,
+    "target": null,
+    "comparator": null,
+    "binding": {
+      "indicator_code": "7.2-5",
+      "source_question_ids": [
+        "F01-S05"
+      ],
+      "formula_id": "SAT_TOP2",
+      "formula_version": "1.1",
+      "group_codes": [
+        "C1",
+        "C2.1"
+      ]
+    },
+    "blueprint_requirements": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      24,
+      25,
+      26,
+      28,
+      31,
+      33
+    ]
+  },
+  {
+    "code": "7.2-6",
+    "original_name": null,
+    "original_name_status": "awaiting_original_indicator_PDF_not_supplied",
+    "display_name": {
+      "th": "การจัดการเรียนการสอนในหลักสูตร",
+      "en": null
+    },
+    "display_name_status": "derived_from_instrument_not_official_PDF_title",
+    "unit": "percent",
+    "direction": "increase",
+    "assessment_method": "survey",
+    "instrument_version": "1.1",
+    "owner": null,
+    "target": null,
+    "comparator": null,
+    "binding": {
+      "indicator_code": "7.2-6",
+      "source_question_ids": [
+        "F01-S06"
+      ],
+      "formula_id": "SAT_TOP2",
+      "formula_version": "1.1",
+      "group_codes": [
+        "C1",
+        "C2.1"
+      ]
+    },
+    "blueprint_requirements": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      24,
+      25,
+      26,
+      28,
+      31,
+      33
+    ]
+  },
+  {
+    "code": "7.2-7",
+    "original_name": null,
+    "original_name_status": "awaiting_original_indicator_PDF_not_supplied",
+    "display_name": {
+      "th": "การบริหารทรัพยากรที่เอื้อต่อการเรียนการสอนและการวิจัย",
+      "en": null
+    },
+    "display_name_status": "derived_from_instrument_not_official_PDF_title",
+    "unit": "percent",
+    "direction": "increase",
+    "assessment_method": "survey",
+    "instrument_version": "1.1",
+    "owner": null,
+    "target": null,
+    "comparator": null,
+    "binding": {
+      "indicator_code": "7.2-7",
+      "source_question_ids": [
+        "F01-S07"
+      ],
+      "formula_id": "SAT_TOP2",
+      "formula_version": "1.1",
+      "group_codes": [
+        "C1",
+        "C2.1"
+      ]
+    },
+    "blueprint_requirements": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      24,
+      25,
+      26,
+      28,
+      31,
+      33
+    ]
+  },
+  {
+    "code": "7.2-8",
+    "original_name": null,
+    "original_name_status": "awaiting_original_indicator_PDF_not_supplied",
+    "display_name": {
+      "th": "การจัดการเรียนการสอน",
+      "en": null
+    },
+    "display_name_status": "derived_from_instrument_not_official_PDF_title",
+    "unit": "percent",
+    "direction": "decrease",
+    "assessment_method": "survey",
+    "instrument_version": "1.1",
+    "owner": null,
+    "target": null,
+    "comparator": null,
+    "binding": {
+      "indicator_code": "7.2-8",
+      "source_question_ids": [
+        "F01-D01"
+      ],
+      "formula_id": "DIS_YES",
+      "formula_version": "1.1",
+      "group_codes": [
+        "C1",
+        "C2.1"
+      ]
+    },
+    "blueprint_requirements": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      24,
+      25,
+      26,
+      28,
+      31,
+      33
+    ]
+  },
+  {
+    "code": "7.2-9",
+    "original_name": null,
+    "original_name_status": "awaiting_original_indicator_PDF_not_supplied",
+    "display_name": {
+      "th": "กิจกรรมเสริมหลักสูตร",
+      "en": null
+    },
+    "display_name_status": "derived_from_instrument_not_official_PDF_title",
+    "unit": "percent",
+    "direction": "decrease",
+    "assessment_method": "survey",
+    "instrument_version": "1.1",
+    "owner": null,
+    "target": null,
+    "comparator": null,
+    "binding": {
+      "indicator_code": "7.2-9",
+      "source_question_ids": [
+        "F01-D02"
+      ],
+      "formula_id": "DIS_YES",
+      "formula_version": "1.1",
+      "group_codes": [
+        "C1",
+        "C2.1"
+      ]
+    },
+    "blueprint_requirements": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      24,
+      25,
+      26,
+      28,
+      31,
+      33
+    ]
+  },
+  {
+    "code": "7.3-25",
+    "original_name": null,
+    "original_name_status": "awaiting_original_indicator_PDF_not_supplied",
+    "display_name": {
+      "th": "การจัดสภาพแวดล้อมภายในวิทยาลัยฯ",
+      "en": null
+    },
+    "display_name_status": "derived_from_instrument_not_official_PDF_title",
+    "unit": "percent",
+    "direction": "increase",
+    "assessment_method": "survey",
+    "instrument_version": "1.1",
+    "owner": null,
+    "target": null,
+    "comparator": null,
+    "binding": {
+      "indicator_code": "7.3-25",
+      "source_question_ids": [
+        "F03-S01"
+      ],
+      "formula_id": "SAT_TOP2",
+      "formula_version": "1.1",
+      "group_codes": [
+        "ST1",
+        "ST2"
+      ]
+    },
+    "blueprint_requirements": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      24,
+      25,
+      26,
+      28,
+      31,
+      33
+    ]
+  },
+  {
+    "code": "7.3-26",
+    "original_name": null,
+    "original_name_status": "awaiting_original_indicator_PDF_not_supplied",
+    "display_name": {
+      "th": "การรักษาความปลอดภัยและการจราจรโดยรวม",
+      "en": null
+    },
+    "display_name_status": "derived_from_instrument_not_official_PDF_title",
+    "unit": "percent",
+    "direction": "increase",
+    "assessment_method": "survey",
+    "instrument_version": "1.1",
+    "owner": null,
+    "target": null,
+    "comparator": null,
+    "binding": {
+      "indicator_code": "7.3-26",
+      "source_question_ids": [
+        "F03-S02"
+      ],
+      "formula_id": "SAT_TOP2",
+      "formula_version": "1.1",
+      "group_codes": [
+        "ST1",
+        "ST2"
+      ]
+    },
+    "blueprint_requirements": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      24,
+      25,
+      26,
+      28,
+      31,
+      33
+    ]
+  },
+  {
+    "code": "7.3-27",
+    "original_name": null,
+    "original_name_status": "awaiting_original_indicator_PDF_not_supplied",
+    "display_name": {
+      "th": "การให้บริการสาธารณูปโภค",
+      "en": null
+    },
+    "display_name_status": "derived_from_instrument_not_official_PDF_title",
+    "unit": "percent",
+    "direction": "increase",
+    "assessment_method": "survey",
+    "instrument_version": "1.1",
+    "owner": null,
+    "target": null,
+    "comparator": null,
+    "binding": {
+      "indicator_code": "7.3-27",
+      "source_question_ids": [
+        "F03-S03"
+      ],
+      "formula_id": "SAT_TOP2",
+      "formula_version": "1.1",
+      "group_codes": [
+        "ST1",
+        "ST2"
+      ]
+    },
+    "blueprint_requirements": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      24,
+      25,
+      26,
+      28,
+      31,
+      33
+    ]
+  },
+  {
+    "code": "7.3-28",
+    "original_name": null,
+    "original_name_status": "awaiting_original_indicator_PDF_not_supplied",
+    "display_name": {
+      "th": "การดำเนินการโดยรวมของวิทยาลัยฯ",
+      "en": null
+    },
+    "display_name_status": "derived_from_instrument_not_official_PDF_title",
+    "unit": "percent",
+    "direction": "increase",
+    "assessment_method": "survey",
+    "instrument_version": "1.1",
+    "owner": null,
+    "target": null,
+    "comparator": null,
+    "binding": {
+      "indicator_code": "7.3-28",
+      "source_question_ids": [
+        "F03-S04"
+      ],
+      "formula_id": "SAT_TOP2",
+      "formula_version": "1.1",
+      "group_codes": [
+        "ST1",
+        "ST2"
+      ]
+    },
+    "blueprint_requirements": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      24,
+      25,
+      26,
+      28,
+      31,
+      33
+    ]
+  },
+  {
+    "code": "7.3-29",
+    "original_name": null,
+    "original_name_status": "awaiting_original_indicator_PDF_not_supplied",
+    "display_name": {
+      "th": "การดำเนินการโดยรวมของวิทยาลัยฯ",
+      "en": null
+    },
+    "display_name_status": "derived_from_instrument_not_official_PDF_title",
+    "unit": "percent",
+    "direction": "decrease",
+    "assessment_method": "survey",
+    "instrument_version": "1.1",
+    "owner": null,
+    "target": null,
+    "comparator": null,
+    "binding": {
+      "indicator_code": "7.3-29",
+      "source_question_ids": [
+        "F03-D01"
+      ],
+      "formula_id": "DIS_YES",
+      "formula_version": "1.1",
+      "group_codes": [
+        "ST1",
+        "ST2"
+      ]
+    },
+    "blueprint_requirements": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      24,
+      25,
+      26,
+      28,
+      31,
+      33
+    ]
+  },
+  {
+    "code": "7.3-36",
+    "original_name": null,
+    "original_name_status": "awaiting_original_indicator_PDF_not_supplied",
+    "display_name": {
+      "th": "สวัสดิการที่วิทยาลัยฯ สนับสนุน / โอกาสความก้าวหน้าในการทำงาน",
+      "en": null
+    },
+    "display_name_status": "derived_from_instrument_not_official_PDF_title",
+    "unit": "percent",
+    "direction": "increase",
+    "assessment_method": "survey",
+    "instrument_version": "1.1",
+    "owner": null,
+    "target": null,
+    "comparator": null,
+    "binding": {
+      "indicator_code": "7.3-36",
+      "source_question_ids": [
+        "F03-S05",
+        "F03-S06"
+      ],
+      "formula_id": "PAIR_MEAN_TOP",
+      "formula_version": "1.1",
+      "group_codes": [
+        "ST1",
+        "ST2"
+      ]
+    },
+    "blueprint_requirements": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      24,
+      25,
+      26,
+      28,
+      31,
+      33
+    ]
+  },
+  {
+    "code": "7.3-37",
+    "original_name": null,
+    "original_name_status": "awaiting_original_indicator_PDF_not_supplied",
+    "display_name": {
+      "th": "ฉันภูมิใจที่เป็นบุคลากรของวิทยาลัยการศึกษา / ฉันเต็มใจมีส่วนร่วมพัฒนางานและช่วยให้วิทยาลัยฯ บรรลุเป้าหมาย / ฉันต้องการทำงานร่วมกับวิทยาลัยฯ ต่อไป",
+      "en": null
+    },
+    "display_name_status": "derived_from_instrument_not_official_PDF_title",
+    "unit": "percent",
+    "direction": "increase",
+    "assessment_method": "survey",
+    "instrument_version": "1.1",
+    "owner": null,
+    "target": null,
+    "comparator": null,
+    "binding": {
+      "indicator_code": "7.3-37",
+      "source_question_ids": [
+        "F03-E01",
+        "F03-E02",
+        "F03-E03"
+      ],
+      "formula_id": "ENG_3",
+      "formula_version": "1.1",
+      "group_codes": [
+        "ST1",
+        "ST2"
+      ]
+    },
+    "blueprint_requirements": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      24,
+      25,
+      26,
+      28,
+      31,
+      33
+    ]
+  },
+  {
+    "code": "7.3-38",
+    "original_name": null,
+    "original_name_status": "awaiting_original_indicator_PDF_not_supplied",
+    "display_name": {
+      "th": "โดยรวมในช่วง 3 เดือนที่ผ่านมา ท่านมีความสุขในการทำงานที่วิทยาลัยฯ เพียงใด",
+      "en": null
+    },
+    "display_name_status": "derived_from_instrument_not_official_PDF_title",
+    "unit": "score_10",
+    "direction": "increase",
+    "assessment_method": "survey",
+    "instrument_version": "1.1",
+    "owner": null,
+    "target": null,
+    "comparator": null,
+    "binding": {
+      "indicator_code": "7.3-38",
+      "source_question_ids": [
+        "F03-H01"
+      ],
+      "formula_id": "HAPPINESS_10",
+      "formula_version": "1.1",
+      "group_codes": [
+        "ST1",
+        "ST2"
+      ]
+    },
+    "blueprint_requirements": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      24,
+      25,
+      26,
+      28,
+      31,
+      33
+    ]
+  },
+  {
+    "code": "7.3-39",
+    "original_name": null,
+    "original_name_status": "awaiting_original_indicator_PDF_not_supplied",
+    "display_name": {
+      "th": "โอกาสในการพัฒนาตนเองอย่างต่อเนื่อง / ความชัดเจนของการมอบหมายงาน / ความก้าวหน้าในสายงาน / แรงจูงใจในการทำงานที่ได้รับ / การได้รับการยอมรับในความสามารถ / สวัสดิการสำหรับตนเองและครอบครัว / สภาพแวดล้อม เครื่องมือ และอุปกรณ์ในการทำงานโดยรวม",
+      "en": null
+    },
+    "display_name_status": "derived_from_instrument_not_official_PDF_title",
+    "unit": "percent",
+    "direction": "increase",
+    "assessment_method": "survey",
+    "instrument_version": "1.1",
+    "owner": null,
+    "target": null,
+    "comparator": null,
+    "binding": {
+      "indicator_code": "7.3-39",
+      "source_question_ids": [
+        "F03-G01",
+        "F03-G02",
+        "F03-G03",
+        "F03-G04",
+        "F03-G05",
+        "F03-G06",
+        "F03-G07"
+      ],
+      "formula_id": "DIMENSION_SAT",
+      "formula_version": "1.1",
+      "group_codes": [
+        "ST1",
+        "ST2"
+      ],
+      "series_dimensions": [
+        "F03-G01",
+        "F03-G02",
+        "F03-G03",
+        "F03-G04",
+        "F03-G05",
+        "F03-G06",
+        "F03-G07"
+      ],
+      "overall": false
+    },
+    "blueprint_requirements": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      24,
+      25,
+      26,
+      28,
+      31,
+      33
+    ]
+  },
+  {
+    "code": "7.3-43",
+    "original_name": null,
+    "original_name_status": "awaiting_original_indicator_PDF_not_supplied",
+    "display_name": {
+      "th": "ร้อยละของบุคลากรที่ประเมินตนเองว่ามีทักษะด้านดิจิทัลและสารสนเทศตามเกณฑ์ที่กำหนด",
+      "en": null
+    },
+    "display_name_status": "derived_from_instrument_not_official_PDF_title",
+    "unit": "percent",
+    "direction": "increase",
+    "assessment_method": "self_report",
+    "instrument_version": "1.1",
+    "owner": null,
+    "target": null,
+    "comparator": null,
+    "binding": {
+      "indicator_code": "7.3-43",
+      "source_question_ids": [
+        "F06-D01",
+        "F06-D02",
+        "F06-D03",
+        "F06-D04",
+        "F06-D05"
+      ],
+      "formula_id": "SELF_DIGITAL_POP",
+      "formula_version": "1.1",
+      "group_codes": [
+        "ST1",
+        "ST2"
+      ],
+      "denominator": "frozen_eligible_population_including_nonrespondents"
+    },
+    "blueprint_requirements": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      24,
+      25,
+      26,
+      28,
+      31,
+      33
+    ]
+  },
+  {
+    "code": "7.3-44",
+    "original_name": null,
+    "original_name_status": "awaiting_original_indicator_PDF_not_supplied",
+    "display_name": {
+      "th": "ชั่วโมงอบรมจริงที่ตรวจรับเฉลี่ยต่อประชากรบุคลากรทั้งหมด",
+      "en": null
+    },
+    "display_name_status": "derived_from_instrument_not_official_PDF_title",
+    "unit": "hours_per_person",
+    "direction": "increase",
+    "assessment_method": "verified_activity",
+    "instrument_version": "1.1",
+    "owner": null,
+    "target": null,
+    "comparator": null,
+    "binding": {
+      "indicator_code": "7.3-44",
+      "source_question_ids": [
+        "F05-A01",
+        "F05-A04",
+        "F05-A05",
+        "F05-A07",
+        "F05-A09",
+        "F05-P01",
+        "F05-P02",
+        "F05-P03",
+        "F05-P04",
+        "F05-P05",
+        "F05-V01",
+        "F05-V02"
+      ],
+      "formula_id": "TRAINING_HOURS",
+      "formula_version": "1.1",
+      "group_codes": [
+        "ST1",
+        "ST2"
+      ],
+      "parameters": {
+        "accepted_only": true,
+        "population": "frozen_eligible_staff",
+        "category": null,
+        "distinct_unit": "person_activity_session",
+        "external_visit_only": false
+      },
+      "source_rules_th": "## การตรวจและสูตร F05\n\n- ตรวจซ้ำด้วยบุคลากร + กิจกรรม + ครั้ง/ช่วงเวลา หากกิจกรรมหลายวันให้หนึ่งรายการสรุปหรือหลาย session ที่ไม่ซ้ำ ห้ามนับทั้งสอง\n- คำนวณจากรายการตรวจรับเท่านั้น ชั่วโมงผิดปกติต้องให้ผู้ตรวจยืนยันพร้อมเหตุผล ถ้าเวลาชนกันต้องแก้หรือชี้แจงก่อนรับ\n- ตั้งขอบเขตประชากรหนึ่งแบบต่อรอบ ตัวอย่างเริ่มต้น: ผู้ปฏิบัติงาน ณ วันสิ้นรอบ นับประวัติที่เกิดระหว่างปฏิบัติงานในรอบของคนกลุ่มนี้ เก็บวันที่เข้า–ออกงานเพื่อกรองได้\n- 7.3-44 = ชั่วโมงอบรมรวมที่ตรวจรับของประชากรนี้ / จำนวนประชากรทั้งหมด รวมคนไม่ได้อบรม ไม่รวมชั่วโมงดูงานล้วน กิจกรรมผสมต้องแยกชั่วโมง\n- 7.3-45 = จำนวนคนไม่ซ้ำที่มีชั่วโมงอบรม >0 ใน T45 / ประชากร ×100; 46 ใช้ T46; 48 ใช้ T48\n- 7.3-47 = จำนวนคนไม่ซ้ำที่มีอบรม >0 อย่างน้อยหนึ่งใน T47S/H/E / ประชากร ×100 พร้อมรายงานแยกทั้งสามด้าน ชื่อแสดงผลต้องระบุ “อย่างน้อยหนึ่งด้าน” หากจะใช้ครบทุกด้านต้องสร้างนิยามรุ่นใหม่ก่อนเก็บ\n- 7.3-49 = จำนวนคนไม่ซ้ำที่เข้าร่วมศึกษาดูงานหน่วยงานภายนอกและมีหลักฐาน / ประชากร ×100\n- คนเดียวอบรมซ้ำหมวดเดิมนับเป็นคนเดียวสำหรับร้อยละ ชั่วโมงจริงทุกกิจกรรมที่ไม่ซ้ำรวมได้ กิจกรรมเดียวหลายหมวดใช้ได้หลายตัวชี้วัด แต่ชั่วโมง 7.3-44 นับเพียงครั้งเดียว\n\n"
+    },
+    "blueprint_requirements": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      24,
+      25,
+      26,
+      28,
+      31,
+      33
+    ]
+  },
+  {
+    "code": "7.3-45",
+    "original_name": null,
+    "original_name_status": "awaiting_original_indicator_PDF_not_supplied",
+    "display_name": {
+      "th": "ร้อยละบุคลากรที่อบรมด้านเทคโนโลยีสมัยใหม่",
+      "en": null
+    },
+    "display_name_status": "derived_from_instrument_not_official_PDF_title",
+    "unit": "percent",
+    "direction": "increase",
+    "assessment_method": "verified_activity",
+    "instrument_version": "1.1",
+    "owner": null,
+    "target": null,
+    "comparator": null,
+    "binding": {
+      "indicator_code": "7.3-45",
+      "source_question_ids": [
+        "F05-A01",
+        "F05-A04",
+        "F05-A05",
+        "F05-A07",
+        "F05-A09",
+        "F05-P01",
+        "F05-P02",
+        "F05-P03",
+        "F05-P04",
+        "F05-P05",
+        "F05-V01",
+        "F05-V02"
+      ],
+      "formula_id": "TRAINING_PEOPLE",
+      "formula_version": "1.1",
+      "group_codes": [
+        "ST1",
+        "ST2"
+      ],
+      "parameters": {
+        "accepted_only": true,
+        "population": "frozen_eligible_staff",
+        "category": [
+          "T45"
+        ],
+        "distinct_unit": "person",
+        "external_visit_only": false
+      },
+      "source_rules_th": "## การตรวจและสูตร F05\n\n- ตรวจซ้ำด้วยบุคลากร + กิจกรรม + ครั้ง/ช่วงเวลา หากกิจกรรมหลายวันให้หนึ่งรายการสรุปหรือหลาย session ที่ไม่ซ้ำ ห้ามนับทั้งสอง\n- คำนวณจากรายการตรวจรับเท่านั้น ชั่วโมงผิดปกติต้องให้ผู้ตรวจยืนยันพร้อมเหตุผล ถ้าเวลาชนกันต้องแก้หรือชี้แจงก่อนรับ\n- ตั้งขอบเขตประชากรหนึ่งแบบต่อรอบ ตัวอย่างเริ่มต้น: ผู้ปฏิบัติงาน ณ วันสิ้นรอบ นับประวัติที่เกิดระหว่างปฏิบัติงานในรอบของคนกลุ่มนี้ เก็บวันที่เข้า–ออกงานเพื่อกรองได้\n- 7.3-44 = ชั่วโมงอบรมรวมที่ตรวจรับของประชากรนี้ / จำนวนประชากรทั้งหมด รวมคนไม่ได้อบรม ไม่รวมชั่วโมงดูงานล้วน กิจกรรมผสมต้องแยกชั่วโมง\n- 7.3-45 = จำนวนคนไม่ซ้ำที่มีชั่วโมงอบรม >0 ใน T45 / ประชากร ×100; 46 ใช้ T46; 48 ใช้ T48\n- 7.3-47 = จำนวนคนไม่ซ้ำที่มีอบรม >0 อย่างน้อยหนึ่งใน T47S/H/E / ประชากร ×100 พร้อมรายงานแยกทั้งสามด้าน ชื่อแสดงผลต้องระบุ “อย่างน้อยหนึ่งด้าน” หากจะใช้ครบทุกด้านต้องสร้างนิยามรุ่นใหม่ก่อนเก็บ\n- 7.3-49 = จำนวนคนไม่ซ้ำที่เข้าร่วมศึกษาดูงานหน่วยงานภายนอกและมีหลักฐาน / ประชากร ×100\n- คนเดียวอบรมซ้ำหมวดเดิมนับเป็นคนเดียวสำหรับร้อยละ ชั่วโมงจริงทุกกิจกรรมที่ไม่ซ้ำรวมได้ กิจกรรมเดียวหลายหมวดใช้ได้หลายตัวชี้วัด แต่ชั่วโมง 7.3-44 นับเพียงครั้งเดียว\n\n"
+    },
+    "blueprint_requirements": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      24,
+      25,
+      26,
+      28,
+      31,
+      33
+    ]
+  },
+  {
+    "code": "7.3-46",
+    "original_name": null,
+    "original_name_status": "awaiting_original_indicator_PDF_not_supplied",
+    "display_name": {
+      "th": "ร้อยละบุคลากรที่อบรมด้านทักษะดิจิทัล",
+      "en": null
+    },
+    "display_name_status": "derived_from_instrument_not_official_PDF_title",
+    "unit": "percent",
+    "direction": "increase",
+    "assessment_method": "verified_activity",
+    "instrument_version": "1.1",
+    "owner": null,
+    "target": null,
+    "comparator": null,
+    "binding": {
+      "indicator_code": "7.3-46",
+      "source_question_ids": [
+        "F05-A01",
+        "F05-A04",
+        "F05-A05",
+        "F05-A07",
+        "F05-A09",
+        "F05-P01",
+        "F05-P02",
+        "F05-P03",
+        "F05-P04",
+        "F05-P05",
+        "F05-V01",
+        "F05-V02"
+      ],
+      "formula_id": "TRAINING_PEOPLE",
+      "formula_version": "1.1",
+      "group_codes": [
+        "ST1",
+        "ST2"
+      ],
+      "parameters": {
+        "accepted_only": true,
+        "population": "frozen_eligible_staff",
+        "category": [
+          "T46"
+        ],
+        "distinct_unit": "person",
+        "external_visit_only": false
+      },
+      "source_rules_th": "## การตรวจและสูตร F05\n\n- ตรวจซ้ำด้วยบุคลากร + กิจกรรม + ครั้ง/ช่วงเวลา หากกิจกรรมหลายวันให้หนึ่งรายการสรุปหรือหลาย session ที่ไม่ซ้ำ ห้ามนับทั้งสอง\n- คำนวณจากรายการตรวจรับเท่านั้น ชั่วโมงผิดปกติต้องให้ผู้ตรวจยืนยันพร้อมเหตุผล ถ้าเวลาชนกันต้องแก้หรือชี้แจงก่อนรับ\n- ตั้งขอบเขตประชากรหนึ่งแบบต่อรอบ ตัวอย่างเริ่มต้น: ผู้ปฏิบัติงาน ณ วันสิ้นรอบ นับประวัติที่เกิดระหว่างปฏิบัติงานในรอบของคนกลุ่มนี้ เก็บวันที่เข้า–ออกงานเพื่อกรองได้\n- 7.3-44 = ชั่วโมงอบรมรวมที่ตรวจรับของประชากรนี้ / จำนวนประชากรทั้งหมด รวมคนไม่ได้อบรม ไม่รวมชั่วโมงดูงานล้วน กิจกรรมผสมต้องแยกชั่วโมง\n- 7.3-45 = จำนวนคนไม่ซ้ำที่มีชั่วโมงอบรม >0 ใน T45 / ประชากร ×100; 46 ใช้ T46; 48 ใช้ T48\n- 7.3-47 = จำนวนคนไม่ซ้ำที่มีอบรม >0 อย่างน้อยหนึ่งใน T47S/H/E / ประชากร ×100 พร้อมรายงานแยกทั้งสามด้าน ชื่อแสดงผลต้องระบุ “อย่างน้อยหนึ่งด้าน” หากจะใช้ครบทุกด้านต้องสร้างนิยามรุ่นใหม่ก่อนเก็บ\n- 7.3-49 = จำนวนคนไม่ซ้ำที่เข้าร่วมศึกษาดูงานหน่วยงานภายนอกและมีหลักฐาน / ประชากร ×100\n- คนเดียวอบรมซ้ำหมวดเดิมนับเป็นคนเดียวสำหรับร้อยละ ชั่วโมงจริงทุกกิจกรรมที่ไม่ซ้ำรวมได้ กิจกรรมเดียวหลายหมวดใช้ได้หลายตัวชี้วัด แต่ชั่วโมง 7.3-44 นับเพียงครั้งเดียว\n\n"
+    },
+    "blueprint_requirements": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      24,
+      25,
+      26,
+      28,
+      31,
+      33
+    ]
+  },
+  {
+    "code": "7.3-47",
+    "original_name": null,
+    "original_name_status": "awaiting_original_indicator_PDF_not_supplied",
+    "display_name": {
+      "th": "ร้อยละบุคลากรที่อบรมด้านความปลอดภัย อาชีวอนามัย หรือพลังงาน อย่างน้อยหนึ่งด้าน",
+      "en": null
+    },
+    "display_name_status": "derived_from_instrument_not_official_PDF_title",
+    "unit": "percent",
+    "direction": "increase",
+    "assessment_method": "verified_activity",
+    "instrument_version": "1.1",
+    "owner": null,
+    "target": null,
+    "comparator": null,
+    "binding": {
+      "indicator_code": "7.3-47",
+      "source_question_ids": [
+        "F05-A01",
+        "F05-A04",
+        "F05-A05",
+        "F05-A07",
+        "F05-A09",
+        "F05-P01",
+        "F05-P02",
+        "F05-P03",
+        "F05-P04",
+        "F05-P05",
+        "F05-V01",
+        "F05-V02"
+      ],
+      "formula_id": "SAFETY_ANY",
+      "formula_version": "1.1",
+      "group_codes": [
+        "ST1",
+        "ST2"
+      ],
+      "parameters": {
+        "accepted_only": true,
+        "population": "frozen_eligible_staff",
+        "category": [
+          "T47S",
+          "T47H",
+          "T47E"
+        ],
+        "distinct_unit": "person",
+        "external_visit_only": false
+      },
+      "source_rules_th": "## การตรวจและสูตร F05\n\n- ตรวจซ้ำด้วยบุคลากร + กิจกรรม + ครั้ง/ช่วงเวลา หากกิจกรรมหลายวันให้หนึ่งรายการสรุปหรือหลาย session ที่ไม่ซ้ำ ห้ามนับทั้งสอง\n- คำนวณจากรายการตรวจรับเท่านั้น ชั่วโมงผิดปกติต้องให้ผู้ตรวจยืนยันพร้อมเหตุผล ถ้าเวลาชนกันต้องแก้หรือชี้แจงก่อนรับ\n- ตั้งขอบเขตประชากรหนึ่งแบบต่อรอบ ตัวอย่างเริ่มต้น: ผู้ปฏิบัติงาน ณ วันสิ้นรอบ นับประวัติที่เกิดระหว่างปฏิบัติงานในรอบของคนกลุ่มนี้ เก็บวันที่เข้า–ออกงานเพื่อกรองได้\n- 7.3-44 = ชั่วโมงอบรมรวมที่ตรวจรับของประชากรนี้ / จำนวนประชากรทั้งหมด รวมคนไม่ได้อบรม ไม่รวมชั่วโมงดูงานล้วน กิจกรรมผสมต้องแยกชั่วโมง\n- 7.3-45 = จำนวนคนไม่ซ้ำที่มีชั่วโมงอบรม >0 ใน T45 / ประชากร ×100; 46 ใช้ T46; 48 ใช้ T48\n- 7.3-47 = จำนวนคนไม่ซ้ำที่มีอบรม >0 อย่างน้อยหนึ่งใน T47S/H/E / ประชากร ×100 พร้อมรายงานแยกทั้งสามด้าน ชื่อแสดงผลต้องระบุ “อย่างน้อยหนึ่งด้าน” หากจะใช้ครบทุกด้านต้องสร้างนิยามรุ่นใหม่ก่อนเก็บ\n- 7.3-49 = จำนวนคนไม่ซ้ำที่เข้าร่วมศึกษาดูงานหน่วยงานภายนอกและมีหลักฐาน / ประชากร ×100\n- คนเดียวอบรมซ้ำหมวดเดิมนับเป็นคนเดียวสำหรับร้อยละ ชั่วโมงจริงทุกกิจกรรมที่ไม่ซ้ำรวมได้ กิจกรรมเดียวหลายหมวดใช้ได้หลายตัวชี้วัด แต่ชั่วโมง 7.3-44 นับเพียงครั้งเดียว\n\n"
+    },
+    "blueprint_requirements": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      24,
+      25,
+      26,
+      28,
+      31,
+      33
+    ]
+  },
+  {
+    "code": "7.3-48",
+    "original_name": null,
+    "original_name_status": "awaiting_original_indicator_PDF_not_supplied",
+    "display_name": {
+      "th": "ร้อยละบุคลากรที่อบรมด้านประกันคุณภาพ",
+      "en": null
+    },
+    "display_name_status": "derived_from_instrument_not_official_PDF_title",
+    "unit": "percent",
+    "direction": "increase",
+    "assessment_method": "verified_activity",
+    "instrument_version": "1.1",
+    "owner": null,
+    "target": null,
+    "comparator": null,
+    "binding": {
+      "indicator_code": "7.3-48",
+      "source_question_ids": [
+        "F05-A01",
+        "F05-A04",
+        "F05-A05",
+        "F05-A07",
+        "F05-A09",
+        "F05-P01",
+        "F05-P02",
+        "F05-P03",
+        "F05-P04",
+        "F05-P05",
+        "F05-V01",
+        "F05-V02"
+      ],
+      "formula_id": "TRAINING_PEOPLE",
+      "formula_version": "1.1",
+      "group_codes": [
+        "ST1",
+        "ST2"
+      ],
+      "parameters": {
+        "accepted_only": true,
+        "population": "frozen_eligible_staff",
+        "category": [
+          "T48"
+        ],
+        "distinct_unit": "person",
+        "external_visit_only": false
+      },
+      "source_rules_th": "## การตรวจและสูตร F05\n\n- ตรวจซ้ำด้วยบุคลากร + กิจกรรม + ครั้ง/ช่วงเวลา หากกิจกรรมหลายวันให้หนึ่งรายการสรุปหรือหลาย session ที่ไม่ซ้ำ ห้ามนับทั้งสอง\n- คำนวณจากรายการตรวจรับเท่านั้น ชั่วโมงผิดปกติต้องให้ผู้ตรวจยืนยันพร้อมเหตุผล ถ้าเวลาชนกันต้องแก้หรือชี้แจงก่อนรับ\n- ตั้งขอบเขตประชากรหนึ่งแบบต่อรอบ ตัวอย่างเริ่มต้น: ผู้ปฏิบัติงาน ณ วันสิ้นรอบ นับประวัติที่เกิดระหว่างปฏิบัติงานในรอบของคนกลุ่มนี้ เก็บวันที่เข้า–ออกงานเพื่อกรองได้\n- 7.3-44 = ชั่วโมงอบรมรวมที่ตรวจรับของประชากรนี้ / จำนวนประชากรทั้งหมด รวมคนไม่ได้อบรม ไม่รวมชั่วโมงดูงานล้วน กิจกรรมผสมต้องแยกชั่วโมง\n- 7.3-45 = จำนวนคนไม่ซ้ำที่มีชั่วโมงอบรม >0 ใน T45 / ประชากร ×100; 46 ใช้ T46; 48 ใช้ T48\n- 7.3-47 = จำนวนคนไม่ซ้ำที่มีอบรม >0 อย่างน้อยหนึ่งใน T47S/H/E / ประชากร ×100 พร้อมรายงานแยกทั้งสามด้าน ชื่อแสดงผลต้องระบุ “อย่างน้อยหนึ่งด้าน” หากจะใช้ครบทุกด้านต้องสร้างนิยามรุ่นใหม่ก่อนเก็บ\n- 7.3-49 = จำนวนคนไม่ซ้ำที่เข้าร่วมศึกษาดูงานหน่วยงานภายนอกและมีหลักฐาน / ประชากร ×100\n- คนเดียวอบรมซ้ำหมวดเดิมนับเป็นคนเดียวสำหรับร้อยละ ชั่วโมงจริงทุกกิจกรรมที่ไม่ซ้ำรวมได้ กิจกรรมเดียวหลายหมวดใช้ได้หลายตัวชี้วัด แต่ชั่วโมง 7.3-44 นับเพียงครั้งเดียว\n\n"
+    },
+    "blueprint_requirements": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      24,
+      25,
+      26,
+      28,
+      31,
+      33
+    ]
+  },
+  {
+    "code": "7.3-49",
+    "original_name": null,
+    "original_name_status": "awaiting_original_indicator_PDF_not_supplied",
+    "display_name": {
+      "th": "ร้อยละบุคลากรที่ศึกษาดูงานหน่วยงานภายนอกจากรายการตรวจรับ",
+      "en": null
+    },
+    "display_name_status": "derived_from_instrument_not_official_PDF_title",
+    "unit": "percent",
+    "direction": "increase",
+    "assessment_method": "verified_activity",
+    "instrument_version": "1.1",
+    "owner": null,
+    "target": null,
+    "comparator": null,
+    "binding": {
+      "indicator_code": "7.3-49",
+      "source_question_ids": [
+        "F05-A01",
+        "F05-A04",
+        "F05-A05",
+        "F05-A07",
+        "F05-A09",
+        "F05-P01",
+        "F05-P02",
+        "F05-P03",
+        "F05-P04",
+        "F05-P05",
+        "F05-V01",
+        "F05-V02"
+      ],
+      "formula_id": "STUDY_VISIT",
+      "formula_version": "1.1",
+      "group_codes": [
+        "ST1",
+        "ST2"
+      ],
+      "parameters": {
+        "accepted_only": true,
+        "population": "frozen_eligible_staff",
+        "category": null,
+        "distinct_unit": "person",
+        "external_visit_only": true
+      },
+      "source_rules_th": "## การตรวจและสูตร F05\n\n- ตรวจซ้ำด้วยบุคลากร + กิจกรรม + ครั้ง/ช่วงเวลา หากกิจกรรมหลายวันให้หนึ่งรายการสรุปหรือหลาย session ที่ไม่ซ้ำ ห้ามนับทั้งสอง\n- คำนวณจากรายการตรวจรับเท่านั้น ชั่วโมงผิดปกติต้องให้ผู้ตรวจยืนยันพร้อมเหตุผล ถ้าเวลาชนกันต้องแก้หรือชี้แจงก่อนรับ\n- ตั้งขอบเขตประชากรหนึ่งแบบต่อรอบ ตัวอย่างเริ่มต้น: ผู้ปฏิบัติงาน ณ วันสิ้นรอบ นับประวัติที่เกิดระหว่างปฏิบัติงานในรอบของคนกลุ่มนี้ เก็บวันที่เข้า–ออกงานเพื่อกรองได้\n- 7.3-44 = ชั่วโมงอบรมรวมที่ตรวจรับของประชากรนี้ / จำนวนประชากรทั้งหมด รวมคนไม่ได้อบรม ไม่รวมชั่วโมงดูงานล้วน กิจกรรมผสมต้องแยกชั่วโมง\n- 7.3-45 = จำนวนคนไม่ซ้ำที่มีชั่วโมงอบรม >0 ใน T45 / ประชากร ×100; 46 ใช้ T46; 48 ใช้ T48\n- 7.3-47 = จำนวนคนไม่ซ้ำที่มีอบรม >0 อย่างน้อยหนึ่งใน T47S/H/E / ประชากร ×100 พร้อมรายงานแยกทั้งสามด้าน ชื่อแสดงผลต้องระบุ “อย่างน้อยหนึ่งด้าน” หากจะใช้ครบทุกด้านต้องสร้างนิยามรุ่นใหม่ก่อนเก็บ\n- 7.3-49 = จำนวนคนไม่ซ้ำที่เข้าร่วมศึกษาดูงานหน่วยงานภายนอกและมีหลักฐาน / ประชากร ×100\n- คนเดียวอบรมซ้ำหมวดเดิมนับเป็นคนเดียวสำหรับร้อยละ ชั่วโมงจริงทุกกิจกรรมที่ไม่ซ้ำรวมได้ กิจกรรมเดียวหลายหมวดใช้ได้หลายตัวชี้วัด แต่ชั่วโมง 7.3-44 นับเพียงครั้งเดียว\n\n"
+    },
+    "blueprint_requirements": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      24,
+      25,
+      26,
+      28,
+      31,
+      33
+    ]
+  },
+  {
+    "code": "7.3-50",
+    "original_name": null,
+    "original_name_status": "awaiting_original_indicator_PDF_not_supplied",
+    "display_name": {
+      "th": "คะแนนสมรรถนะจากการประเมินตนเองของบุคลากรสายวิชาการ",
+      "en": null
+    },
+    "display_name_status": "derived_from_instrument_not_official_PDF_title",
+    "unit": "score_5",
+    "direction": "increase",
+    "assessment_method": "self_report",
+    "instrument_version": "1.1",
+    "owner": null,
+    "target": null,
+    "comparator": null,
+    "binding": {
+      "indicator_code": "7.3-50",
+      "source_question_ids": [
+        "F06-A01",
+        "F06-A02",
+        "F06-A03",
+        "F06-A04",
+        "F06-A05"
+      ],
+      "formula_id": "SELF_COMPETENCY",
+      "formula_version": "1.1",
+      "group_codes": [
+        "ST1"
+      ],
+      "required_complete": 5
+    },
+    "blueprint_requirements": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      24,
+      25,
+      26,
+      28,
+      31,
+      33
+    ]
+  },
+  {
+    "code": "7.3-51",
+    "original_name": null,
+    "original_name_status": "awaiting_original_indicator_PDF_not_supplied",
+    "display_name": {
+      "th": "คะแนนสมรรถนะจากการประเมินตนเองของบุคลากรสายสนับสนุน",
+      "en": null
+    },
+    "display_name_status": "derived_from_instrument_not_official_PDF_title",
+    "unit": "score_5",
+    "direction": "increase",
+    "assessment_method": "self_report",
+    "instrument_version": "1.1",
+    "owner": null,
+    "target": null,
+    "comparator": null,
+    "binding": {
+      "indicator_code": "7.3-51",
+      "source_question_ids": [
+        "F06-A01",
+        "F06-A02",
+        "F06-A03",
+        "F06-A04",
+        "F06-A05",
+        "F06-A06",
+        "F06-A07",
+        "F06-A08",
+        "F06-A09"
+      ],
+      "formula_id": "SELF_COMPETENCY",
+      "formula_version": "1.1",
+      "group_codes": [
+        "ST2"
+      ],
+      "required_complete": 9
+    },
+    "blueprint_requirements": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      24,
+      25,
+      26,
+      28,
+      31,
+      33
+    ]
+  },
+  {
+    "code": "7.3-52",
+    "original_name": null,
+    "original_name_status": "awaiting_original_indicator_PDF_not_supplied",
+    "display_name": {
+      "th": "ระบบการพัฒนาบุคลากรของวิทยาลัยฯ",
+      "en": null
+    },
+    "display_name_status": "derived_from_instrument_not_official_PDF_title",
+    "unit": "percent",
+    "direction": "increase",
+    "assessment_method": "survey",
+    "instrument_version": "1.1",
+    "owner": null,
+    "target": null,
+    "comparator": null,
+    "binding": {
+      "indicator_code": "7.3-52",
+      "source_question_ids": [
+        "F03-S07"
+      ],
+      "formula_id": "SAT_TOP2",
+      "formula_version": "1.1",
+      "group_codes": [
+        "ST1",
+        "ST2"
+      ]
+    },
+    "blueprint_requirements": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      24,
+      25,
+      26,
+      28,
+      31,
+      33
+    ]
+  },
+  {
+    "code": "7.3-53",
+    "original_name": null,
+    "original_name_status": "awaiting_original_indicator_PDF_not_supplied",
+    "display_name": {
+      "th": "ระบบการพัฒนาบุคลากร",
+      "en": null
+    },
+    "display_name_status": "derived_from_instrument_not_official_PDF_title",
+    "unit": "percent",
+    "direction": "decrease",
+    "assessment_method": "survey",
+    "instrument_version": "1.1",
+    "owner": null,
+    "target": null,
+    "comparator": null,
+    "binding": {
+      "indicator_code": "7.3-53",
+      "source_question_ids": [
+        "F03-D02"
+      ],
+      "formula_id": "DIS_YES",
+      "formula_version": "1.1",
+      "group_codes": [
+        "ST1",
+        "ST2"
+      ]
+    },
+    "blueprint_requirements": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      24,
+      25,
+      26,
+      28,
+      31,
+      33
+    ]
+  },
+  {
+    "code": "7.3-54",
+    "original_name": null,
+    "original_name_status": "awaiting_original_indicator_PDF_not_supplied",
+    "display_name": {
+      "th": "คะแนนสมรรถนะจากการประเมินตนเองแยกพันธกิจ",
+      "en": null
+    },
+    "display_name_status": "derived_from_instrument_not_official_PDF_title",
+    "unit": "score_5",
+    "direction": "increase",
+    "assessment_method": "self_report",
+    "instrument_version": "1.1",
+    "owner": null,
+    "target": null,
+    "comparator": null,
+    "binding": {
+      "indicator_code": "7.3-54",
+      "source_question_ids": [
+        "F06-M01",
+        "F06-M02",
+        "F06-M03",
+        "F06-M04",
+        "F06-M05"
+      ],
+      "formula_id": "SELF_DIMENSION",
+      "formula_version": "1.1",
+      "group_codes": [
+        "ST1",
+        "ST2"
+      ],
+      "series_dimensions": [
+        "F06-M01",
+        "F06-M02",
+        "F06-M03",
+        "F06-M04",
+        "F06-M05"
+      ],
+      "overall": false
+    },
+    "blueprint_requirements": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      24,
+      25,
+      26,
+      28,
+      31,
+      33
+    ]
+  },
+  {
+    "code": "7.3-55",
+    "original_name": null,
+    "original_name_status": "awaiting_original_indicator_PDF_not_supplied",
+    "display_name": {
+      "th": "คะแนนสมรรถนะจากการประเมินตนเองแยก SO",
+      "en": null
+    },
+    "display_name_status": "derived_from_instrument_not_official_PDF_title",
+    "unit": "score_5",
+    "direction": "increase",
+    "assessment_method": "self_report",
+    "instrument_version": "1.1",
+    "owner": null,
+    "target": null,
+    "comparator": null,
+    "binding": {
+      "indicator_code": "7.3-55",
+      "source_question_ids": [
+        "F06-T01",
+        "F06-T02",
+        "F06-T03",
+        "F06-T04",
+        "F06-T05"
+      ],
+      "formula_id": "SELF_DIMENSION",
+      "formula_version": "1.1",
+      "group_codes": [
+        "ST1",
+        "ST2"
+      ],
+      "series_dimensions": [
+        "F06-T01",
+        "F06-T02",
+        "F06-T03",
+        "F06-T04",
+        "F06-T05"
+      ],
+      "overall": false
+    },
+    "blueprint_requirements": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      24,
+      25,
+      26,
+      28,
+      31,
+      33
+    ]
+  },
+  {
+    "code": "7.4-1",
+    "original_name": null,
+    "original_name_status": "awaiting_original_indicator_PDF_not_supplied",
+    "display_name": {
+      "th": "การสื่อสารทิศทางและการรับฟังของผู้นำระดับสูงโดยรวม",
+      "en": null
+    },
+    "display_name_status": "derived_from_instrument_not_official_PDF_title",
+    "unit": "percent",
+    "direction": "increase",
+    "assessment_method": "survey",
+    "instrument_version": "1.1",
+    "owner": null,
+    "target": null,
+    "comparator": null,
+    "binding": {
+      "indicator_code": "7.4-1",
+      "source_question_ids": [
+        "F03-S08"
+      ],
+      "formula_id": "SAT_TOP2",
+      "formula_version": "1.1",
+      "group_codes": [
+        "ST1",
+        "ST2"
+      ]
+    },
+    "blueprint_requirements": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      24,
+      25,
+      26,
+      28,
+      31,
+      33
+    ]
+  },
+  {
+    "code": "7.4-10",
+    "original_name": null,
+    "original_name_status": "awaiting_original_indicator_PDF_not_supplied",
+    "display_name": {
+      "th": "ก่อนตอบแบบนี้ ท่านเคยได้รับการสื่อสารเกี่ยวกับวิสัยทัศน์หรือค่านิยมของวิทยาลัยฯ หรือไม่: เคย / ไม่เคย / จำไม่ได้ / ข้อใดใกล้เคียงเป้าหมายหลักของวิทยาลัยการศึกษามากที่สุด / ทิศทางการพัฒนานวัตกรรมทางการศึกษาที่สอดคล้องกับวิสัยทัศน์คือข้อใด / พฤติกรรมใดสอดคล้องกับ Service Mind มากที่สุด / พฤติกรรมใดสอดคล้องกับ Ethics and Excellence of Education มากที่สุด / พฤติกรรมใดสอดคล้องกับ Unity มากที่สุด / พฤติกรรมใดสอดคล้องกับ Professional มากที่สุด",
+      "en": null
+    },
+    "display_name_status": "derived_from_instrument_not_official_PDF_title",
+    "unit": "percent",
+    "direction": "increase",
+    "assessment_method": "survey",
+    "instrument_version": "1.1",
+    "owner": null,
+    "target": null,
+    "comparator": null,
+    "binding": {
+      "indicator_code": "7.4-10",
+      "source_question_ids": [
+        "F02-K00",
+        "F02-K01",
+        "F02-K02",
+        "F02-K03",
+        "F02-K04",
+        "F02-K05",
+        "F02-K06"
+      ],
+      "formula_id": "K_EXTERNAL",
+      "formula_version": "1.1",
+      "group_codes": [
+        "C4.1",
+        "C5.1",
+        "C5.2",
+        "C5.3"
+      ]
+    },
+    "blueprint_requirements": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      24,
+      25,
+      26,
+      28,
+      31,
+      33
+    ]
+  },
+  {
+    "code": "7.4-11",
+    "original_name": null,
+    "original_name_status": "awaiting_original_indicator_PDF_not_supplied",
+    "display_name": {
+      "th": "ท่านพึงพอใจต่อการสื่อสารของวิทยาลัยฯ เพียงใด",
+      "en": null
+    },
+    "display_name_status": "derived_from_instrument_not_official_PDF_title",
+    "unit": "percent",
+    "direction": "increase",
+    "assessment_method": "survey",
+    "instrument_version": "1.1",
+    "owner": null,
+    "target": null,
+    "comparator": null,
+    "binding": {
+      "indicator_code": "7.4-11",
+      "source_question_ids": [
+        "F02-C01"
+      ],
+      "formula_id": "SAT_TOP2",
+      "formula_version": "1.1",
+      "group_codes": [
+        "S1",
+        "S3-1",
+        "S3-2",
+        "CO-1",
+        "CO-2",
+        "CO-3",
+        "CO-4"
+      ]
+    },
+    "blueprint_requirements": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      24,
+      25,
+      26,
+      28,
+      31,
+      33
+    ]
+  },
+  {
+    "code": "7.4-12",
+    "original_name": null,
+    "original_name_status": "awaiting_original_indicator_PDF_not_supplied",
+    "display_name": {
+      "th": "ก่อนตอบแบบนี้ ท่านเคยได้รับการสื่อสารเกี่ยวกับวิสัยทัศน์หรือค่านิยมของวิทยาลัยฯ หรือไม่: เคย / ไม่เคย / จำไม่ได้ / ข้อใดใกล้เคียงเป้าหมายหลักของวิทยาลัยการศึกษามากที่สุด / ทิศทางการพัฒนานวัตกรรมทางการศึกษาที่สอดคล้องกับวิสัยทัศน์คือข้อใด / พฤติกรรมใดสอดคล้องกับ Service Mind มากที่สุด / พฤติกรรมใดสอดคล้องกับ Ethics and Excellence of Education มากที่สุด / พฤติกรรมใดสอดคล้องกับ Unity มากที่สุด / พฤติกรรมใดสอดคล้องกับ Professional มากที่สุด",
+      "en": null
+    },
+    "display_name_status": "derived_from_instrument_not_official_PDF_title",
+    "unit": "percent",
+    "direction": "increase",
+    "assessment_method": "survey",
+    "instrument_version": "1.1",
+    "owner": null,
+    "target": null,
+    "comparator": null,
+    "binding": {
+      "indicator_code": "7.4-12",
+      "source_question_ids": [
+        "F02-K00",
+        "F02-K01",
+        "F02-K02",
+        "F02-K03",
+        "F02-K04",
+        "F02-K05",
+        "F02-K06"
+      ],
+      "formula_id": "K_EXTERNAL",
+      "formula_version": "1.1",
+      "group_codes": [
+        "S1",
+        "S3-1",
+        "S3-2",
+        "CO-1",
+        "CO-2",
+        "CO-3",
+        "CO-4"
+      ]
+    },
+    "blueprint_requirements": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      24,
+      25,
+      26,
+      28,
+      31,
+      33
+    ]
+  },
+  {
+    "code": "7.4-13",
+    "original_name": null,
+    "original_name_status": "awaiting_original_indicator_PDF_not_supplied",
+    "display_name": {
+      "th": "กำหนดและสื่อสารทิศทางของวิทยาลัยฯ ให้บุคลากรเข้าใจ / ผลักดันแผนงานสำคัญให้ดำเนินการตามเป้าหมาย / สนับสนุนให้บุคลากรทำงานและพัฒนาตนเองได้ / จัดสรรทรัพยากรให้เหมาะกับภารกิจสำคัญ / ใช้ผลติดตามและข้อเสนอแนะปรับปรุงการบริหาร",
+      "en": null
+    },
+    "display_name_status": "derived_from_instrument_not_official_PDF_title",
+    "unit": "score_5",
+    "direction": "increase",
+    "assessment_method": "survey",
+    "instrument_version": "1.1",
+    "owner": null,
+    "target": null,
+    "comparator": null,
+    "binding": {
+      "indicator_code": "7.4-13",
+      "source_question_ids": [
+        "F04-DE01",
+        "F04-DE02",
+        "F04-DE03",
+        "F04-DE04",
+        "F04-DE05"
+      ],
+      "formula_id": "ADMIN_MEAN",
+      "formula_version": "1.1",
+      "group_codes": [
+        "ST1",
+        "ST2"
+      ],
+      "minimum_answered": 4,
+      "series_dimensions": [
+        "person",
+        "role",
+        "appointment_dates",
+        "programme"
+      ],
+      "requires_configured_appointment": true
+    },
+    "blueprint_requirements": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      24,
+      25,
+      26,
+      28,
+      31,
+      33
+    ]
+  },
+  {
+    "code": "7.4-14",
+    "original_name": null,
+    "original_name_status": "awaiting_original_indicator_PDF_not_supplied",
+    "display_name": {
+      "th": "กำกับทิศทางและนโยบายให้สอดคล้องกับพันธกิจ / พิจารณาข้อมูลที่เกี่ยวข้องก่อนให้ข้อเสนอแนะหรือตัดสินใจ / ติดตามการดำเนินการตามมติและผลการดำเนินงาน / ให้ความสำคัญกับความรับผิดชอบและประโยชน์ส่วนรวม / ให้ข้อเสนอแนะที่วิทยาลัยฯ นำไปปรับปรุงงานได้",
+      "en": null
+    },
+    "display_name_status": "derived_from_instrument_not_official_PDF_title",
+    "unit": "score_5",
+    "direction": "increase",
+    "assessment_method": "survey",
+    "instrument_version": "1.1",
+    "owner": null,
+    "target": null,
+    "comparator": null,
+    "binding": {
+      "indicator_code": "7.4-14",
+      "source_question_ids": [
+        "F04-BO01",
+        "F04-BO02",
+        "F04-BO03",
+        "F04-BO04",
+        "F04-BO05"
+      ],
+      "formula_id": "ADMIN_MEAN",
+      "formula_version": "1.1",
+      "group_codes": [
+        "ST1",
+        "ST2"
+      ],
+      "minimum_answered": 4,
+      "series_dimensions": [
+        "person",
+        "role",
+        "appointment_dates",
+        "programme"
+      ],
+      "requires_configured_appointment": true
+    },
+    "blueprint_requirements": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      24,
+      25,
+      26,
+      28,
+      31,
+      33
+    ]
+  },
+  {
+    "code": "7.4-15",
+    "original_name": null,
+    "original_name_status": "awaiting_original_indicator_PDF_not_supplied",
+    "display_name": {
+      "th": "ฉันเชื่อมั่นว่าคณบดีอธิบายเหตุผลของการตัดสินใจสำคัญอย่างโปร่งใส / ฉันเชื่อมั่นว่าคณบดีปฏิบัติต่อบุคลากรอย่างเป็นธรรม / ฉันเชื่อมั่นว่าคณบดีรับผิดชอบต่อการตัดสินใจและผลการบริหาร / ฉันเชื่อมั่นว่าคณบดียึดหลักคุณธรรมและประโยชน์ส่วนรวม",
+      "en": null
+    },
+    "display_name_status": "derived_from_instrument_not_official_PDF_title",
+    "unit": "percent",
+    "direction": "increase",
+    "assessment_method": "survey",
+    "instrument_version": "1.1",
+    "owner": null,
+    "target": null,
+    "comparator": null,
+    "binding": {
+      "indicator_code": "7.4-15",
+      "source_question_ids": [
+        "F04-ET01",
+        "F04-ET02",
+        "F04-ET03",
+        "F04-ET04"
+      ],
+      "formula_id": "ETHICS_TOP",
+      "formula_version": "1.1",
+      "group_codes": [
+        "ST1",
+        "ST2"
+      ],
+      "required_complete": 4,
+      "role": "DE"
+    },
+    "blueprint_requirements": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      24,
+      25,
+      26,
+      28,
+      31,
+      33
+    ]
+  },
+  {
+    "code": "7.4-18A",
+    "original_name": null,
+    "original_name_status": "awaiting_original_indicator_PDF_not_supplied",
+    "display_name": {
+      "th": "แปลงภารกิจที่รับผิดชอบเป็นแผนงานที่ชัดเจน / ประสานงานกับหน่วยงานที่เกี่ยวข้องได้เหมาะสม / สนับสนุนและแก้ปัญหาให้ผู้ปฏิบัติงานในภารกิจ / ติดตามความก้าวหน้าและผลของงานอย่างต่อเนื่อง / นำผลติดตามมาปรับปรุงงานที่รับผิดชอบ",
+      "en": null
+    },
+    "display_name_status": "derived_from_instrument_not_official_PDF_title",
+    "unit": "score_5",
+    "direction": "increase",
+    "assessment_method": "survey",
+    "instrument_version": "1.1",
+    "owner": null,
+    "target": null,
+    "comparator": null,
+    "binding": {
+      "indicator_code": "7.4-18A",
+      "source_question_ids": [
+        "F04-VD01",
+        "F04-VD02",
+        "F04-VD03",
+        "F04-VD04",
+        "F04-VD05"
+      ],
+      "formula_id": "ADMIN_MEAN",
+      "formula_version": "1.1",
+      "group_codes": [
+        "ST1",
+        "ST2"
+      ],
+      "minimum_answered": 4,
+      "series_dimensions": [
+        "person",
+        "role",
+        "appointment_dates",
+        "programme"
+      ],
+      "requires_configured_appointment": true
+    },
+    "blueprint_requirements": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      24,
+      25,
+      26,
+      28,
+      31,
+      33
+    ]
+  },
+  {
+    "code": "7.4-18B",
+    "original_name": null,
+    "original_name_status": "awaiting_original_indicator_PDF_not_supplied",
+    "display_name": {
+      "th": "ทำความเข้าใจและกำหนดวิธีดำเนินภารกิจที่ได้รับมอบหมายชัดเจน / ประสานผู้เกี่ยวข้องเพื่อดำเนินงานตามภารกิจ / สนับสนุนผู้ปฏิบัติงานและแก้ปัญหาในขอบเขตหน้าที่ / ติดตามและรายงานความก้าวหน้าของงานที่ได้รับมอบหมาย / ปรับปรุงวิธีดำเนินงานจากข้อเสนอแนะและผลติดตาม",
+      "en": null
+    },
+    "display_name_status": "derived_from_instrument_not_official_PDF_title",
+    "unit": "score_5",
+    "direction": "increase",
+    "assessment_method": "survey",
+    "instrument_version": "1.1",
+    "owner": null,
+    "target": null,
+    "comparator": null,
+    "binding": {
+      "indicator_code": "7.4-18B",
+      "source_question_ids": [
+        "F04-AS01",
+        "F04-AS02",
+        "F04-AS03",
+        "F04-AS04",
+        "F04-AS05"
+      ],
+      "formula_id": "ADMIN_MEAN",
+      "formula_version": "1.1",
+      "group_codes": [
+        "ST1",
+        "ST2"
+      ],
+      "minimum_answered": 4,
+      "series_dimensions": [
+        "person",
+        "role",
+        "appointment_dates",
+        "programme"
+      ],
+      "requires_configured_appointment": true
+    },
+    "blueprint_requirements": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      24,
+      25,
+      26,
+      28,
+      31,
+      33
+    ]
+  },
+  {
+    "code": "7.4-18C",
+    "original_name": null,
+    "original_name_status": "awaiting_original_indicator_PDF_not_supplied",
+    "display_name": {
+      "th": "วางแผนและประสานการดำเนินหลักสูตรอย่างชัดเจน / สนับสนุนอาจารย์ให้จัดการเรียนรู้ตามผลลัพธ์หลักสูตร / ประสานการดูแลและแก้ปัญหาที่เกี่ยวข้องกับผู้เรียน / ติดตามผลการดำเนินงานและคุณภาพของหลักสูตร / ใช้ผลประเมินและเสียงผู้เกี่ยวข้องพัฒนาหลักสูตร",
+      "en": null
+    },
+    "display_name_status": "derived_from_instrument_not_official_PDF_title",
+    "unit": "score_5",
+    "direction": "increase",
+    "assessment_method": "survey",
+    "instrument_version": "1.1",
+    "owner": null,
+    "target": null,
+    "comparator": null,
+    "binding": {
+      "indicator_code": "7.4-18C",
+      "source_question_ids": [
+        "F04-PC01",
+        "F04-PC02",
+        "F04-PC03",
+        "F04-PC04",
+        "F04-PC05"
+      ],
+      "formula_id": "ADMIN_MEAN",
+      "formula_version": "1.1",
+      "group_codes": [
+        "ST1",
+        "ST2"
+      ],
+      "minimum_answered": 4,
+      "series_dimensions": [
+        "person",
+        "role",
+        "appointment_dates",
+        "programme"
+      ],
+      "requires_configured_appointment": true
+    },
+    "blueprint_requirements": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      24,
+      25,
+      26,
+      28,
+      31,
+      33
+    ]
+  },
+  {
+    "code": "7.4-2",
+    "original_name": null,
+    "original_name_status": "awaiting_original_indicator_PDF_not_supplied",
+    "display_name": {
+      "th": "การส่งต่อข้อมูลและการประสานงานภายในองค์กรโดยรวม",
+      "en": null
+    },
+    "display_name_status": "derived_from_instrument_not_official_PDF_title",
+    "unit": "score_5",
+    "direction": "increase",
+    "assessment_method": "survey",
+    "instrument_version": "1.1",
+    "owner": null,
+    "target": null,
+    "comparator": null,
+    "binding": {
+      "indicator_code": "7.4-2",
+      "source_question_ids": [
+        "F03-S09"
+      ],
+      "formula_id": "MEAN_5",
+      "formula_version": "1.1",
+      "group_codes": [
+        "ST1",
+        "ST2"
+      ]
+    },
+    "blueprint_requirements": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      24,
+      25,
+      26,
+      28,
+      31,
+      33
+    ]
+  },
+  {
+    "code": "7.4-3",
+    "original_name": null,
+    "original_name_status": "awaiting_original_indicator_PDF_not_supplied",
+    "display_name": {
+      "th": "ร้อยละของผู้ตอบที่ประเมินตนเองว่ามีความเข้าใจวิสัยทัศน์ตามเกณฑ์",
+      "en": null
+    },
+    "display_name_status": "derived_from_instrument_not_official_PDF_title",
+    "unit": "percent",
+    "direction": "increase",
+    "assessment_method": "self_report",
+    "instrument_version": "1.1",
+    "owner": null,
+    "target": null,
+    "comparator": null,
+    "binding": {
+      "indicator_code": "7.4-3",
+      "source_question_ids": [
+        "F06-K01",
+        "F06-K02"
+      ],
+      "formula_id": "SELF_VISION",
+      "formula_version": "1.1",
+      "group_codes": [
+        "ST1",
+        "ST2"
+      ],
+      "denominator": "complete_scored_pair"
+    },
+    "blueprint_requirements": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      24,
+      25,
+      26,
+      28,
+      31,
+      33
+    ]
+  },
+  {
+    "code": "7.4-4",
+    "original_name": null,
+    "original_name_status": "awaiting_original_indicator_PDF_not_supplied",
+    "display_name": {
+      "th": "ร้อยละของผู้ตอบที่ประเมินตนเองว่ามีความเข้าใจค่านิยมตามเกณฑ์",
+      "en": null
+    },
+    "display_name_status": "derived_from_instrument_not_official_PDF_title",
+    "unit": "percent",
+    "direction": "increase",
+    "assessment_method": "self_report",
+    "instrument_version": "1.1",
+    "owner": null,
+    "target": null,
+    "comparator": null,
+    "binding": {
+      "indicator_code": "7.4-4",
+      "source_question_ids": [
+        "F06-K03",
+        "F06-K04",
+        "F06-K05",
+        "F06-K06"
+      ],
+      "formula_id": "SELF_VALUES",
+      "formula_version": "1.1",
+      "group_codes": [
+        "ST1",
+        "ST2"
+      ],
+      "denominator": "complete_scored_four"
+    },
+    "blueprint_requirements": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      24,
+      25,
+      26,
+      28,
+      31,
+      33
+    ]
+  },
+  {
+    "code": "7.4-6",
+    "original_name": null,
+    "original_name_status": "awaiting_original_indicator_PDF_not_supplied",
+    "display_name": {
+      "th": "ร้อยละของผู้ตอบที่ประเมินตนเองว่าปฏิบัติตามค่านิยม SEUP ตามเกณฑ์",
+      "en": null
+    },
+    "display_name_status": "derived_from_instrument_not_official_PDF_title",
+    "unit": "percent",
+    "direction": "increase",
+    "assessment_method": "self_report",
+    "instrument_version": "1.1",
+    "owner": null,
+    "target": null,
+    "comparator": null,
+    "binding": {
+      "indicator_code": "7.4-6",
+      "source_question_ids": [
+        "F06-VS",
+        "F06-VE",
+        "F06-VU",
+        "F06-VP"
+      ],
+      "formula_id": "SELF_BEHAVIOUR",
+      "formula_version": "1.1",
+      "group_codes": [
+        "ST1",
+        "ST2"
+      ],
+      "series_dimensions": [
+        "S",
+        "E",
+        "U",
+        "P",
+        "overall"
+      ],
+      "examples_affect_score": false
+    },
+    "blueprint_requirements": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      24,
+      25,
+      26,
+      28,
+      31,
+      33
+    ]
+  },
+  {
+    "code": "7.4-7",
+    "original_name": null,
+    "original_name_status": "awaiting_original_indicator_PDF_not_supplied",
+    "display_name": {
+      "th": "ท่านพึงพอใจต่อการสื่อสารของวิทยาลัยฯ โดยรวมเพียงใด",
+      "en": null
+    },
+    "display_name_status": "derived_from_instrument_not_official_PDF_title",
+    "unit": "percent",
+    "direction": "increase",
+    "assessment_method": "survey",
+    "instrument_version": "1.1",
+    "owner": null,
+    "target": null,
+    "comparator": null,
+    "binding": {
+      "indicator_code": "7.4-7",
+      "source_question_ids": [
+        "F01-C01"
+      ],
+      "formula_id": "SAT_TOP2",
+      "formula_version": "1.1",
+      "group_codes": [
+        "C1",
+        "C2.1",
+        "C2.2",
+        "C3.1"
+      ]
+    },
+    "blueprint_requirements": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      24,
+      25,
+      26,
+      28,
+      31,
+      33
+    ]
+  },
+  {
+    "code": "7.4-8",
+    "original_name": null,
+    "original_name_status": "awaiting_original_indicator_PDF_not_supplied",
+    "display_name": {
+      "th": "ก่อนตอบแบบนี้ ท่านเคยได้รับการสื่อสารเกี่ยวกับวิสัยทัศน์หรือค่านิยมของวิทยาลัยฯ หรือไม่: เคย / ไม่เคย / จำไม่ได้ / ข้อใดใกล้เคียงเป้าหมายหลักของวิทยาลัยการศึกษามากที่สุด / ทิศทางการพัฒนานวัตกรรมทางการศึกษาที่สอดคล้องกับวิสัยทัศน์คือข้อใด / พฤติกรรมใดสอดคล้องกับ Service Mind มากที่สุด / พฤติกรรมใดสอดคล้องกับ Ethics and Excellence of Education มากที่สุด / พฤติกรรมใดสอดคล้องกับ Unity มากที่สุด / พฤติกรรมใดสอดคล้องกับ Professional มากที่สุด",
+      "en": null
+    },
+    "display_name_status": "derived_from_instrument_not_official_PDF_title",
+    "unit": "percent",
+    "direction": "increase",
+    "assessment_method": "survey",
+    "instrument_version": "1.1",
+    "owner": null,
+    "target": null,
+    "comparator": null,
+    "binding": {
+      "indicator_code": "7.4-8",
+      "source_question_ids": [
+        "F01-K00",
+        "F01-K01",
+        "F01-K02",
+        "F01-K03",
+        "F01-K04",
+        "F01-K05",
+        "F01-K06"
+      ],
+      "formula_id": "K_EXTERNAL",
+      "formula_version": "1.1",
+      "group_codes": [
+        "C1",
+        "C2.1",
+        "C2.2",
+        "C3.1"
+      ]
+    },
+    "blueprint_requirements": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      24,
+      25,
+      26,
+      28,
+      31,
+      33
+    ]
+  },
+  {
+    "code": "7.4-9",
+    "original_name": null,
+    "original_name_status": "awaiting_original_indicator_PDF_not_supplied",
+    "display_name": {
+      "th": "ท่านพึงพอใจต่อการสื่อสารของวิทยาลัยฯ เพียงใด",
+      "en": null
+    },
+    "display_name_status": "derived_from_instrument_not_official_PDF_title",
+    "unit": "percent",
+    "direction": "increase",
+    "assessment_method": "survey",
+    "instrument_version": "1.1",
+    "owner": null,
+    "target": null,
+    "comparator": null,
+    "binding": {
+      "indicator_code": "7.4-9",
+      "source_question_ids": [
+        "F02-C01"
+      ],
+      "formula_id": "SAT_TOP2",
+      "formula_version": "1.1",
+      "group_codes": [
+        "C4.1",
+        "C5.1",
+        "C5.2",
+        "C5.3"
+      ]
+    },
+    "blueprint_requirements": [
+      1,
+      2,
+      6,
+      10,
+      11,
+      12,
+      13,
+      17,
+      24,
+      25,
+      26,
+      28,
+      31,
+      33
+    ]
+  }
+]

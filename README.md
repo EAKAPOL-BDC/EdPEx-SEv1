@@ -7,6 +7,11 @@ attachments are optional.
 See [คู่มือการตั้งค่าและตรวจสอบ](docs/setup-th.md) for the PostgreSQL/Supabase
 safety model and Thai verification instructions.
 
+See [คู่มือเตรียมติดตั้ง migrations บน Supabase development](docs/supabase-development-migrations-th.md)
+for the manual plan/apply workflow, existing secret names, backup/restore preparation,
+and checks that preserve existing Django accounts. The workflow defaults to read-only
+planning; this preparation does not apply migrations to Supabase or deploy the app.
+
 M0 source documents and offline catalogs are available in `docs/source/` and
 `catalog/`. See [ทะเบียน M0 และวิธีตรวจโดยไม่เชื่อมฐานข้อมูล](docs/m0-catalog.md)
 for all 63 indicator bindings, F01–F06 questions, formula/group registries,

@@ -66,6 +66,8 @@ checker ส่ง `SELECT 1` ใน transaction อ่านอย่างเ�
 3. อนุมัติ Environment ตามกฎ แล้วอ่านผล job `plan` เก็บลิงก์ run และ SHA เต็มไว้ในบันทึกติดตั้ง
 4. ตรวจรายการ migrations ที่ใช้แล้วและรายการที่ยังรอติดตั้งพร้อมลำดับ เทียบกับไฟล์ migrations
    ของ commit ที่แสดงในผล อ่านความหมายของตารางใน [คู่มือ M1](m1-schema-th.md)
+   ตรวจรายการ `schema_exceptions` ในผล JSON ของ plan และรายการข้อยกเว้นใน GitHub job summary
+   ซึ่งระบุ migration, table, column และ operation ที่ยอมให้เปลี่ยนตามแผนอย่างชัดเจน
 5. เก็บ **plan hash** จากผล run เพื่อกรอก `expected_plan_hash` ตอน apply
    ตรวจจำนวนบัญชี/กลุ่ม/ความสัมพันธ์สิทธิ์ Django เดิมที่รายงานแบบผลรวมด้วย
    ฐานใหม่อาจยังไม่มีตาราง auth หรือ `django_migrations`: จะยังไม่มีรายการ applied
@@ -88,9 +90,18 @@ exposed schemas หลังตรวจผลกระทบต่อผู้�
 ดู [Supabase: Securing your API](https://supabase.com/docs/guides/api/securing-your-api)
 และ [Row Level Security](https://supabase.com/docs/guides/database/postgres/row-level-security)
 
-plan hash ใช้ผูกแผนที่ตรวจรับกับ commit เนื้อหาไฟล์ migrations รุ่น Django และสถานะ migrations
-รวมปลายทาง/ผู้ใช้เชื่อมต่อในรูป hash โดยไม่พิมพ์ค่าต่อฐานข้อมูล; ไม่ใช่ backup หรือ checksum
-ของข้อมูลทั้งหมด หากมีการเปลี่ยนสิ่งเหล่านี้ระหว่าง plan กับ apply
+ข้อยกเว้น schema ที่รองรับมีเพียงการลบ `django_content_type.name` ตาม
+`contenttypes.0002_remove_content_type_name` เมื่อ migration นี้อยู่ในรายการ pending ของแผนจริง
+และมี operation `RemoveField(model_name="contenttype", name="name")` ตรงตามที่ตรวจรับ
+ผล `schema_exceptions` จะระบุ migration นี้, table `django_content_type`, column `name`
+และ operation `remove_column` ซึ่งมาจาก Django operation `RemoveField` ข้างต้น
+หากเงื่อนไขไม่ครบ จะไม่มีสิทธิ์ข้ามการตรวจคอลัมน์นี้
+การตรวจหลัง apply ยอมรับการลบได้ต่อเมื่อประวัติ `django_migrations` บันทึก migration นี้สำเร็จแล้วด้วย
+runner ไม่ข้ามคอลัมน์ที่หายไปแบบทั่วไป และยังตรวจคอลัมน์กับข้อมูลเดิมส่วนที่เหลือครบตามข้อ 6
+
+plan hash ใช้ผูกแผนที่ตรวจรับกับ commit เนื้อหาไฟล์ migrations รุ่น Django สถานะ migrations
+และรายการ `schema_exceptions` รวมปลายทาง/ผู้ใช้เชื่อมต่อในรูป hash โดยไม่พิมพ์ค่าต่อฐานข้อมูล;
+ไม่ใช่ backup หรือ checksum ของข้อมูลทั้งหมด หากมีการเปลี่ยนสิ่งเหล่านี้ระหว่าง plan กับ apply
 ต้องรัน plan ใหม่ อ่านผลใหม่ และใช้ hash ใหม่ ไม่มีตัวเลือกข้ามการตรวจนี้
 
 ## 4. เตรียมสำรองและซ้อมกู้คืนข้อมูลเดิม
@@ -162,7 +173,8 @@ pg_restore --dbname=service=edpex_restore_isolated --use-list=edpex-app-restore.
 3. กรอก `commit_sha` เป็น SHA เต็ม 40 ตัวที่แสดงใน plan, `expected_plan_hash` เป็น hash ของ
    plan นั้น และ `backup_reference` เป็นรหัสหลักฐานสำรอง/ซ้อมกู้คืนที่ไม่เป็นความลับ
    inputs เหล่านี้แสดงใน metadata ของ workflow จึงห้ามใส่ค่าลับ
-4. ผู้ตรวจ Environment ตรวจ SHA, ลิงก์ plan, รายการ migrations และหลักฐานสำรอง ก่อนอนุมัติ
+4. ผู้ตรวจ Environment ตรวจ SHA, ลิงก์ plan, รายการ migrations, `schema_exceptions`
+   และหลักฐานสำรอง ก่อนอนุมัติ
    workflow checkout SHA ตายตัว และปฏิเสธ SHA ที่ไม่ตรงกับ `main` ณ ตอนสร้าง run
 5. ติดตาม job `apply` จนจบ อย่ากดยกเลิกหรือเริ่มรันขนานเพื่อแก้อาการรอ
    workflow ใช้ concurrency กลุ่มเดียวของ development และ `cancel-in-progress: false`
@@ -172,17 +184,45 @@ apply เป็นงานที่เรียกเองเท่านั�
 ไม่มี `--fake`, reset, seed หรือ deploy รวมอยู่ด้วย การกรอก `backup_reference` ไม่ได้สร้าง
 หรือตรวจความสมบูรณ์ของ backup ให้แทนผู้ดูแล
 
-หาก apply ล้มเหลว ให้คงช่วงหยุดเขียน ตรวจผลและรัน plan แบบอ่านอย่างเดียวเพื่อทราบรายการที่ใช้แล้ว
-Django อาจ commit migrations ก่อนหน้าที่สำเร็จแล้ว การรันทั้งชุดไม่ใช่ transaction เดียว
-จึงอย่าอ้างว่าล้มเหลวแล้วฐานกลับสภาพเดิมทั้งหมด ห้ามใช้ `--fake` แก้ชื่อให้ตรงหรือย้อน migration
-โดยไม่วิเคราะห์ ให้ผู้ดูแลตัดสินใจแก้ไปข้างหน้าหรือใช้แผนกู้คืนที่ซ้อมไว้ บันทึกจุดข้อมูลที่จะสูญเสีย
-และขออนุมัติการกู้คืนจริงก่อนเปลี่ยนปลายทาง งานนี้ไม่มีคำสั่ง restore ฐานจริงอัตโนมัติ
+หาก apply ล้มเหลว ให้แยกผลสองกรณีจากข้อความที่ไม่มีรายละเอียดข้อมูลหรือการเชื่อมต่อ:
+
+- `Migration execution failed: migration_execution_failed. Earlier migrations may already be committed.`
+  หมายถึงคำสั่ง migrate ล้มเหลว โดย migrations ก่อนหน้าที่สำเร็จอาจ commit ไปแล้ว
+- `Migrate command completed, but post-apply verification failed: CODE. Committed changes were not rolled back.`
+  หมายถึงคำสั่ง migrate จบแล้ว แต่การตรวจหลังติดตั้งไม่ผ่าน รหัส `CODE` เป็นรหัสคงที่ที่ปลอดภัย เช่น
+  `legacy_schema_changed` เมื่อตารางหรือคอลัมน์เดิมหายนอกข้อยกเว้น,
+  `legacy_auth_changed` เมื่อข้อมูลแถวเดิมเปลี่ยนหรือหาย,
+  `migrations_still_pending` เมื่อยังมี migrations ค้าง หรือ
+  `post_apply_verification_error` เมื่อการตรวจหลังติดตั้งเกิดข้อผิดพลาดอื่น
+  หากเกิด `connection_cleanup_failed` หมายถึงการปลด lock หรือปิด connection ไม่สำเร็จ
+  ระบบยังรายงานขั้นตอนที่เกิดปัญหา และไม่อ้างว่าการเปลี่ยนแปลงที่ commit แล้วถูกย้อนกลับ
+
+ทั้งสองกรณีจบด้วย exit code ที่ไม่เป็นศูนย์ และไม่รายงาน apply สำเร็จ
+ผลสำเร็จจะออกได้เมื่อ migrate จบ การตรวจหลังติดตั้งผ่าน และรายการ pending ว่างทั้งหมดเท่านั้น
+การรันทั้งชุดไม่ใช่ transaction เดียว และการตรวจพบปัญหาไม่ได้ย้อนการเปลี่ยนแปลงที่ commit แล้ว
+
+ให้คงช่วงหยุดเขียนและรัน plan แบบอ่านอย่างเดียวเพื่อดูสถานะจริงหลังล้มเหลว
+ตรวจรายการที่ใช้แล้ว/ที่ยัง pending เทียบกับผล run และหลักฐานสำรอง จากนั้นวิเคราะห์และแก้สาเหตุ
+ก่อนรัน plan ใหม่อีกครั้ง ตรวจรับ SHA, hash, รายการ migrations และ `schema_exceptions` ใหม่
+แล้วจึง apply ตามขั้นตอนอนุมัติเดิม ห้ามนำ hash หรือข้อยกเว้นจากแผนที่ล้มเหลวมาใช้ต่อโดยอัตโนมัติ:
+ข้อยกเว้นต้องมาจาก migrations ที่ยัง pending จริงในแผนใหม่ หาก contenttypes migration ข้างต้น
+commit ไปแล้ว แผนใหม่จะไม่อนุญาตข้อยกเว้นการลบ `name` ซ้ำ
+plan ที่ผ่านหรือ pending ที่ว่างไม่ได้ยืนยันย้อนหลังว่าข้อมูลก่อน run ที่ล้มเหลวยังคงครบ
+จึงต้องเทียบข้อมูลเดิมกับหลักฐานสำรองในช่องทางส่วนตัวก่อนรับผลและเปิดการเขียนอีกครั้ง
+
+ห้ามใช้ `--fake`, reset หรือย้อน migration เพื่อทำให้การตรวจผ่านโดยไม่วิเคราะห์
+หากต้องใช้แผนกู้คืนที่ซ้อมไว้ ให้ผู้ดูแลประเมินจุดข้อมูลที่จะสูญเสียและขออนุมัติการกู้คืนจริง
+ก่อนเปลี่ยนปลายทาง งานนี้ไม่มีคำสั่ง restore ฐานจริงอัตโนมัติ
 
 ## 6. ตรวจ migrations และบัญชีเดิมหลังติดตั้ง
 
 1. ตรวจว่า apply จบสำเร็จและ SHA ในผลตรงที่อนุมัติ runner เปรียบเทียบข้อมูล auth เดิมก่อน/หลัง
    ในหน่วยความจำและรายงานผลรวม ไม่พิมพ์ usernames, อีเมล หรือ password hashes
-   หากพบข้อมูลเดิมเปลี่ยนจะถือว่าไม่ผ่าน; การตรวจพบไม่ได้ย้อน migrations ที่ commit ไปแล้ว
+   ตรวจ primary key/ค่ารหัสผ่านเดิม กลุ่ม สิทธิ์ ตารางเชื่อมความสัมพันธ์ และแถวประวัติ migrations เดิม
+   อย่างเคร่งครัด รวมข้อมูลเดิมของ `django_content_type` ในคอลัมน์ที่ยังคงอยู่
+   ยอมให้ลบเฉพาะ `django_content_type.name` ตามข้อยกเว้นที่ตรวจรับใน plan และยืนยันประวัติติดตั้งแล้ว
+   หากตารางหรือคอลัมน์เดิมหายนอกข้อยกเว้น หรือแถวเดิมส่วนที่ต้องรักษาถูกแก้ไข/ลบ จะถือว่าไม่ผ่าน
+   การเพิ่มข้อมูลระบบตาม migrations ไม่ได้อนุญาตให้แก้แถวเดิม; การตรวจพบไม่ได้ย้อน migrations ที่ commit ไปแล้ว
 2. รัน `plan` อีกครั้งที่ commit เดียวกัน รายการ pending ต้องว่าง ประวัติที่เคยใช้แล้วต้องยังอยู่
    เก็บลิงก์ผลตรวจคู่กับ apply run และ backup reference
 3. ผู้ดูแลตรวจบัญชีเดิมในช่องทางส่วนตัว: primary key/รหัสผ่าน/กลุ่ม/สิทธิ์เดิมและ membership/grant

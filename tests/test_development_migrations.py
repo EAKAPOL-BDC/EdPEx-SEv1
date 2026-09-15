@@ -198,6 +198,36 @@ class DevelopmentMigrationTests(unittest.TestCase):
             self.db.close()
             self.db.settings_dict["OPTIONS"] = {}
 
+    def replace_startup_options(self, replacement):
+        """Simulate changed startup GUCs while opening a real loopback connection."""
+        real_open = self.db.get_new_connection
+
+        def open_with_changed_options(parameters):
+            changed = dict(parameters)
+            if replacement is None:
+                changed.pop("options", None)
+            else:
+                changed["options"] = replacement
+            return real_open(changed)
+
+        return patch.object(self.db, "get_new_connection", side_effect=open_with_changed_options)
+
+    def main_plan(self):
+        """Run the actual CLI entry point with our isolated database alias."""
+        real_run = self.runner.run
+        stdout, stderr = StringIO(), StringIO()
+        try:
+            with patch.object(self.runner, "run", side_effect=lambda *args, **kwargs:
+                              real_run(*args, database=self.alias, **kwargs)), \
+                    patch.dict(os.environ, {"GITHUB_STEP_SUMMARY": ""}), \
+                    redirect_stdout(stdout), redirect_stderr(stderr):
+                code = self.runner.main(["--settings", "edpex.testing", "--mode", "plan",
+                                         "--commit", self.commit])
+            return code, stdout.getvalue(), stderr.getvalue()
+        finally:
+            self.db.close()
+            self.db.settings_dict["OPTIONS"] = {}
+
     def test_empty_plan_has_no_recorder_and_preserves_existing_unrelated_data(self):
         with self.db.cursor() as cursor:
             cursor.execute("CREATE TABLE synthetic_existing_data (id integer PRIMARY KEY, value text)")
@@ -210,6 +240,12 @@ class DevelopmentMigrationTests(unittest.TestCase):
         self.assertEqual(plan["applied"], [])
         self.assertTrue(plan["pending"])
         self.assertRegex(plan["plan_hash"], r"^[0-9a-f]{64}$")
+        # Direct PostgreSQL control case: our actual startup options take
+        # effect before SET, unlike the deliberately altered transport tests.
+        diagnostics = plan["session_diagnostics"]
+        self.assertEqual(diagnostics["before"]["transaction_read_only"], "on")
+        self.assertEqual(diagnostics["before"], diagnostics["expected"])
+        self.assertEqual(diagnostics["after"], diagnostics["expected"])
         self.assertEqual(self.tables_and_rows(), before)
 
     def test_existing_auth_plan_preserves_all_tables_and_migration_rows(self):
@@ -220,6 +256,163 @@ class DevelopmentMigrationTests(unittest.TestCase):
         self.assertTrue(plan["pending"])
         self.assertEqual(self.tables_and_rows(), before)
         self.assertEqual(self.run_plan()["plan_hash"], plan["plan_hash"])
+
+    def test_plan_recovers_read_only_session_when_startup_options_are_absent(self):
+        with self.db.cursor() as cursor:
+            cursor.execute("CREATE TABLE synthetic_session_sentinel (id integer PRIMARY KEY, value text)")
+            cursor.execute("INSERT INTO synthetic_session_sentinel VALUES (1, 'preserve existing data')")
+        before = self.tables_and_rows()
+        with self.replace_startup_options(None):
+            report = self.run_plan()
+        self.assertEqual(report["mode"], "plan")
+        self.assertTrue(report["pending"])
+        diagnostics = report["session_diagnostics"]
+        self.assertEqual(diagnostics["stage"], "verified")
+        self.assertEqual(diagnostics["before"]["default_transaction_read_only"], "off")
+        self.assertEqual(diagnostics["before"]["transaction_read_only"], "off")
+        self.assertEqual(diagnostics["after"], diagnostics["expected"])
+        self.assertEqual(diagnostics["after"]["transaction_read_only"], "on")
+        self.assertEqual(self.tables_and_rows(), before)
+        self.assertNotIn("django_migrations", self.tables_and_rows())
+
+    def test_explicit_session_settings_correct_all_overridden_startup_values(self):
+        original_inspect = self.runner.inspect_plan
+        observed = []
+
+        def inspect_configured_session(connection, commit):
+            with connection.cursor() as cursor:
+                cursor.execute("""SELECT current_setting('default_transaction_read_only'),
+                    current_setting('transaction_read_only'), current_setting('search_path'),
+                    (SELECT setting::integer FROM pg_settings WHERE name='lock_timeout'),
+                    (SELECT setting::integer FROM pg_settings WHERE name='statement_timeout')""")
+                observed.append(cursor.fetchone())
+            return original_inspect(connection, commit)
+
+        replacement = ("-c default_transaction_read_only=off "
+                       "-c search_path=synthetic_private_schema_938475 "
+                       "-c lock_timeout=123 -c statement_timeout=456")
+        with self.replace_startup_options(replacement), \
+                patch.object(self.runner, "inspect_plan", side_effect=inspect_configured_session):
+            report = self.run_plan()
+        self.assertEqual(observed, [("on", "on", "public", 5000, 900000)])
+        diagnostics = report["session_diagnostics"]
+        self.assertEqual(diagnostics["before"], {
+            "django_autocommit": True, "driver_autocommit": True,
+            "default_transaction_read_only": "off", "transaction_read_only": "off",
+            "search_path": "other", "lock_timeout_ms": 123, "statement_timeout_ms": 456,
+        })
+        self.assertEqual(diagnostics["after"], diagnostics["expected"])
+        self.assertNotIn("synthetic_private_schema_938475", json.dumps(report))
+        self.assertEqual(self.tables_and_rows(), {})
+
+    def test_apply_corrects_an_initial_read_only_session_before_real_migrate(self):
+        plan = self.run_plan()
+        with self.replace_startup_options("-c default_transaction_read_only=on"):
+            report = self.run_apply(plan)
+        diagnostics = report["session_diagnostics"]
+        self.assertEqual(diagnostics["before"]["transaction_read_only"], "on")
+        self.assertEqual(diagnostics["after"], diagnostics["expected"])
+        self.assertEqual(diagnostics["after"]["transaction_read_only"], "off")
+        self.assertTrue(report["auth_preserved"])
+        self.assertTrue(report["no_pending_afterapply"])
+        self.assertEqual(self.run_plan()["pending"], [])
+
+    def test_failed_session_set_stops_before_lock_and_inspection_with_safe_diagnostics(self):
+        from django.db import OperationalError
+        from django.db.backends.utils import CursorWrapper
+        real_execute = CursorWrapper.execute
+        statements = []
+        marker = "synthetic-session-secret-do-not-echo"
+
+        def deny_set(cursor, sql, params=None):
+            statement = str(sql).strip()
+            if cursor.db is self.db:
+                statements.append(statement)
+                if statement.startswith("SET SESSION search_path"):
+                    raise OperationalError(marker)
+            return real_execute(cursor, sql, params)
+
+        before = self.tables_and_rows()
+        with self.replace_startup_options(None), \
+                patch.object(CursorWrapper, "execute", autospec=True, side_effect=deny_set), \
+                patch.object(self.runner, "inspect_plan", wraps=self.runner.inspect_plan) as inspected:
+            code, stdout, stderr = self.main_plan()
+        self.assertEqual(code, 1)
+        self.assertIn("Migration preparation failed: session_configuration_failed.", stderr)
+        self.assertIn('"stage": "configure"', stderr)
+        self.assertIn('"default_transaction_read_only": "off"', stderr)
+        self.assertNotIn(marker, stdout + stderr)
+        self.assertNotIn(self.name, stdout + stderr)
+        self.assertNotIn("Traceback", stdout + stderr)
+        inspected.assert_not_called()
+        self.assertFalse(any("pg_try_advisory_lock" in sql for sql in statements))
+        self.assertEqual(self.tables_and_rows(), before)
+        self.assertNotIn("django_migrations", self.tables_and_rows())
+
+    def test_session_readback_rejects_each_ignored_set_before_lock_and_inspection(self):
+        from django.db.backends.utils import CursorWrapper
+        real_execute = CursorWrapper.execute
+        initial = ("-c default_transaction_read_only=off -c search_path=pg_catalog "
+                   "-c lock_timeout=123 -c statement_timeout=456")
+        cases = (
+            ("default_transaction_read_only", "session_mode_mismatch", "transaction_read_only", "off"),
+            ("search_path", "session_settings_mismatch", "search_path", "other"),
+            ("lock_timeout", "session_settings_mismatch", "lock_timeout_ms", 123),
+            ("statement_timeout", "session_settings_mismatch", "statement_timeout_ms", 456),
+        )
+        for setting, error_code, diagnostic_key, actual in cases:
+            with self.subTest(setting=setting):
+                statements = []
+
+                def ignore_one_set(cursor, sql, params=None):
+                    statement = str(sql).strip()
+                    if cursor.db is self.db:
+                        statements.append(statement)
+                        if statement.startswith("SET SESSION " + setting + " "):
+                            # The server retains the real, incorrect startup
+                            # value. The runner must catch it via fresh readback.
+                            return real_execute(cursor, "SELECT 1")
+                    return real_execute(cursor, sql, params)
+
+                with self.replace_startup_options(initial), \
+                        patch.object(CursorWrapper, "execute", autospec=True, side_effect=ignore_one_set), \
+                        patch.object(self.runner, "inspect_plan", wraps=self.runner.inspect_plan) as inspected:
+                    with self.assertRaises(self.runner.MigrationPreparationError) as rejected:
+                        self.run_plan()
+                self.assertEqual(rejected.exception.code, error_code)
+                self.assertEqual(rejected.exception.phase, "preparation")
+                self.assertEqual(rejected.exception.diagnostics["stage"], "verify")
+                self.assertEqual(rejected.exception.diagnostics["after"][diagnostic_key], actual)
+                inspected.assert_not_called()
+                self.assertFalse(any("pg_try_advisory_lock" in sql for sql in statements))
+                self.assertEqual(self.tables_and_rows(), {})
+
+    def test_existing_non_autocommit_session_is_rejected_without_committing(self):
+        with self.db.cursor() as cursor:
+            cursor.execute("CREATE TABLE synthetic_uncommitted_session (id integer PRIMARY KEY)")
+        for driver_only in (False, True):
+            with self.subTest(driver_only=driver_only):
+                self.db.ensure_connection()
+                if driver_only:
+                    self.db.connection.autocommit = False
+                    self.assertTrue(self.db.get_autocommit())
+                else:
+                    self.db.set_autocommit(False)
+                with self.db.cursor() as cursor:
+                    cursor.execute("INSERT INTO synthetic_uncommitted_session VALUES (1)")
+                with patch.object(self.db, "commit", wraps=self.db.commit) as committed, \
+                        patch.object(self.db, "set_autocommit", wraps=self.db.set_autocommit) as changed, \
+                        patch.object(self.runner, "inspect_plan", wraps=self.runner.inspect_plan) as inspected:
+                    with self.assertRaises(self.runner.MigrationPreparationError) as rejected:
+                        self.run_plan()
+                self.assertEqual(rejected.exception.code, "session_autocommit_required")
+                self.assertEqual(rejected.exception.diagnostics["stage"], "preflight")
+                self.assertFalse(rejected.exception.diagnostics["before"]["driver_autocommit"])
+                committed.assert_not_called()
+                changed.assert_not_called()
+                inspected.assert_not_called()
+                self.assertIsNone(self.db.connection)
+                self.assertEqual(self.tables_and_rows(), {"synthetic_uncommitted_session": []})
 
     def test_plan_database_transaction_refuses_accidental_write(self):
         from django.db import DatabaseError
@@ -235,7 +428,8 @@ class DevelopmentMigrationTests(unittest.TestCase):
                 cursor.execute("CREATE TABLE accidental_plan_write (id integer)")
             return original(executor, *args, **kwargs)
 
-        with patch.object(MigrationExecutor, "migration_plan", attempt_write):
+        with self.replace_startup_options(None), \
+                patch.object(MigrationExecutor, "migration_plan", attempt_write):
             with self.assertRaises(DatabaseError) as rejected:
                 self.run_plan()
         self.assertEqual(observed.get("read_only"), "on")

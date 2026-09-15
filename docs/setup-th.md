@@ -3,6 +3,11 @@
 โครงการอ้างอิง System Blueprint 1.2 และเครื่องมือ 1.1 โดยคงขอบเขตไทย–อังกฤษ F01–F06;
 F06 เป็นการประเมินตนเองและ **ไม่บังคับแนบหลักฐาน** เอกสารนี้ไม่ใช่ขั้นตอน deploy
 
+ขั้นตอนเตรียมติดตั้ง migrations แบบ `plan`/`apply` การตั้ง Environment `development`
+การสำรอง/ซ้อมกู้คืน และการตรวจบัญชีเดิม อยู่ใน
+[คู่มือ Supabase development migrations](supabase-development-migrations-th.md)
+ยังไม่ apply ไปยัง Supabase ในงานเตรียมนี้
+
 ## หลักการฐานข้อมูล
 
 - ใช้ Django migrations เป็นแหล่งหลักเพียงระบบเดียวสำหรับโครงสร้างตารางของแอป
@@ -28,9 +33,11 @@ Workflow `Test` ทำขั้นตอนนี้อัตโนมัติ�
 
 ## กดตรวจ Supabase แบบอ่านอย่างเดียว
 
-1. เปิดแท็บ **Actions** ของ repository
+1. ให้ผู้ดูแลตั้ง Environment `development` กฎอนุมัติ/สาขา `main` และ secrets ชื่อเดิมทั้งห้า
+   ตามคู่มือข้างต้น แล้วเปิดแท็บ **Actions** ของ repository
 2. เลือก **Test Supabase connection**
-3. กด **Run workflow** เลือก branch ที่ต้องการ แล้วกด **Run workflow** อีกครั้ง
+3. กด **Run workflow** เลือก branch `main` แล้วกด **Run workflow** อีกครั้ง
+   อนุมัติ Environment ตามกฎที่ตั้งไว้
 4. ตรวจว่า step `Run read-only connection check` แสดงข้อความว่าสำเร็จ
 
 Workflow นี้ทำงานเมื่อกด `workflow_dispatch` เท่านั้น ใช้ TLS เปิด transaction แบบ read-only

@@ -1,0 +1,141 @@
+name: Supabase development migrations
+run-name: Development migrations / ${{ inputs.mode }} / ${{ github.sha }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "plan = inspect only; apply = install the reviewed plan"
+        type: choice
+        options: [plan, apply]
+        default: plan
+        required: true
+      commit_sha:
+        description: "Full main commit SHA; required for apply, optional for plan"
+        type: string
+        default: ""
+        required: false
+      expected_plan_hash:
+        description: "Apply only: copy the SHA-256 hash from a successful plan"
+        type: string
+        default: ""
+        required: false
+      backup_reference:
+        description: "Apply only: non-secret backup reference (1-120 ASCII characters)"
+        type: string
+        default: ""
+        required: false
+
+permissions:
+  contents: read
+
+# One queue for plan and apply across all commits in this repository.
+concurrency:
+  group: supabase-development-migrations
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    outputs:
+      mode: ${{ steps.request.outputs.mode }}
+      commit_sha: ${{ steps.request.outputs.commit_sha }}
+    steps:
+      - name: Validate main commit and explicit apply request
+        id: request
+        env:
+          INPUT_MODE: ${{ inputs.mode }}
+          INPUT_COMMIT_SHA: ${{ inputs.commit_sha }}
+          INPUT_EXPECTED_PLAN_HASH: ${{ inputs.expected_plan_hash }}
+          INPUT_BACKUP_REFERENCE: ${{ inputs.backup_reference }}
+        run: |
+          python - <<'PY'
+          import os
+          import re
+
+          def reject(message):
+              raise SystemExit(message)
+
+          if os.environ.get("GITHUB_EVENT_NAME") != "workflow_dispatch":
+              reject("Only a manual workflow dispatch is allowed.")
+          if os.environ.get("GITHUB_REF") != "refs/heads/main":
+              reject("Select the main branch before running this workflow.")
+          mode = os.environ.get("INPUT_MODE", "plan")
+          if mode not in {"plan", "apply"}:
+              reject("Mode must be plan or apply.")
+          commit = os.environ.get("GITHUB_SHA", "")
+          target = os.environ.get("INPUT_COMMIT_SHA") or commit
+          if not re.fullmatch(r"[0-9a-f]{40}", target) or target != commit:
+              reject("The target must be the full SHA of this main workflow run.")
+          if mode == "apply":
+              if not os.environ.get("INPUT_COMMIT_SHA"):
+                  reject("Apply requires an explicit full commit SHA matching the reviewed plan.")
+              if not re.fullmatch(r"[0-9a-f]{64}", os.environ.get("INPUT_EXPECTED_PLAN_HASH", "")):
+                  reject("Apply requires the SHA-256 hash from a successful plan.")
+              if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._/-]{0,119}", os.environ.get("INPUT_BACKUP_REFERENCE", "")):
+                  reject("Apply requires a short non-secret backup reference; do not enter credentials or signed URLs.")
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as output:
+              output.write(f"mode={mode}\ncommit_sha={commit}\n")
+          print(f"Validated development migration request: {mode}, commit {commit}.")
+          PY
+
+  plan:
+    needs: validate
+    if: needs.validate.outputs.mode == 'plan'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: development
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Inspect status and plan without database writes
+        env:
+          DJANGO_DATABASE_PROFILE: supabase
+          SUPABASE_DEV_DB_HOST: ${{ secrets.SUPABASE_DEV_DB_HOST }}
+          SUPABASE_DEV_DB_PORT: ${{ secrets.SUPABASE_DEV_DB_PORT }}
+          SUPABASE_DEV_DB_NAME: ${{ secrets.SUPABASE_DEV_DB_NAME }}
+          SUPABASE_DEV_DB_USER: ${{ secrets.SUPABASE_DEV_DB_USER }}
+          SUPABASE_DEV_DB_PASSWORD: ${{ secrets.SUPABASE_DEV_DB_PASSWORD }}
+          TARGET_COMMIT_SHA: ${{ needs.validate.outputs.commit_sha }}
+        run: python scripts/manage_development_migrations.py --mode plan --commit "$TARGET_COMMIT_SHA"
+
+  apply:
+    needs: validate
+    if: needs.validate.outputs.mode == 'apply'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment: development
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Apply the reviewed plan and verify existing accounts
+        env:
+          DJANGO_DATABASE_PROFILE: supabase
+          SUPABASE_DEV_DB_HOST: ${{ secrets.SUPABASE_DEV_DB_HOST }}
+          SUPABASE_DEV_DB_PORT: ${{ secrets.SUPABASE_DEV_DB_PORT }}
+          SUPABASE_DEV_DB_NAME: ${{ secrets.SUPABASE_DEV_DB_NAME }}
+          SUPABASE_DEV_DB_USER: ${{ secrets.SUPABASE_DEV_DB_USER }}
+          SUPABASE_DEV_DB_PASSWORD: ${{ secrets.SUPABASE_DEV_DB_PASSWORD }}
+          TARGET_COMMIT_SHA: ${{ needs.validate.outputs.commit_sha }}
+          EXPECTED_PLAN_HASH: ${{ inputs.expected_plan_hash }}
+          BACKUP_REFERENCE: ${{ inputs.backup_reference }}
+        run: >-
+          python scripts/manage_development_migrations.py --mode apply
+          --commit "$TARGET_COMMIT_SHA"
+          --expected-plan-hash "$EXPECTED_PLAN_HASH"
+          --backup-reference "$BACKUP_REFERENCE"

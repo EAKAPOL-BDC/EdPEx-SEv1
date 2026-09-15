@@ -1,0 +1,4 @@
+{% load static %}<!doctype html>
+<html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>{% block title %}EdPEx · วิทยาลัยการศึกษา{% endblock %}</title><link rel="stylesheet" href="{% static 'portal/site.css' %}"></head>
+<body><a class="skip" href="#main">ข้ามไปเนื้อหา</a><header><a class="brand" href="{% url 'home' %}">EdPEx <small>วิทยาลัยการศึกษา · มหาวิทยาลัยพะเยา</small></a><nav aria-label="เมนูหลัก">{% if user.is_authenticated %}<a href="{% url 'workspace' %}">พื้นที่ทำงาน</a><form method="post" action="{% url 'logout' %}">{% csrf_token %}<button>ออกจากระบบ</button></form>{% else %}<a href="{% url 'login' %}">เข้าสู่ระบบ</a>{% endif %}</nav></header>
+<main id="main">{% for message in messages %}<p class="notice" role="status">{{ message }}</p>{% endfor %}{% block content %}{% endblock %}</main><footer>EdPEx · พัฒนาคุณภาพการศึกษาร่วมกัน</footer></body></html>

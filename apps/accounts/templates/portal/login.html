@@ -1,0 +1,1 @@
+{% extends 'portal/base.html' %}{% block content %}<section class="card narrow"><h1>เข้าสู่ระบบ EdPEx</h1><p>ใช้บัญชีเดียวกับที่ผู้ดูแลจัดเตรียมให้</p><form method="post">{% csrf_token %}{{ form.as_p }}<input type="hidden" name="next" value="{{ next }}"><button type="submit">เข้าสู่ระบบ</button></form></section>{% endblock %}

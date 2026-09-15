@@ -73,3 +73,21 @@ def revoke_role(*, actor, assignment):
                  metadata={"scope_id": str(assignment.scope_id), "membership_id": str(assignment.membership_id),
                            "role_id": str(assignment.role_id)})
     return assignment
+
+
+@transaction.atomic
+def add_member(*, actor, scope, username):
+    """Add an existing active account; never reactivate a revoked membership implicitly."""
+    from .models import Membership
+    scope = AccessScope.objects.get(pk=scope.pk)
+    require_permission(actor, "role.manage", scope)
+    user = get_user_model().objects.filter(username=username, is_active=True).first()
+    if user is None:
+        raise ValidationError("ไม่พบชื่อผู้ใช้ที่เปิดใช้งาน กรุณาตรวจชื่อผู้ใช้กับผู้ดูแลบัญชี")
+    member, created = Membership.objects.get_or_create(user=user, organization=scope.organization)
+    if not member.is_active:
+        raise ValidationError("สมาชิกนี้ถูกระงับแล้ว ต้องทบทวนการคืนสิทธิ์แยกต่างหาก")
+    if created:
+        record_event(scope.organization, actor, "membership.created", "Membership", member.pk,
+                     metadata={"scope_id": str(scope.pk), "membership_id": str(member.pk)})
+    return member

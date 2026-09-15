@@ -47,15 +47,86 @@ F06 ยังคงเป็น self-report ไม่บังคับหลั
 2. ใช้ **Direct connection** เป็นตัวเลือกหลักสำหรับ migrations หาก runner เข้า IPv6 ไม่ได้
    ให้ใช้ **Session pooler** ที่รักษา session เดิม ไม่ใช้ **Transaction pooler**:
    runner นี้ใช้ session read-only และ session advisory lock ซึ่งต้องคงอยู่ข้าม transaction
+   ตรวจโหมดจาก endpoint ที่เลือกใน Connect; หมายเลข port อย่างเดียวไม่พิสูจน์โหมดหรือพฤติกรรม session
 3. การเชื่อมต่อ Supabase ใน settings และ checker ใช้ `sslmode=require` ซึ่งบังคับเข้ารหัส TLS;
    ยังไม่ได้ตั้ง `verify-full`/root certificate เพื่อตรวจชื่อเซิร์ฟเวอร์ในงานนี้
 4. เปิด GitHub **Actions → Test Supabase connection → Run workflow** เลือก `main`
    อนุมัติ Environment หากมี แล้วตรวจข้อความ `Supabase connection check passed (read-only SELECT 1).`
 
-checker ส่ง `SELECT 1` ใน transaction อ่านอย่างเดียว ไม่เรียก Django migrations และไม่พิมพ์
-รหัสผ่าน connection string หรือรายละเอียด exception หากล้มเหลว ให้ผู้ดูแลตรวจ secrets,
+checker ส่ง `SELECT 1` ซึ่งเป็นคำสั่งอ่าน และขอ `default_transaction_read_only=on`
+ผ่าน startup options แต่ไม่ได้อ่านกลับเพื่อยืนยันโหมดที่มีผลจริง ไม่เรียก Django migrations
+และไม่พิมพ์รหัสผ่าน connection string หรือรายละเอียด exception หากล้มเหลว ให้ผู้ดูแลตรวจ secrets,
 โหมด endpoint, DNS/IPv4/IPv6 และกฎเครือข่ายในช่องทางส่วนตัว ไม่เปิด debug เพื่อพิมพ์ค่าออก log
 การเลือกโหมดและข้อจำกัด session อ้างอิง [Supabase: Connect to your database](https://supabase.com/docs/guides/database/connecting-to-postgres)
+
+Direct connection เชื่อมกับ PostgreSQL โดยตรง ส่วน Session pooler เป็นทางเลือกสำหรับ IPv4
+ที่รองรับ session state รวม `SET` และ session advisory locks; Transaction pooler คืน connection
+หลังแต่ละ transaction จึงไม่รองรับข้อกำหนดของ runner นี้
+ดู [Supabase: Transaction mode limitations](https://supabase.com/docs/guides/database/connecting-to-postgres#transaction-mode-limitations)
+ข้อจำกัดนี้ไม่ใช่ข้อสรุปว่าการใช้ Session pooler เป็นสาเหตุของความล้มเหลวแต่ละครั้ง
+
+### กรณี `session_mode_mismatch` และการลอง plan ใหม่
+
+Actions plan run `34936261291` รายงาน `session_mode_mismatch` ในจุดตรวจโหมดหลังเปิด connection
+ด้วย startup options ผู้ดูแลยืนยันว่าใช้ Session pooler และ connection checker ผ่านแล้ว
+log เดิมไม่ได้แสดงค่า session ที่อ่านได้จริง จึงยืนยันได้เพียงว่าค่าที่ตรวจไม่ตรงกับโหมดที่ต้องการ
+ยังระบุสาเหตุว่าเกิดจาก Supavisor, endpoint หรือการตั้งค่าใดโดยเฉพาะไม่ได้
+ผล `SELECT 1` ที่ผ่านไม่ได้พิสูจน์ว่า read-only, search path, timeouts และ autocommit ของ runner
+ถูกตั้งและคงอยู่ครบข้าม transaction งานแก้ไขนี้ให้คง endpoint และ secrets ทั้งห้าค่าเดิมไว้
+
+runner ยังคงส่ง startup options เป็นคำขอเริ่มต้น ตรวจว่า autocommit ของทั้ง Django และ driver
+เป็น `true` แล้วจึงอ่านค่าก่อนตั้ง session อย่างปลอดภัย จากนั้นตั้งค่าระดับ session
+ด้วย `SET SESSION`: `default_transaction_read_only` เป็น `on` สำหรับ plan หรือ `off` สำหรับ apply,
+`search_path=public`, `lock_timeout=5000ms` และ `statement_timeout=900000ms`
+อ่านยืนยันค่าหลังตั้ง รวม `transaction_read_only` ก่อนขอ advisory lock หรืออ่าน migration plan
+หากอ่านหรือตั้งค่าไม่ได้ หรือค่าใดไม่ตรง จะหยุดด้วยผลไม่สำเร็จ ไม่มีการข้ามเงื่อนไขเพื่อทำงานต่อ
+`SET SESSION` เปลี่ยนค่าของ connection นี้ ไม่เปลี่ยน schema หรือแถวข้อมูลของแอป
+ดู [PostgreSQL: SET](https://www.postgresql.org/docs/17/sql-set.html)
+และ [Django: Autocommit](https://docs.djangoproject.com/en/5.2/topics/db/transactions/#autocommit)
+
+ผลสำเร็จมี `session_diagnostics` ใน JSON และ GitHub job summary แบ่งเป็น `expected`, `before`
+และ `after` เพื่อเทียบค่าที่ต้องการ ค่าก่อนตั้ง และค่าหลังตั้งตามลำดับ พร้อม `stage` ที่ระบุขั้นตอน
+เป็น `preflight`, `startup`, `configure`, `verify` หรือ `verified`
+ค่าที่ตรวจแสดงเฉพาะ read-only แบบ `on`/`off` (หรือ `unknown` เมื่อยืนยันไม่ได้), autocommit แบบ boolean,
+search path ที่แปลงเป็น `public`/`other` และ timeout เป็นตัวเลขมิลลิวินาที
+ไม่แสดง host, port, database, username, password, connection string หรือค่า search path อื่นจริง
+เมื่อการตรวจหรือตั้ง session ล้มเหลว log จะแสดงรหัสคงที่พร้อม JSON ของค่าที่อ่านได้
+ส่วน `before` หรือ `after` อาจยังว่างหากหยุดก่อนอ่านครบ; ไม่ถือว่าช่องว่างผ่านการตรวจ
+ค่า `before` อาจต่างจาก `expected` ได้; การยอมให้ทำงานต่อขึ้นกับการยืนยันค่า `after` ให้ครบตามนี้:
+
+| ค่าที่ตรวจหลังตั้ง session | plan | apply ที่ได้รับอนุมัติแยกต่างหาก |
+|---|---|---|
+| `default_transaction_read_only` และ `transaction_read_only` | `on` ทั้งคู่ | `off` ทั้งคู่ |
+| `django_autocommit` และ `driver_autocommit` | `true` ทั้งคู่ | `true` ทั้งคู่ |
+| `search_path` | `public` | `public` |
+| `lock_timeout_ms` | `5000` | `5000` |
+| `statement_timeout_ms` | `900000` | `900000` |
+
+รหัส `session_autocommit_required` หมายถึง autocommit ไม่พร้อม;
+`session_configuration_failed` หมายถึงอ่านหรือตั้งค่า session ไม่สำเร็จ;
+`session_mode_mismatch` หมายถึง read-only หลังตั้งไม่ตรง;
+`session_settings_mismatch` หมายถึง search path หรือ timeout หลังตั้งไม่ตรง
+ให้ใช้ `stage` และค่าที่กรองแล้วประกอบการวิเคราะห์ โดยไม่เดาค่า endpoint จากรหัสเหล่านี้
+
+หลัง PR แก้ session ผ่านการตรวจรับและรวมเข้า `main` โดยได้รับอนุญาตจากผู้ใช้แล้ว
+ให้ผู้ดูแลลองเฉพาะ plan ดังนี้:
+
+1. คง Environment `development`, endpoint แบบ Session pooler ที่ยืนยันไว้ และ secrets เดิมทั้งห้า
+   ตรวจ SHA เต็ม 40 ตัวของ `main` ล่าสุดที่รวมการแก้ไขแล้ว
+2. เปิด **Actions → Supabase development migrations → Run workflow** เพื่อสร้าง run ใหม่
+   เลือก branch `main` และ `mode=plan`; อย่าใช้ Re-run jobs ของ run เก่า เพราะจะยังใช้ commit เก่า
+3. กรอก `commit_sha` เป็น SHA เต็มล่าสุดข้างต้น เว้น `expected_plan_hash` และ `backup_reference` ว่าง
+   หาก `main` เปลี่ยนก่อนสร้าง run ให้ตรวจ SHA ล่าสุดใหม่ ไม่เลือก `apply`
+4. อนุมัติ Environment ตามกฎ ตรวจว่า SHA ในผลตรงกับที่เลือก, `session_diagnostics.stage=verified`
+   และค่า `after` ตรงกับ `expected` ทุกค่าของ plan ในตาราง จากนั้นตรวจ applied/pending migrations,
+   `schema_exceptions`, จำนวน auth และ plan hash ตามข้อ 3 เก็บลิงก์ run กับผลไว้ตรวจรับ
+5. หากยัง mismatch หรือยืนยันค่าใดไม่ได้ ให้หยุดและส่งกลับเฉพาะรหัสข้อผิดพลาด
+   กับ `session_diagnostics` ที่ runner กรองแล้ว ไม่ส่งค่า secrets หรือรายละเอียด endpoint
+   ไม่กด apply หรือเปลี่ยน endpoint เพื่อข้ามปัญหา แม้ plan ผ่านก็ต้องรอการอนุมัติ apply แยกต่างหาก
+
+ขั้นตอนนี้ยังไม่ได้ทดลองกับ Supavisor/Session pooler ของโครงการจริง
+เอกสารทางการและผลทดสอบ PostgreSQL ชั่วคราวไม่ยืนยันว่า plan บน endpoint จริงผ่านแล้ว
+ต้องดูผล run ใหม่หลังตรวจรับ โดยไม่ตีความผลสำเร็จของ checker เดิมแทนการตรวจ session นี้
 
 ## 3. รันและอ่านผล plan
 
@@ -244,6 +315,8 @@ plan ที่ผ่านหรือ pending ที่ว่างไม่ไ
 CI ที่ไม่ใช้ secrets ตรวจ runner/workflow ได้ แต่ไม่พิสูจน์ DNS/TLS สิทธิ์ฐานข้อมูลจริง
 การตั้งค่า Environment หรือความสมบูรณ์ของ backup ของ Supabase development
 
-คู่มือนี้ไม่ยืนยันว่าได้ตั้ง Environment, กรอก secrets, ทดสอบเชื่อมต่อจริง หรือซ้อมกู้คืนข้อมูลจริงแล้ว
-ขั้นตอนเหล่านั้นต้องทำหลังตรวจรับตามสิทธิ์ของผู้ดูแล ไม่ใช้ `manage.py test` หรือสคริปต์สร้างฐานทดสอบ
-กับ profile Supabase และไม่ใช้ Supabase CLI migrations จัดการตารางเดียวกับ Django
+ผล checker ที่ผู้ดูแลแจ้งในข้อ 2 ไม่ยืนยันการตั้งค่า session ของ migration runner หรือความพร้อมของ backup
+งานแก้ session นี้ยังไม่ได้เชื่อมต่อ ทดสอบ Supavisor จริง หรือ apply ไปยัง Supabase
+การลอง plan ใหม่และขั้นตอนติดตั้งจริงต้องทำหลังตรวจรับตามสิทธิ์ของผู้ดูแล
+ไม่ใช้ `manage.py test` หรือสคริปต์สร้างฐานทดสอบกับ profile Supabase
+และไม่ใช้ Supabase CLI migrations จัดการตารางเดียวกับ Django

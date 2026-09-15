@@ -35,9 +35,10 @@ SCHEMA_EXCEPTIONS = (
 class MigrationPreparationError(Exception):
     """Only static error codes may be displayed by the CLI."""
 
-    def __init__(self, code, *, phase="preparation"):
+    def __init__(self, code, *, phase="preparation", diagnostics=None):
         self.code = code
         self.phase = phase
+        self.diagnostics = diagnostics
         super().__init__(code)
 
 
@@ -63,15 +64,51 @@ def validate_request(mode, commit, expected_plan_hash, backup_reference):
             raise MigrationPreparationError("apply_requires_backup")
 
 
+def _autocommit_state(connection):
+    return {"django_autocommit": connection.get_autocommit(),
+            "driver_autocommit": connection.connection.autocommit}
+
+
+def _session_state(connection):
+    """Read only fixed session metadata; never return arbitrary schema names."""
+    state = _autocommit_state(connection)
+    with connection.cursor() as cursor:
+        cursor.execute("""
+            SELECT pg_catalog.current_setting('default_transaction_read_only'),
+                   pg_catalog.current_setting('transaction_read_only'),
+                   pg_catalog.current_setting('search_path') = 'public',
+                   (SELECT setting::bigint FROM pg_catalog.pg_settings WHERE name = 'lock_timeout'),
+                   (SELECT setting::bigint FROM pg_catalog.pg_settings WHERE name = 'statement_timeout')
+        """)
+        default_read_only, transaction_read_only, public_path, lock_ms, statement_ms = cursor.fetchone()
+    state.update(
+        default_transaction_read_only=default_read_only if default_read_only in {"on", "off"} else "unknown",
+        transaction_read_only=transaction_read_only if transaction_read_only in {"on", "off"} else "unknown",
+        search_path="public" if public_path else "other",
+        lock_timeout_ms=lock_ms, statement_timeout_ms=statement_ms,
+    )
+    return state
+
+
 def configure_connection(connection, mode):
     if connection.vendor != "postgresql" or connection.in_atomic_block:
         raise MigrationPreparationError("postgresql_session_required")
     if str(connection.settings_dict.get("PORT", "")) == "6543":
         raise MigrationPreparationError("session_connection_required")
+    read_only = "on" if mode == "plan" else "off"
+    expected = {"django_autocommit": True, "driver_autocommit": True,
+                "default_transaction_read_only": read_only, "transaction_read_only": read_only,
+                "search_path": "public", "lock_timeout_ms": 5000, "statement_timeout_ms": 900000}
+    diagnostics = {"stage": "preflight", "expected": expected, "before": {}, "after": {}}
+    # Never enable autocommit on a caller's active transaction: that may commit
+    # pending writes. This runner owns a fresh, autocommit session instead.
+    if connection.connection is not None:
+        diagnostics["before"] = _autocommit_state(connection)
+        if not all(diagnostics["before"].values()):
+            raise MigrationPreparationError("session_autocommit_required", diagnostics=diagnostics)
     connection.close()
     options = dict(connection.settings_dict.get("OPTIONS", {}))
     existing = options.get("options", "")
-    read_only = "on" if mode == "plan" else "off"
     options.update({
         "connect_timeout": 10,
         "application_name": "edpex_development_migrations_" + mode,
@@ -81,10 +118,37 @@ def configure_connection(connection, mode):
     connection.settings_dict["OPTIONS"] = options
     connection.settings_dict["CONN_MAX_AGE"] = 0
     connection.ensure_connection()
-    with connection.cursor() as cursor:
-        cursor.execute("SHOW transaction_read_only")
-        if cursor.fetchone()[0] != read_only:
-            raise MigrationPreparationError("session_mode_mismatch")
+    try:
+        diagnostics["stage"] = "startup"
+        diagnostics["before"] = _autocommit_state(connection)
+        if not all(diagnostics["before"].values()):
+            raise MigrationPreparationError("session_autocommit_required", diagnostics=diagnostics)
+        diagnostics["before"] = _session_state(connection)
+        diagnostics["stage"] = "configure"
+        # Startup options are an initial request, not proof of effective state.
+        # Session pooling supports persistent SETs; transaction pooling does not.
+        # Each statement completes in autocommit. Readback must start a NEW
+        # transaction to observe default_transaction_read_only taking effect.
+        with connection.cursor() as cursor:
+            cursor.execute(f"SET SESSION default_transaction_read_only = {read_only}")
+            cursor.execute("SET SESSION search_path = public")
+            cursor.execute("SET SESSION lock_timeout = '5s'")
+            cursor.execute("SET SESSION statement_timeout = '15min'")
+        diagnostics["stage"] = "verify"
+        diagnostics["after"] = _session_state(connection)
+        actual = diagnostics["after"]
+        if not actual["django_autocommit"] or not actual["driver_autocommit"]:
+            raise MigrationPreparationError("session_autocommit_required", diagnostics=diagnostics)
+        if any(actual[key] != read_only for key in ("default_transaction_read_only", "transaction_read_only")):
+            raise MigrationPreparationError("session_mode_mismatch", diagnostics=diagnostics)
+        if any(actual[key] != expected[key] for key in ("search_path", "lock_timeout_ms", "statement_timeout_ms")):
+            raise MigrationPreparationError("session_settings_mismatch", diagnostics=diagnostics)
+        diagnostics["stage"] = "verified"
+        return diagnostics
+    except MigrationPreparationError:
+        raise
+    except Exception:
+        raise MigrationPreparationError("session_configuration_failed", diagnostics=diagnostics) from None
 
 
 def inspect_plan(connection, commit):
@@ -203,13 +267,13 @@ def run(mode, commit, expected_plan_hash="", backup_reference="", *, database="d
     locked = False
     phase = "preparation"
     try:
-        configure_connection(connection, mode)
+        session_diagnostics = configure_connection(connection, mode)
         with connection.cursor() as cursor:
             cursor.execute("SELECT pg_try_advisory_lock(%s)", [LOCK_KEY])
             locked = cursor.fetchone()[0]
         if not locked:
             raise MigrationPreparationError("migration_busy")
-        report = {"mode": mode, **inspect_plan(connection, commit),
+        report = {"mode": mode, "session_diagnostics": session_diagnostics, **inspect_plan(connection, commit),
                   "auth_before": _auth_counts(connection)}
         if mode == "plan":
             return report
@@ -283,6 +347,8 @@ def _display(report):
         lines += ["", "Read-only plan. No migrations or database records were written."]
     lines += ["", "Auth counts (no usernames, passwords or connection details):",
               "```json", json.dumps(report.get("auth_after", report["auth_before"]), indent=2), "```", ""]
+    lines += ["Session diagnostics (fixed metadata only):", "```json",
+              json.dumps(report["session_diagnostics"], indent=2), "```", ""]
     with open(summary, "a", encoding="utf-8") as stream:
         stream.write("\n".join(lines))
 
@@ -316,6 +382,8 @@ def main(argv=None):
         else:
             message = "Migration preparation failed: " + error.code + "."
         print(message, file=sys.stderr)
+        if error.diagnostics is not None:
+            print(json.dumps({"session_diagnostics": error.diagnostics}), file=sys.stderr)
         return 1
     except Exception as error:
         print(f"Migration preparation failed ({type(error).__name__}); connection details omitted.", file=sys.stderr)

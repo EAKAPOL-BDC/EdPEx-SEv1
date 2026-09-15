@@ -1,1 +1,66 @@
-{% extends 'portal/base.html' %}{% load i18n %}{% block content %}<a href="{% url 'workspace' %}">{% translate "← พื้นที่ทำงาน" %}</a><h1>{% translate "สมาชิกและบทบาท" %}</h1><p>{{ scope.organization.name }} · {{ scope.name }}</p><div class="grid"><section class="card"><h2>{% translate "1. เพิ่มสมาชิกองค์กร" %}</h2><p>{% translate "ระบุชื่อบัญชีที่มีอยู่แล้ว การเพิ่มสมาชิกยังไม่มอบสิทธิ์ทำงาน" %}</p><form method="post">{% csrf_token %}<input type="hidden" name="operation" value="member">{{ member_form.as_p }}<button>{% translate "เพิ่มสมาชิก" %}</button></form></section><section class="card"><h2>{% translate "2. มอบบทบาทในขอบเขตนี้" %}</h2><p>{% translate "มอบได้เฉพาะสิทธิ์และระยะเวลาที่คุณมีอยู่ ช่องสิ้นสุดว่างหมายถึงไม่กำหนดวันสิ้นสุด" %}</p><form method="post">{% csrf_token %}<input type="hidden" name="operation" value="grant">{{ grant_form.as_p }}<button>{% translate "มอบบทบาท" %}</button></form></section></div><section class="card"><h2>{% translate "ประวัติการมอบบทบาทในขอบเขตนี้" %}</h2><div class="table-scroll"><table><thead><tr><th>{% translate "ผู้ใช้" %}</th><th>{% translate "บทบาท" %}</th><th>{% translate "เริ่ม / สิ้นสุด" %}</th><th>{% translate "รวมขอบเขตย่อย" %}</th><th>{% translate "การเพิกถอน" %}</th></tr></thead><tbody>{% for grant in grants %}<tr><td>{{ grant.membership.user.get_username }}</td><td>{{ grant.role.code }}</td><td>{{ grant.active_from }} / {% if grant.active_until %}{{ grant.active_until }}{% else %}{% translate "ไม่กำหนด" %}{% endif %}</td><td>{% if grant.include_descendants %}{% translate "ใช่" %}{% else %}{% translate "ไม่ใช่" %}{% endif %}</td><td>{% if grant.revoked_at %}{% translate "เพิกถอนแล้ว" %} {{ grant.revoked_at }}{% else %}<form method="post" action="{% url 'portal-revoke' scope.pk grant.pk %}">{% csrf_token %}<button class="danger">{% translate "เพิกถอนบทบาทนี้" %}</button></form>{% endif %}</td></tr>{% empty %}<tr><td colspan="5">{% translate "ยังไม่มีรายการ" %}</td></tr>{% endfor %}</tbody></table></div></section>{% endblock %}
+{% extends 'portal/base.html' %}
+{% load i18n %}
+{% block content %}
+<div class="members-page">
+  <a class="back-link" href="{% url 'workspace' %}">{% translate "← พื้นที่ทำงาน" %}</a>
+  <section class="page-heading">
+    <div class="heading-content">
+      <div class="section-kicker"><span class="kicker-line"></span>EdPEx / {% translate "พื้นที่ทำงาน" %}</div>
+      <h1>{% translate "สมาชิกและบทบาท" %}</h1>
+      <p class="organization-line">{{ scope.organization.name }}{% if scope.name != scope.organization.name %}<span class="scope-divider">/</span>{{ scope.name }}{% endif %}</p>
+    </div>
+    <div class="heading-emblem" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none"><path d="M24 5 40 12v12c0 10-16 19-16 19S8 34 8 24V12L24 5Z" stroke="currentColor" stroke-width="1.7"/><path d="m17 24 5 5 10-11" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+  </section>
+
+  <div class="member-forms">
+    <section class="panel member-panel">
+      <div class="panel-heading"><span class="step-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><circle cx="9" cy="8" r="3"/><path d="M3 20v-2a6 6 0 0 1 12 0v2M19 8v6m-3-3h6"/></svg></span><div><h2>{% translate "1. เพิ่มสมาชิกองค์กร" %}</h2></div></div>
+      <p class="panel-description">{% translate "ระบุชื่อบัญชีที่มีอยู่แล้ว การเพิ่มสมาชิกยังไม่มอบสิทธิ์ทำงาน" %}</p>
+      <form method="post" class="member-form">
+        {% csrf_token %}<input type="hidden" name="operation" value="member">
+        {{ member_form.non_field_errors }}
+        {% for field in member_form %}<div class="form-field">{{ field.label_tag }}{{ field }}{{ field.errors }}{% if field.help_text %}<p class="field-help">{{ field.help_text }}</p>{% endif %}</div>{% endfor %}
+        <div class="form-actions"><button type="submit" class="button-secondary"><span aria-hidden="true">＋</span> {% translate "เพิ่มสมาชิก" %}</button></div>
+      </form>
+      <div class="panel-footnote"><span class="small-rule"></span><p>{% translate "ใช้บัญชีเดียวกับที่ผู้ดูแลจัดเตรียมให้" %}</p></div>
+    </section>
+
+    <section class="panel grant-panel">
+      <div class="panel-heading"><span class="step-icon gold-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="m12 3 8 4v5c0 5-8 9-8 9s-8-4-8-9V7l8-4Z"/><path d="m8 12 3 3 5-6"/></svg></span><div><h2>{% translate "2. มอบบทบาทในขอบเขตนี้" %}</h2></div></div>
+      <p class="panel-description">{% translate "มอบได้เฉพาะสิทธิ์และระยะเวลาที่คุณมีอยู่ ช่องสิ้นสุดว่างหมายถึงไม่กำหนดวันสิ้นสุด" %}</p>
+      <form method="post" class="grant-form">
+        {% csrf_token %}<input type="hidden" name="operation" value="grant">
+        {{ grant_form.non_field_errors }}
+        <div class="grant-fields">
+        {% for field in grant_form %}
+          {% if field.name == 'include_descendants' %}
+          <div class="checkbox-field">{{ field }}{{ field.label_tag }}{{ field.errors }}</div>
+          {% else %}
+          <div class="form-field {% if field.name == 'active_until' %}full-width{% endif %}">{{ field.label_tag }}{{ field }}{{ field.errors }}{% if field.help_text %}<p class="field-help">{{ field.help_text }}</p>{% endif %}</div>
+          {% endif %}
+        {% endfor %}
+        </div>
+        <div class="form-actions"><button type="submit">{% translate "มอบบทบาท" %}<span aria-hidden="true"> →</span></button></div>
+      </form>
+    </section>
+  </div>
+
+  <section class="panel history-panel">
+    <div class="history-heading"><div><span class="section-kicker">{% translate "สมาชิกและบทบาท" %}</span><h2>{% translate "ประวัติการมอบบทบาทในขอบเขตนี้" %} <span class="count-badge">{{ grants|length }}</span></h2></div><span class="history-decoration" aria-hidden="true">↗</span></div>
+    <div class="table-scroll" tabindex="0" role="region" aria-label="{% translate 'ประวัติการมอบบทบาทในขอบเขตนี้' %}">
+      <table class="grants-table">
+        <thead><tr><th scope="col">{% translate "ผู้ใช้" %}</th><th scope="col">{% translate "บทบาท" %}</th><th scope="col">{% translate "เริ่ม / สิ้นสุด" %}</th><th scope="col">{% translate "รวมขอบเขตย่อย" %}</th><th scope="col">{% translate "การเพิกถอน" %}</th></tr></thead>
+        <tbody>{% for grant in grants %}
+          <tr>
+            <td><div class="user-cell"><span class="avatar" aria-hidden="true">{{ grant.membership.user.get_username|first|upper }}</span><span class="username">{{ grant.membership.user.get_username }}</span></div></td>
+            <td><span class="role-badge">{{ grant.role.code }}</span></td>
+            <td><div class="date-primary">{{ grant.active_from }}</div><div class="date-secondary">{% if grant.active_until %}{{ grant.active_until }}{% else %}{% translate "ไม่กำหนด" %}{% endif %}</div></td>
+            <td><span class="scope-badge {% if grant.include_descendants %}scope-included{% endif %}">{% if grant.include_descendants %}<span aria-hidden="true">✓ </span>{% translate "ใช่" %}{% else %}{% translate "ไม่ใช่" %}{% endif %}</span></td>
+            <td>{% if grant.revoked_at %}<span class="revoked-label">{% translate "เพิกถอนแล้ว" %}</span><div class="date-secondary">{{ grant.revoked_at }}</div>{% else %}<form method="post" action="{% url 'portal-revoke' scope.pk grant.pk %}">{% csrf_token %}<button type="submit" class="danger">{% translate "เพิกถอนบทบาทนี้" %}</button></form>{% endif %}</td>
+          </tr>
+        {% empty %}<tr><td colspan="5" class="empty-state">{% translate "ยังไม่มีรายการ" %}</td></tr>{% endfor %}</tbody>
+      </table>
+    </div>
+  </section>
+</div>
+{% endblock %}

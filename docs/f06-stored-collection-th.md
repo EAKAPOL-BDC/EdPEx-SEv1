@@ -101,8 +101,11 @@ JSON ทุกคำขอต้องมีเฉพาะ fields ที่ร�
 
 ## Migrations และการตรวจ
 
-เพิ่ม 5 migrations ต่อจากรุ่นเดิม: accounts 0004, calculations 0003–0004,
-selfassessments 0001–0002 โดยเพิ่ม permission allowlist แต่ไม่ให้ role เดิมอัตโนมัติ
+เพิ่ม 6 migrations ต่อจากรุ่นเดิม: accounts 0004, calculations 0003–0004,
+selfassessments 0001–0003 โดยเพิ่ม permission allowlist แต่ไม่ให้ role เดิมอัตโนมัติ
+
+CI รอบแรกพบชื่อย่อตารางชนกับตัวแปรใน PL/pgSQL จึงเพิ่ม selfassessments 0003
+เพื่อแก้ฟังก์ชันทั้งฐานใหม่และฐาน development ที่เคยใช้ 0002 แล้ว โดยคงเงื่อนไขตรวจเดิม
 
 SQL guards ป้องกัน update/delete ทั้ง assignment, revision, source selection, review และ decision
 ตรวจกำหนดส่ง ลำดับ revision ขอบเขตและการแยกผู้รับรอง พร้อมล็อกแถวรอบเดียวกับบริการ

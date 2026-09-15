@@ -1,0 +1,35 @@
+{% extends 'selfassessments/operator_base.html' %}
+{% block operator_content %}
+<h1>{% if LANGUAGE_CODE == 'en' %}Result set and review{% else %}ชุดผลและการตรวจรับรอง{% endif %}</h1>
+<p>Cutoff: {{ run.cutoff|date:'Y-m-d H:i:s' }} · {{ scope.organization.timezone }}</p>
+{% include 'selfassessments/operator_status.html' with status=run.status %}
+{% if run.superseded %}<p class="notice">{% if LANGUAGE_CODE == 'en' %}A newer approved set supersedes this set. Its original history is retained.{% else %}มีชุดผลรับรองใหม่แทนชุดนี้แล้ว ประวัติเดิมยังคงอยู่{% endif %}</p>{% endif %}
+<p>{% if LANGUAGE_CODE == 'en' %}This review covers aggregate formulas and data completeness. F06 is self-report only. Approved results remain unpublished.{% else %}การตรวจนี้ครอบคลุมสูตรและความครบถ้วนของข้อมูลรวม F06 เป็นการรายงานตนเอง ชุดผลที่รับรองแล้วยังคงไม่เผยแพร่{% endif %}</p>
+{% if history %}<section class="panel"><h2>{% if LANGUAGE_CODE == 'en' %}Review history{% else %}ประวัติการตรวจ{% endif %}</h2>
+<p>{{ history.requested_at|date:'Y-m-d H:i:s' }} · {{ history.reason }}</p>
+{% if history.decided_at %}<p>{{ history.decided_at|date:'Y-m-d H:i:s' }} · {{ history.decision_reason }}</p>{% endif %}
+{% if history.previous_run_id %}<a href="{% url 'operator-run' scope.pk history.previous_run_id %}">{% if LANGUAGE_CODE == 'en' %}Previous approved set{% else %}ชุดผลรับรองก่อนหน้า{% endif %}</a>{% endif %}
+</section>{% endif %}
+{% if packet_error %}<p class="notice" role="alert">{% if LANGUAGE_CODE == 'en' %}Result validation failed. Prepare a new calculation for review.{% else %}ตรวจความถูกต้องของชุดผลไม่ผ่าน กรุณาจัดทำการคำนวณใหม่เพื่อส่งตรวจ{% endif %}</p>{% endif %}
+{% if packet %}<section class="panel"><h2>{% if LANGUAGE_CODE == 'en' %}Aggregate review{% else %}ตรวจผลรวม{% endif %}</h2>
+{% for row in packet.results %}<article class="operator-series">
+<h3>{{ row.indicator }} · {{ row.group }}{% if row.dimension %} · {{ row.dimension }}{% endif %}</h3>
+<p>{% if LANGUAGE_CODE == 'en' %}Method{% else %}วิธีประเมิน{% endif %}: {{ row.method }} · {% if LANGUAGE_CODE == 'en' %}Unit{% else %}หน่วย{% endif %}: {{ row.unit }}</p>
+{% if row.status == 'suppressed' %}
+<p class="notice">{% if row.reason == 'restricted_revision' %}{% if LANGUAGE_CODE == 'en' %}Values restricted because this context has multiple result generations.{% else %}ซ่อนค่าเนื่องจากบริบทนี้มีชุดผลหลายรุ่น{% endif %}{% else %}{% if LANGUAGE_CODE == 'en' %}Values restricted because the valid group is smaller than five.{% else %}ซ่อนค่าเนื่องจากกลุ่มคำตอบที่ใช้ได้มีขนาดน้อยกว่า 5{% endif %}{% endif %}</p>
+{% else %}
+<p class="operator-value">{{ row.display_value }} {{ row.unit }}</p>
+<p>{{ row.status }} · {% if LANGUAGE_CODE == 'en' %}Numerator / denominator{% else %}ตัวตั้ง / ตัวหาร{% endif %}: {{ row.numerator|default_if_none:'—' }} / {{ row.denominator|default_if_none:'—' }}</p>
+<details><summary>{% if LANGUAGE_CODE == 'en' %}Data quality counts{% else %}จำนวนข้อมูลตามสถานะ{% endif %}</summary><dl class="operator-definition">{% for key, value in row.quality_counts.items %}<dt>{{ key }}</dt><dd>{{ value }}</dd>{% endfor %}</dl></details>
+{% endif %}
+<details><summary>{% if LANGUAGE_CODE == 'en' %}Pinned formula definition{% else %}นิยามสูตรที่ตรึงไว้{% endif %}</summary><dl class="operator-definition">{% for key, value in row.formula.items %}<dt>{{ key }}</dt><dd>{{ value|default_if_none:'—' }}</dd>{% endfor %}</dl></details>
+</article>{% endfor %}</section>{% endif %}
+{% if can_submit %}<section class="panel"><h2>{% if LANGUAGE_CODE == 'en' %}Submit for review{% else %}ส่งชุดผลเข้าตรวจ{% endif %}</h2>
+<form method="post">{% csrf_token %}{% include 'selfassessments/operator_fields.html' with form=submit_form %}<button name="action" value="submit">{% if LANGUAGE_CODE == 'en' %}Submit result set{% else %}ส่งชุดผลเข้าตรวจ{% endif %}</button></form></section>
+{% else %}{{ submit_form.non_field_errors }}{% endif %}
+{% if can_decide %}<section class="panel"><h2>{% if LANGUAGE_CODE == 'en' %}Record review decision{% else %}บันทึกผลการตรวจ{% endif %}</h2>
+<form method="post">{% csrf_token %}{% include 'selfassessments/operator_fields.html' with form=decision_form %}<button name="action" value="decide">{% if LANGUAGE_CODE == 'en' %}Save decision{% else %}บันทึกผลการตรวจ{% endif %}</button></form></section>
+{% else %}{{ decision_form.non_field_errors }}{% endif %}
+{% if independence_notice %}<p class="notice">{% if LANGUAGE_CODE == 'en' %}A reviewer with approval permission who did not calculate or submit this set must record the decision.{% else %}ต้องให้ผู้ตรวจที่มีสิทธิ์รับรอง และไม่ใช่ผู้คำนวณหรือผู้ส่งชุดนี้ เป็นผู้บันทึกผลการตรวจ{% endif %}</p>{% endif %}
+<p><a href="{% url 'operator-collection' scope.pk selected.pk %}">{% if LANGUAGE_CODE == 'en' %}Back to result history{% else %}กลับประวัติชุดผล{% endif %}</a></p>
+{% endblock %}

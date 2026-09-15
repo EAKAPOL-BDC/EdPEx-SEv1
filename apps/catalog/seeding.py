@@ -20,8 +20,10 @@ def _digest(value):
 
 
 @transaction.atomic
-def seed_catalog(scope, actor, version="1.1", catalog_dir=None):
+def seed_catalog(scope, actor, version="1.1", catalog_dir=None, progress=None):
     """Never runs during migrate. Existing versions are compared, never overwritten."""
+    report = progress or (lambda message: None)
+    report("Checking permissions and source files")
     require_permission(actor, "catalog.edit", scope)
     catalog_dir = Path(catalog_dir or settings.BASE_DIR / "catalog")
     loaded = {p.stem: json.loads(p.read_text(encoding="utf-8-sig")) for p in catalog_dir.glob("*.json")}
@@ -38,6 +40,7 @@ def seed_catalog(scope, actor, version="1.1", catalog_dir=None):
     versions = {}
     created_codes = []
     # First reject conflicts for the entire scope before adding anything.
+    report("Creating instrument versions")
     for item in loaded["instruments"]:
         instrument, _ = Instrument.objects.get_or_create(scope=scope, code=item["instrument_id"])
         existing = InstrumentVersion.objects.filter(instrument=instrument, version=version).first()
@@ -56,6 +59,7 @@ def seed_catalog(scope, actor, version="1.1", catalog_dir=None):
                 source_metadata={"seed_hash": seed_hash, "manifest": manifest, "catalog_instrument": item},
             )
             created_codes.append(instrument.code)
+    report("Importing group and indicator labels")
     for namespace, rows, code_key, text_key in (
         ("group", loaded["groups"], "code", "label"),
         ("indicator", loaded["indicators"], "code", "display_name"),
@@ -68,7 +72,10 @@ def seed_catalog(scope, actor, version="1.1", catalog_dir=None):
         return {"created_instruments": 0, "instrument_versions": versions}
     scales = {scale["scale_id"]: scale for scale in loaded["scales"]}
     questions = {}
-    for row in loaded["questions"]:
+    report("Importing questions and options")
+    for question_number, row in enumerate(loaded["questions"], 1):
+        if question_number == 1 or question_number % 10 == 0:
+            report(f"Question {question_number}/{len(loaded['questions'])}")
         current_version = versions[row["instrument_id"]]
         if row["instrument_id"] not in created_codes:
             questions[row["question_id"]] = current_version.questions.get(question_id=row["question_id"])
@@ -87,6 +94,7 @@ def seed_catalog(scope, actor, version="1.1", catalog_dir=None):
             status = option.get("answer_status") or (na_status if option["code"] == "NA" else "answered")
             QuestionOption.objects.create(question=question, code=option["code"], label_th=option["label"]["th"],
                 score=option.get("score"), answer_status=status, position=position)
+    report("Creating instrument versions")
     for item in loaded["instruments"]:
         code = item["instrument_id"]
         if code not in created_codes:
@@ -110,6 +118,7 @@ def seed_catalog(scope, actor, version="1.1", catalog_dir=None):
             if (prefix == "self" and code == "F06") or (prefix == "development" and code == "F05") or (prefix == "survey" and code in ("F01", "F02", "F03", "F04")):
                 InstrumentContent.objects.create(version=current_version, content_key=ancillary["field_key"], kind="ancillary",
                     text_th=ancillary.get("source_text_th", ancillary["field_key"]), audience="configuration_only", source_metadata=ancillary)
+    report("Importing formula definitions and indicator bindings")
     formula_map = {}
     for row in loaded["formulas"]:
         formula, created = FormulaVersion.objects.get_or_create(scope=scope, key=row["formula_id"], version=row["formula_version"], defaults={
@@ -139,7 +148,9 @@ def seed_catalog(scope, actor, version="1.1", catalog_dir=None):
         for question in source_questions:
             BindingQuestion.objects.create(binding=record, question=question)
     inventory = {item["key"]: item for item in loaded["translations"]["inventory"]}
+    report("Importing translation drafts")
     for code in created_codes:
+        report(f"Translation draft: {code}")
         current_version = versions[code]
         bundle = TranslationBundle.objects.create(instrument_version=current_version, bundle_version=loaded["translations"]["bundle_version"])
         for key, original in source_texts(current_version).items():

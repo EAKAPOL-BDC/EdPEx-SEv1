@@ -38,6 +38,10 @@ jobs:
         with:
           python-version: "3.12"
           cache: pip
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: node --test tests/portal_language.test.js
       - run: pip install -r requirements.txt
       - run: python manage.py check
       - run: python manage.py migrate --noinput

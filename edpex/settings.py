@@ -22,6 +22,8 @@ INSTALLED_APPS = [
     "apps.catalog",
     "apps.rounds",
     "apps.auditlog",
+    "apps.calculations",
+    "apps.selfassessments",
 ]
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -30,6 +32,7 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "apps.accounts.middleware.PortalLanguageMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
@@ -83,3 +86,7 @@ USE_I18N = True
 USE_TZ = True
 STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+LOGIN_URL = "login"
+LOGIN_REDIRECT_URL = "workspace"
+LOGOUT_REDIRECT_URL = "home"

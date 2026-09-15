@@ -34,3 +34,29 @@ migration tests. M1 has not been migrated to Supabase or deployed.
 
 PR #3 review fixes and their PostgreSQL regression coverage are described in
 [ข้อค้นพบ → วิธีแก้ → ไฟล์ → tests](docs/pr3-fixes-th.md).
+
+M2 now has an offline, server-side calculation core for the 20 formula templates
+in version 1.1. It includes CAL-01–18 fixtures, typed answer/status validation,
+frozen population inputs, latest submitted revision selection, F05 deduplication,
+and safe pooling of disjoint groups. The catalog adapter checks all 63 indicator
+bindings, including their group and dimension variants.
+
+```text
+python -m unittest tests.test_m0_catalog tests.test_m0_bindings tests.test_m0_source_semantics tests.test_m2_golden tests.test_m2_validation
+```
+
+See [แกนคำนวณ M2: ผลทดสอบและขอบเขตการใช้งาน](docs/m2-calculation-core-th.md).
+The next increment adds internal persisted calculation runs, source/definition
+snapshots, checksums, replay, scoped source/run/validation permissions, and
+transactional idempotency. See [รอบคำนวณและการตรวจผลย้อนหลัง](docs/m2-snapshots-th.md).
+It includes additive migrations but does not apply them to Supabase automatically.
+The F06 increment adds owner-only draft/submitted revisions, frozen duties and expected
+levels, a stored-response calculation adapter, and independent aggregate approval/return
+with retained correction history. See [F06 intake and result review](docs/f06-stored-collection-th.md).
+The staff workspace now exposes assignment, whole-round open/close, a signed calculation
+preview/commit flow, independent aggregate review and correction history through the existing
+services. See [F06 staff workspace](docs/f06-operator-workspace-th.md). This UI adds no migrations
+or automatic role grants. Its language-switch regression is checked with
+`node --test tests/portal_language.test.js`.
+Anonymous F01–F04 collection, verified F05 intake, historical imports, publication and annual
+aggregation remain pending before the full M2/M4 milestones are complete.

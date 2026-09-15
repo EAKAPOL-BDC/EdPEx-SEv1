@@ -1,0 +1,9 @@
+{% extends 'portal/base.html' %}
+{% block content %}
+<h1>{% if LANGUAGE_CODE == 'en' %}My self-assessments{% else %}แบบประเมินตนเองของฉัน{% endif %}</h1>
+<p>{% if LANGUAGE_CODE == 'en' %}Report your own experience. No assessor scores or evidence uploads are required.{% else %}รายงานตามประสบการณ์ของตนเอง ไม่มีการให้คะแนนโดยผู้ประเมินและไม่บังคับแนบหลักฐาน{% endif %}</p>
+<div class="grid">{% for assignment in assignments %}<section class="card"><h2>{{ assignment.round_instrument.collection_round.code }}</h2>
+<p>F06 · {{ assignment.round_instrument.instrument_version.version }} · {{ assignment.member.group.code }}</p>
+<a class="button" href="{% url 'self-assessment-detail' assignment.pk %}">{% if LANGUAGE_CODE == 'en' %}Open my answers{% else %}เปิดคำตอบของฉัน{% endif %}</a></section>
+{% empty %}<p>{% if LANGUAGE_CODE == 'en' %}No self-assessment is assigned yet.{% else %}ยังไม่มีแบบประเมินตนเองที่ได้รับมอบหมาย{% endif %}</p>{% endfor %}</div>
+{% endblock %}

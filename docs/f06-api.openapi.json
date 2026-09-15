@@ -1,0 +1,1433 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "NEXORA F06 stored collection and aggregate review",
+    "version": "0.1.0",
+    "description": "Development increment. Approved result sets remain unpublished. F06 respondents have no reviewer/evidence workflow. See f06-stored-collection-th.md for scope and deployment prerequisites."
+  },
+  "paths": {
+    "/api/v1/me/self-assessments/": {
+      "get": {
+        "summary": "List my assignments",
+        "description": "Required scoped permissions: self.read. No automatic staff/superuser grant. Responses are private/no-store.",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssignmentList"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Sign in required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Missing permission or CSRF failure (Django may return HTML for CSRF rejection)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Object not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Revision, request key or immutable decision conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid input, state, source coverage or replay failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method not allowed"
+          }
+        }
+      }
+    },
+    "/api/v1/me/self-assessments/{id}/": {
+      "get": {
+        "summary": "Read my versioned schema and current answers",
+        "description": "Required scoped permissions: self.read + owner match. No automatic staff/superuser grant. Responses are private/no-store.",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OwnerSchema"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Sign in required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Missing permission or CSRF failure (Django may return HTML for CSRF rejection)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Object not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Revision, request key or immutable decision conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid input, state, source coverage or replay failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method not allowed"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v1/me/self-assessments/{id}/draft/": {
+      "put": {
+        "summary": "Save draft revision",
+        "description": "Required scoped permissions: self.write + owner match. No automatic staff/superuser grant. Responses are private/no-store.",
+        "security": [
+          {
+            "sessionCookie": [],
+            "csrfHeader": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RevisionReceipt"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Sign in required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Missing permission or CSRF failure (Django may return HTML for CSRF rejection)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Object not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Revision, request key or immutable decision conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid input, state, source coverage or replay failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method not allowed"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RevisionWrite"
+              },
+              "example": {
+                "expected_revision": 0,
+                "answers": {
+                  "F06-K01": {
+                    "status": "answered",
+                    "value": 4
+                  }
+                },
+                "idempotency_key": "example-request-1"
+              }
+            }
+          },
+          "description": "Maximum 65536 bytes. Exact documented fields; duplicate JSON keys and nonfinite numbers are rejected."
+        }
+      }
+    },
+    "/api/v1/me/self-assessments/{id}/submit/": {
+      "post": {
+        "summary": "Save submit revision",
+        "description": "Required scoped permissions: self.write + owner match. No automatic staff/superuser grant. Responses are private/no-store.",
+        "security": [
+          {
+            "sessionCookie": [],
+            "csrfHeader": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RevisionReceipt"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Sign in required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Missing permission or CSRF failure (Django may return HTML for CSRF rejection)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Object not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Revision, request key or immutable decision conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid input, state, source coverage or replay failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method not allowed"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RevisionWrite"
+              },
+              "example": {
+                "expected_revision": 0,
+                "answers": {
+                  "F06-K01": {
+                    "status": "answered",
+                    "value": 4
+                  }
+                },
+                "idempotency_key": "example-request-1"
+              }
+            }
+          },
+          "description": "Maximum 65536 bytes. Exact documented fields; duplicate JSON keys and nonfinite numbers are rejected."
+        }
+      }
+    },
+    "/api/v1/self-assessment-assignments/": {
+      "post": {
+        "summary": "Assign F06 before opening collection",
+        "description": "Required scoped permissions: selfassessment.assign. No automatic staff/superuser grant. Responses are private/no-store.",
+        "security": [
+          {
+            "sessionCookie": [],
+            "csrfHeader": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssignmentReceipt"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Sign in required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Missing permission or CSRF failure (Django may return HTML for CSRF rejection)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Object not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Revision, request key or immutable decision conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid input, state, source coverage or replay failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method not allowed"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssignmentWrite"
+              }
+            }
+          },
+          "description": "Maximum 65536 bytes. Exact documented fields; duplicate JSON keys and nonfinite numbers are rejected."
+        }
+      }
+    },
+    "/api/v1/round-instruments/{id}/calculate/": {
+      "post": {
+        "summary": "Calculate every F06 series for one stored round instrument",
+        "description": "Required scoped permissions: calculation.run. No automatic staff/superuser grant. Responses are private/no-store.",
+        "security": [
+          {
+            "sessionCookie": [],
+            "csrfHeader": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CalculationReceipt"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Sign in required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Missing permission or CSRF failure (Django may return HTML for CSRF rejection)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Object not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Revision, request key or immutable decision conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid input, state, source coverage or replay failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method not allowed"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CalculationWrite"
+              }
+            }
+          },
+          "description": "Maximum 65536 bytes. Exact documented fields; duplicate JSON keys and nonfinite numbers are rejected."
+        }
+      }
+    },
+    "/api/v1/calculation-runs/{id}/review-request/": {
+      "post": {
+        "summary": "Request aggregate result review",
+        "description": "Required scoped permissions: result.submit + calculation.validate. No automatic staff/superuser grant. Responses are private/no-store.",
+        "security": [
+          {
+            "sessionCookie": [],
+            "csrfHeader": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReviewReceipt"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Sign in required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Missing permission or CSRF failure (Django may return HTML for CSRF rejection)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Object not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Revision, request key or immutable decision conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid input, state, source coverage or replay failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method not allowed"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReviewWrite"
+              }
+            }
+          },
+          "description": "Maximum 65536 bytes. Exact documented fields; duplicate JSON keys and nonfinite numbers are rejected."
+        }
+      }
+    },
+    "/api/v1/calculation-runs/{id}/review/": {
+      "get": {
+        "summary": "Read disclosure-limited aggregate review packet",
+        "description": "Required scoped permissions: result.review + calculation.validate. No automatic staff/superuser grant. Responses are private/no-store.",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReviewPacket"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Sign in required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Missing permission or CSRF failure (Django may return HTML for CSRF rejection)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Object not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Revision, request key or immutable decision conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid input, state, source coverage or replay failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method not allowed"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v1/calculation-runs/{id}/decision/": {
+      "post": {
+        "summary": "Approve or return aggregate results",
+        "description": "Required scoped permissions: result.review + result.approve + calculation.validate; independent reviewer. No automatic staff/superuser grant. Responses are private/no-store.",
+        "security": [
+          {
+            "sessionCookie": [],
+            "csrfHeader": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DecisionReceipt"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Sign in required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Missing permission or CSRF failure (Django may return HTML for CSRF rejection)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Object not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Revision, request key or immutable decision conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid input, state, source coverage or replay failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method not allowed"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DecisionWrite"
+              }
+            }
+          },
+          "description": "Maximum 65536 bytes. Exact documented fields; duplicate JSON keys and nonfinite numbers are rejected."
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Answer": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "enum": [
+              "answered",
+              "missing",
+              "skipped",
+              "not_applicable",
+              "unable_to_assess",
+              "not_shown"
+            ]
+          },
+          "value": {
+            "type": [
+              "integer",
+              "string"
+            ]
+          },
+          "reason": {
+            "type": "string",
+            "maxLength": 1000
+          },
+          "example": {
+            "type": "string",
+            "maxLength": 4000
+          },
+          "development_plan": {
+            "type": "string",
+            "maxLength": 4000
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "additionalProperties": false,
+        "description": "Published F06 IDs only. Score values are integers 1–5. Non-score states have no value. M/T NA requires a reason. not_shown is server-owned; omitted duties become not_shown. Context fields P01–P05 cannot be supplied. Examples/plans accompany score questions only."
+      },
+      "RevisionWrite": {
+        "type": "object",
+        "properties": {
+          "expected_revision": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "answers": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/Answer"
+            }
+          },
+          "idempotency_key": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 160
+          }
+        },
+        "required": [
+          "expected_revision",
+          "answers",
+          "idempotency_key"
+        ],
+        "additionalProperties": false
+      },
+      "RevisionReceipt": {
+        "type": "object",
+        "properties": {
+          "revision": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "status": {
+            "enum": [
+              "draft",
+              "submitted"
+            ]
+          },
+          "completeness": {
+            "enum": [
+              "complete",
+              "partial"
+            ]
+          },
+          "reused": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "revision",
+          "status",
+          "completeness",
+          "reused"
+        ],
+        "additionalProperties": false
+      },
+      "AssignmentWrite": {
+        "type": "object",
+        "properties": {
+          "round_instrument_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "member_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "user_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "duties": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4000
+          },
+          "expected_levels": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 5
+            }
+          },
+          "applicable_question_ids": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "round_instrument_id",
+          "member_id",
+          "user_id",
+          "duties",
+          "expected_levels",
+          "applicable_question_ids"
+        ],
+        "additionalProperties": false
+      },
+      "CalculationWrite": {
+        "type": "object",
+        "properties": {
+          "cutoff": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "idempotency_key": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 160
+          },
+          "dry_run": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "cutoff",
+          "idempotency_key",
+          "dry_run"
+        ],
+        "additionalProperties": false
+      },
+      "CalculationReceipt": {
+        "type": "object",
+        "properties": {
+          "run_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "input_hash": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "result_count": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "status": {
+            "enum": [
+              "dry_run",
+              "complete"
+            ]
+          },
+          "reused": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "run_id",
+          "input_hash",
+          "result_count",
+          "status",
+          "reused"
+        ],
+        "additionalProperties": false
+      },
+      "ReviewWrite": {
+        "type": "object",
+        "properties": {
+          "reason": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000
+          }
+        },
+        "required": [
+          "reason"
+        ],
+        "additionalProperties": false
+      },
+      "ReviewReceipt": {
+        "type": "object",
+        "properties": {
+          "run_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "enum": [
+              "review",
+              "approved",
+              "returned"
+            ]
+          },
+          "review_token": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "reused": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "run_id",
+          "status",
+          "review_token",
+          "reused"
+        ],
+        "additionalProperties": false
+      },
+      "DecisionWrite": {
+        "type": "object",
+        "properties": {
+          "outcome": {
+            "enum": [
+              "approved",
+              "returned"
+            ]
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000
+          },
+          "reviewed_token": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        },
+        "required": [
+          "outcome",
+          "reason",
+          "reviewed_token"
+        ],
+        "additionalProperties": false
+      },
+      "DecisionReceipt": {
+        "type": "object",
+        "properties": {
+          "run_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "enum": [
+              "approved",
+              "returned"
+            ]
+          },
+          "publication_status": {
+            "const": "unpublished"
+          },
+          "reused": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "run_id",
+          "status",
+          "publication_status",
+          "reused"
+        ],
+        "additionalProperties": false
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "enum": [
+              "authentication_required",
+              "forbidden",
+              "not_found",
+              "revision_or_request_conflict",
+              "invalid_request"
+            ]
+          }
+        },
+        "required": [
+          "error"
+        ],
+        "additionalProperties": false
+      },
+      "OwnerSchema": {
+        "type": "object",
+        "properties": {
+          "assignment_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "instrument_version": {
+            "type": "string"
+          },
+          "round": {
+            "type": "string"
+          },
+          "group": {
+            "enum": [
+              "ST1",
+              "ST2"
+            ]
+          },
+          "duties": {
+            "type": "string"
+          },
+          "method": {
+            "const": "self_report"
+          },
+          "questions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "type": {
+                  "enum": [
+                    "integer_scale",
+                    "single_choice",
+                    "text"
+                  ]
+                },
+                "text": {
+                  "type": "string"
+                },
+                "options": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "code": {
+                        "type": "string"
+                      },
+                      "label": {
+                        "type": "string"
+                      },
+                      "value": {
+                        "type": [
+                          "integer",
+                          "string"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "code",
+                      "label",
+                      "value"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "expected_level": {
+                  "type": [
+                    "integer",
+                    "null"
+                  ]
+                },
+                "allow_na": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "id",
+                "type",
+                "text",
+                "options",
+                "expected_level",
+                "allow_na"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "instructions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "editable": {
+            "type": "boolean"
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "status": {
+            "enum": [
+              "not_started",
+              "draft",
+              "submitted"
+            ]
+          },
+          "completeness": {
+            "enum": [
+              "complete",
+              "partial"
+            ]
+          },
+          "answers": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/Answer"
+            }
+          }
+        },
+        "required": [
+          "assignment_id",
+          "instrument_version",
+          "round",
+          "group",
+          "duties",
+          "method",
+          "questions",
+          "instructions",
+          "editable",
+          "revision",
+          "status",
+          "completeness",
+          "answers"
+        ],
+        "additionalProperties": false
+      },
+      "ReviewPacket": {
+        "type": "object",
+        "properties": {
+          "run_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "enum": [
+              "review",
+              "approved",
+              "returned"
+            ]
+          },
+          "review_token": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "results": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "Fixed indicator/group/dimension, self_report method, formula spec and unit. Suppressed rows contain status/reason and omit value, numerator, denominator and quality_counts. Computed rows add those numeric fields as decimal strings and quality_counts. No source identities or raw answers."
+            }
+          },
+          "publication_status": {
+            "const": "unpublished"
+          },
+          "review_scope": {
+            "const": "aggregate_formula_and_data_completeness"
+          },
+          "reason": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "run_id",
+          "status",
+          "review_token",
+          "results",
+          "publication_status",
+          "review_scope",
+          "reason"
+        ],
+        "additionalProperties": false
+      },
+      "AssignmentList": {
+        "type": "object",
+        "properties": {
+          "assignments": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "round": {
+                  "type": "string"
+                },
+                "instrument_version": {
+                  "type": "string"
+                },
+                "method": {
+                  "const": "self_report"
+                }
+              },
+              "required": [
+                "id",
+                "round",
+                "instrument_version",
+                "method"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "assignments"
+        ],
+        "additionalProperties": false
+      },
+      "AssignmentReceipt": {
+        "type": "object",
+        "properties": {
+          "assignment_id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "required": [
+          "assignment_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "securitySchemes": {
+      "sessionCookie": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "sessionid"
+      },
+      "csrfHeader": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-CSRFToken",
+        "description": "Obtain CSRF cookie from authenticated owner form; send matching token on unsafe methods."
+      }
+    }
+  }
+}

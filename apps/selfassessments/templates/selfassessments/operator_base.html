@@ -1,0 +1,9 @@
+{% extends 'portal/base.html' %}
+{% block content %}
+<div class="operator-page">
+  <a class="back-link" href="{% url 'operator-list' scope.pk %}">{% if LANGUAGE_CODE == 'en' %}F06 collection{% else %}งานเก็บข้อมูล F06{% endif %}</a>
+  <p class="organization-line">{{ scope.organization.name }} · {{ scope.name }}</p>
+  {% if selected %}<p>{{ selected.collection_round.code }} · F06 {{ selected.instrument_version.version }} · {{ selected.context }}</p>{% endif %}
+  {% block operator_content %}{% endblock %}
+</div>
+{% endblock %}

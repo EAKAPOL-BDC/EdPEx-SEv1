@@ -1,0 +1,12 @@
+{% extends 'portal/base.html' %}{% load static i18n %}{% block content %}
+<section class="hero nexora-hero">
+<div class="hero-copy"><p class="eyebrow">{% translate "วิทยาลัยการศึกษา มหาวิทยาลัยพะเยา" %}</p>
+<h1>NEXORA</h1><p class="brand-pronunciation">{% translate "เน็กซอรา" %}</p>
+<h2>{% translate "ระบบสารสนเทศขับเคลื่อนองค์กรสู่ความเป็นเลิศ" %}</h2>
+{% if LANGUAGE_CODE == 'th' %}<p lang="en" class="system-english-name">Organizational Excellence Information System</p>{% endif %}
+<p class="brand-tagline">{% translate "เชื่อมโยงข้อมูล ขับเคลื่อนองค์กร สู่ความเป็นเลิศ" %}</p>
+<a class="button" href="{% if user.is_authenticated %}{% url 'workspace' %}{% else %}{% url 'login' %}{% endif %}">{% translate "เข้าสู่พื้นที่ทำงาน →" %}</a></div>
+<img class="nexora-mascot" src="{% static 'portal/branding/nexora-mascot.png' %}" alt="{% translate 'มาสคอต NEXORA' %}" width="1254" height="1254">
+</section>
+<section class="card"><h2>{% translate "เริ่มต้นใช้งาน" %}</h2><p>{% translate "เข้าสู่ระบบด้วยบัญชีที่ผู้ดูแลจัดเตรียมให้ เพื่อดูองค์กร ขอบเขต และสิทธิ์ของคุณ" %}</p><p>{% translate "ระบบอยู่ระหว่างเตรียมใช้งาน ส่วนแบบฟอร์มและแดชบอร์ดจะเปิดให้บริการในระยะถัดไป" %}</p><p class="edpex-context"><strong>EdPEx</strong> — <span lang="en">Education Criteria for Performance Excellence</span>{% if LANGUAGE_CODE == 'th' %}<br>เกณฑ์คุณภาพการศึกษาเพื่อการดำเนินการที่เป็นเลิศ{% endif %}</p></section>
+{% endblock %}

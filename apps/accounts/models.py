@@ -14,6 +14,7 @@ ALLOWED_PERMISSIONS = frozenset({
     "calendar.manage", "round.manage", "population.manage",
     "responsibility.manage", "source.manage", "audit.read", "self.read",
     "self.write", "role.manage",
+    "calculation.run", "calculation.source", "calculation.validate",
 })
 
 

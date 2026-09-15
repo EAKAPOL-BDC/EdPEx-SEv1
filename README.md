@@ -46,6 +46,9 @@ python -m unittest tests.test_m0_catalog tests.test_m0_bindings tests.test_m0_so
 ```
 
 See [แกนคำนวณ M2: ผลทดสอบและขอบเขตการใช้งาน](docs/m2-calculation-core-th.md).
-This increment performs no migrations or seeding and adds no public endpoint.
-Persisted calculation runs/manifests, permissions, approval, historical imports,
-and annual aggregation still require implementation before M2 is complete.
+The next increment adds internal persisted calculation runs, source/definition
+snapshots, checksums, replay, scoped source/run/validation permissions, and
+transactional idempotency. See [รอบคำนวณและการตรวจผลย้อนหลัง](docs/m2-snapshots-th.md).
+It includes additive migrations but does not apply them to Supabase automatically.
+Live collection adapters, approval, historical imports, public endpoints and annual
+aggregation remain pending before the full M2 milestone is complete.

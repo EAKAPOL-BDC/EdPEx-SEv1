@@ -1,1 +1,1 @@
-"""Offline M2 calculation core. No Django setup, database writes, or public API."""
+"""M2 pure calculation core and internal Django snapshot services. No public API."""

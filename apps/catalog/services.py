@@ -182,10 +182,15 @@ def publish_instrument_version(actor, version):
         assert_complete_bundle(bundle)
     if not version.questions.filter(active=True).exists():
         raise ValidationError("An instrument version must contain questions.")
-    for binding in version.bindings.select_related("formula"):
-        if binding.formula.status == "draft":
-            binding.formula.status = "published"
-            binding.formula.save()
+    # Multiple indicator bindings may share a formula. Read and lock each actual
+    # formula once; cached per-binding copies otherwise republish a locked version.
+    from .models import FormulaVersion
+    for formula in FormulaVersion.objects.select_for_update().filter(
+        pk__in=version.bindings.values("formula_id")
+    ).order_by("pk"):
+        if formula.status == "draft":
+            formula.status = "published"
+            formula.save()
     snapshot = {
         "texts": source_texts(version),
         "questions": list(version.questions.order_by("question_id").values("question_id", "answer_type", "required_rule", "visibility_rule", "scale", "group_codes", "answer_statuses", "active")),

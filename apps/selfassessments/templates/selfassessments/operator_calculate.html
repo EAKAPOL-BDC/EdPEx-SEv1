@@ -1,0 +1,22 @@
+{% extends 'selfassessments/operator_base.html' %}
+{% block operator_content %}
+<h1>{% if LANGUAGE_CODE == 'en' %}Calculate F06 results{% else %}คำนวณผล F06{% endif %}</h1>
+<p>{% if LANGUAGE_CODE == 'en' %}Uses the latest submitted answers up to the cutoff for this form and context. The frozen population remains the denominator where the formula requires it.{% else %}ใช้คำตอบที่ส่งล่าสุดถึง cutoff ของแบบและบริบทนี้ ตัวหารประชากรใช้ชุดที่ตรึงไว้ตามนิยามสูตร{% endif %}</p>
+{% if not ready %}<p class="notice">{% if LANGUAGE_CODE == 'en' %}Close the round before calculating.{% else %}ต้องปิดรับคำตอบของรอบก่อนคำนวณ{% endif %}</p>{% endif %}
+<section class="panel"><form method="post">{% csrf_token %}
+<p>{% if LANGUAGE_CODE == 'en' %}Time zone{% else %}เขตเวลา{% endif %}: {{ scope.organization.timezone }}</p>
+{% include 'selfassessments/operator_fields.html' %}
+{% if ready %}<button name="action" value="preview">{% if LANGUAGE_CODE == 'en' %}Check calculation{% else %}ตรวจผลก่อนบันทึก{% endif %}</button>{% endif %}
+</form></section>
+{% if preview %}
+<section class="panel" aria-labelledby="preview-title"><h2 id="preview-title">{% if LANGUAGE_CODE == 'en' %}Ready to save{% else %}พร้อมบันทึกชุดผล{% endif %}</h2>
+<p>F06 {{ selected.instrument_version.version }} · {{ selected.context }}</p>
+<p>Cutoff: {{ form.cleaned_data.cutoff|date:'Y-m-d H:i:s' }} · {{ scope.organization.timezone }}</p>
+<p>{% if LANGUAGE_CODE == 'en' %}Result series{% else %}จำนวนชุดผลตัวชี้วัด/กลุ่ม/มิติ{% endif %}: {{ preview.result_count }}</p>
+<p>{% if LANGUAGE_CODE == 'en' %}This check has not saved a new result set. Confirm within 30 minutes. The same confirmation can be retried without creating a duplicate.{% else %}การตรวจนี้ยังไม่บันทึกชุดผลใหม่ ยืนยันได้ภายใน 30 นาที หากส่งคำยืนยันเดิมซ้ำจะไม่สร้างชุดผลซ้ำ{% endif %}</p>
+<form method="post">{% csrf_token %}<input type="hidden" name="preview_token" value="{{ preview_token }}">
+<button name="action" value="commit">{% if LANGUAGE_CODE == 'en' %}Confirm and save result set{% else %}ยืนยันบันทึกชุดผล{% endif %}</button></form>
+</section>
+{% endif %}
+<p><a href="{% url 'operator-collection' scope.pk selected.pk %}">{% if LANGUAGE_CODE == 'en' %}Back to collection{% else %}กลับหน้าจัดการรอบ{% endif %}</a></p>
+{% endblock %}

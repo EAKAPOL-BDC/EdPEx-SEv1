@@ -53,5 +53,10 @@ It includes additive migrations but does not apply them to Supabase automaticall
 The F06 increment adds owner-only draft/submitted revisions, frozen duties and expected
 levels, a stored-response calculation adapter, and independent aggregate approval/return
 with retained correction history. See [F06 intake and result review](docs/f06-stored-collection-th.md).
+The staff workspace now exposes assignment, whole-round open/close, a signed calculation
+preview/commit flow, independent aggregate review and correction history through the existing
+services. See [F06 staff workspace](docs/f06-operator-workspace-th.md). This UI adds no migrations
+or automatic role grants. Its language-switch regression is checked with
+`node --test tests/portal_language.test.js`.
 Anonymous F01–F04 collection, verified F05 intake, historical imports, publication and annual
 aggregation remain pending before the full M2/M4 milestones are complete.

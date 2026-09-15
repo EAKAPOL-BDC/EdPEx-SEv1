@@ -7,7 +7,8 @@ document.addEventListener('submit', async (event) => {
   if (!button) return;
   const values = [...document.querySelectorAll('main form')].map(f =>
     [...f.elements].filter(e => e.name && e.name !== 'csrfmiddlewaretoken')
-      .map(e => ({name: e.name, value: e.value, checked: e.checked})));
+      .map(e => ({name: e.name, type: e.type, value: e.value, checked: e.checked,
+        selected: e.multiple ? [...e.selectedOptions].map(o => o.value) : null})));
   const data = new FormData(form);
   data.set('language', button.value);
   button.disabled = true;
@@ -24,8 +25,15 @@ document.addEventListener('submit', async (event) => {
     document.title = next.title;
     [...document.querySelectorAll('main form')].forEach((f, i) => {
       for (const previous of values[i] || []) {
-        const field = f.elements.namedItem(previous.name);
-        if (field) { field.value = previous.value; if ('checked' in field) field.checked = previous.checked; }
+        const fields = [...f.elements].filter(field => field.name === previous.name && field.type === previous.type);
+        if (previous.type === 'checkbox' || previous.type === 'radio') {
+          // namedItem returns RadioNodeList for repeated names, including checkbox groups.
+          for (const field of fields) if (field.value === previous.value) field.checked = previous.checked;
+        } else if (previous.selected) {
+          for (const field of fields) for (const option of field.options) option.selected = previous.selected.includes(option.value);
+        } else {
+          for (const field of fields) field.value = previous.value;
+        }
       }
     });
     document.dispatchEvent(new Event('portal:updated'));

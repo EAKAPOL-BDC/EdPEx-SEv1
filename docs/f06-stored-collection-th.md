@@ -122,10 +122,14 @@ suppression, CSRF และหน้าเว็บ รวมการตรว�
 
 - F01–F04: invitation registry กับ anonymous response store ที่แยกจากกัน; F04 appointment/context
 - F05: ทะเบียนกิจกรรม/ช่วงเวลาจ้างงาน การตรวจหลักฐาน storage และชั่วโมงไม่ซ้ำ
-- หน้าเจ้าหน้าที่มอบหมาย/ตั้ง expected levels และหน้าผู้ตรวจผล (increment นี้มี service/API)
+- การเตรียมรอบ/ประชากร/เผยแพร่คลังผ่านหน้าจอ และการติดตั้ง/กำหนดสิทธิ์จริง
 - personal gap reports, historical raw/aggregate, annual aggregation และการรับรองทั้งรอบ
 - disclosure-reviewed publication, dashboard/export, retention และ production hardening/UAT
 
 หน้า F06 บนเครื่องผู้ใช้จะใช้งานรับคำตอบได้เมื่อเข้าสู่ขั้นติดตั้ง migrations
 ตรวจรับและ publish คลังที่ตรึงไว้ เตรียม population/assignment/permissions แล้วเปิดรอบจริง
 สถานะฉบับร่างในคลังเดิมของผู้ใช้ยังไม่ถูกเปลี่ยนโดยงานนี้
+
+หน้ามอบหมาย/ตั้ง expected levels เปิด/ปิดรอบ เตรียมคำนวณ และตรวจผลรวมเพิ่มแล้ว
+ใน [คู่มือหน้าจอเจ้าหน้าที่ F06](f06-operator-workspace-th.md) โดยใช้บริการของ increment นี้
+ไม่มี migrations หรือการมอบสิทธิ์เพิ่มในงานหน้าจอ

@@ -1,0 +1,16 @@
+{% extends 'selfassessments/operator_base.html' %}
+{% block operator_content %}
+<h1>{% if LANGUAGE_CODE == 'en' %}Assignment roster{% else %}รายชื่อสำหรับมอบหมาย{% endif %}</h1>
+<p>{% if LANGUAGE_CODE == 'en' %}Staff in the frozen population. Match each population key to the correct account before assigning.{% else %}บุคลากรในประชากรที่ตรึงไว้ ตรวจรหัสประชากรให้ตรงกับบัญชีเจ้าของก่อนมอบหมาย{% endif %}</p>
+{% if selected.collection_round.status != 'ready' %}<p class="notice">{% if LANGUAGE_CODE == 'en' %}Assignments are available only while the round is ready, before opening.{% else %}มอบหมายได้เฉพาะสถานะพร้อมเปิดรอบ ก่อนเปิดรับคำตอบ{% endif %}</p>{% endif %}
+<section class="panel"><div class="table-scroll"><table class="grants-table"><thead><tr>
+  <th>{% if LANGUAGE_CODE == 'en' %}Population key{% else %}รหัสสมาชิกประชากร{% endif %}</th><th>{% if LANGUAGE_CODE == 'en' %}Group{% else %}กลุ่ม{% endif %}</th><th>{% if LANGUAGE_CODE == 'en' %}Assignment{% else %}การมอบหมาย{% endif %}</th>
+</tr></thead><tbody>{% for member in members %}<tr>
+  <td>{{ member.eligible_unit_key }}</td><td>{{ member.group.code }}</td><td>
+  {% if member.assigned %}{% if LANGUAGE_CODE == 'en' %}Assigned{% else %}มอบหมายแล้ว{% endif %}
+  {% elif selected.collection_round.status == 'ready' %}<a href="{% url 'operator-assign' scope.pk selected.pk member.pk %}">{% if LANGUAGE_CODE == 'en' %}Assign{% else %}มอบหมาย{% endif %}</a>
+  {% else %}{% if LANGUAGE_CODE == 'en' %}Not assigned{% else %}ยังไม่มอบหมาย{% endif %}{% endif %}</td>
+</tr>{% empty %}<tr><td colspan="3">{% if LANGUAGE_CODE == 'en' %}No frozen staff population available.{% else %}ยังไม่มีประชากรบุคลากรที่ตรึงสำหรับรอบนี้{% endif %}</td></tr>{% endfor %}</tbody></table></div>
+{% include 'selfassessments/operator_pagination.html' with page=members %}</section>
+<p><a href="{% url 'operator-collection' scope.pk selected.pk %}">{% if LANGUAGE_CODE == 'en' %}Back to collection{% else %}กลับหน้าจัดการรอบ{% endif %}</a></p>
+{% endblock %}

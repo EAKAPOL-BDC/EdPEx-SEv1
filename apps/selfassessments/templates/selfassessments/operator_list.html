@@ -1,0 +1,19 @@
+{% extends 'selfassessments/operator_base.html' %}
+{% block operator_content %}
+<h1>{% if LANGUAGE_CODE == 'en' %}F06 collection{% else %}งานเก็บข้อมูล F06{% endif %}</h1>
+<p>{% if LANGUAGE_CODE == 'en' %}Assign self-reports, calculate a result set and review aggregate results for each pinned context.{% else %}มอบหมายแบบประเมิน คำนวณชุดผล และตรวจผลรวมแยกตามบริบทที่รอบตรึงไว้{% endif %}</p>
+<div class="grid">
+{% for item in selections %}
+  <section class="card"><h2>{{ item.collection_round.code }}</h2>
+    <p>F06 {{ item.instrument_version.version }} · {{ item.context }}</p>
+    {% include 'selfassessments/operator_status.html' with status=item.collection_round.status %}
+    <p><a class="button button-secondary" href="{% url 'operator-collection' scope.pk item.pk %}">{% if LANGUAGE_CODE == 'en' %}Open collection workspace{% else %}เปิดพื้นที่จัดการรอบ{% endif %}</a></p>
+  </section>
+{% empty %}
+  <section class="card"><h2>{% if LANGUAGE_CODE == 'en' %}No F06 collection configured{% else %}ยังไม่มีรอบที่เลือก F06{% endif %}</h2>
+  <p>{% if LANGUAGE_CODE == 'en' %}A form in the library is ready for collection after its content is reviewed and published, a round is configured, and its population is frozen.{% else %}แบบในคลังจะพร้อมเก็บคำตอบเมื่อผ่านการตรวจรับและเผยแพร่เนื้อหา ตั้งค่ารอบ และตรึงประชากรแล้ว{% endif %}</p></section>
+{% endfor %}
+</div>
+{% include 'selfassessments/operator_pagination.html' with page=selections %}
+<p><a href="{% url 'workspace' %}">{% if LANGUAGE_CODE == 'en' %}Back to workspace{% else %}กลับพื้นที่ทำงาน{% endif %}</a></p>
+{% endblock %}

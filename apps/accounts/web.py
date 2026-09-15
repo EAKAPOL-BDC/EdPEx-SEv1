@@ -45,7 +45,9 @@ def workspace(request):
     for scope in candidates:
         actions = [a for a in sorted(ALLOWED_PERMISSIONS) if can_access(request.user, a, scope, owner=request.user)]
         if actions:
-            scopes.append({'scope': scope, 'actions': actions, 'manage': 'role.manage' in actions})
+            scopes.append({'scope': scope, 'actions': actions, 'manage': 'role.manage' in actions,
+                'collection': bool(set(actions) & {'selfassessment.assign', 'round.manage',
+                    'calculation.run', 'result.submit', 'result.review'})})
     return render(request, 'portal/workspace.html', {'scopes': scopes})
 
 

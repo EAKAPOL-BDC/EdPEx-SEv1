@@ -1,0 +1,11 @@
+{% extends 'selfassessments/operator_base.html' %}
+{% block operator_content %}
+<h1>{% if LANGUAGE_CODE == 'en' %}Assign a self-report{% else %}มอบหมายแบบประเมินตนเอง{% endif %}</h1>
+<p>{{ member.eligible_unit_key }} · {{ member.group.code }}</p>
+<p class="notice">{% if LANGUAGE_CODE == 'en' %}Verify the account, duties and expected levels before saving. This assignment is retained and cannot be edited. Expected levels are required for all score questions, including M/T dimensions outside the assigned duties.{% else %}ตรวจบัญชี หน้าที่ และระดับที่คาดหวังก่อนบันทึก การมอบหมายนี้เก็บเป็นประวัติและแก้ไขไม่ได้ ต้องกำหนดระดับที่คาดหวังทุกข้อคะแนน รวมด้าน M/T ที่อยู่นอกหน้าที่{% endif %}</p>
+<section class="panel"><form method="post">{% csrf_token %}
+{% include 'selfassessments/operator_fields.html' %}
+<div class="form-actions"><button>{% if LANGUAGE_CODE == 'en' %}Save assignment{% else %}บันทึกการมอบหมาย{% endif %}</button>
+<a href="{% url 'operator-roster' scope.pk selected.pk %}">{% if LANGUAGE_CODE == 'en' %}Back to roster{% else %}กลับรายชื่อ{% endif %}</a></div>
+</form></section>
+{% endblock %}

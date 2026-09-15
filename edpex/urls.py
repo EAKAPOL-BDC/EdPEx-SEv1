@@ -4,6 +4,7 @@ from django.urls import path
 from apps.accounts import web
 from apps.catalog import web as catalog_web
 from apps.selfassessments import web as self_web, api as self_api
+from apps.selfassessments import operator_web
 
 urlpatterns = [
     path("", web.home, name="home"),
@@ -17,6 +18,12 @@ urlpatterns = [
     path("workspace/<uuid:scope_id>/catalog/<uuid:version_id>/", catalog_web.version_detail, name="portal-catalog-detail"),
     path("workspace/self-assessments/", self_web.mine, name="self-assessment-list"),
     path("workspace/self-assessments/<uuid:assignment_id>/", self_web.detail, name="self-assessment-detail"),
+    path("workspace/<uuid:scope_id>/collection/", operator_web.overview, name="operator-list"),
+    path("workspace/<uuid:scope_id>/collection/<uuid:selected_id>/", operator_web.collection, name="operator-collection"),
+    path("workspace/<uuid:scope_id>/collection/<uuid:selected_id>/roster/", operator_web.roster, name="operator-roster"),
+    path("workspace/<uuid:scope_id>/collection/<uuid:selected_id>/assign/<uuid:member_id>/", operator_web.assign, name="operator-assign"),
+    path("workspace/<uuid:scope_id>/collection/<uuid:selected_id>/calculate/", operator_web.calculate, name="operator-calculate"),
+    path("workspace/<uuid:scope_id>/results/<uuid:run_id>/", operator_web.result, name="operator-run"),
     path("api/v1/me/self-assessments/", self_api.mine),
     path("api/v1/me/self-assessments/<uuid:assignment_id>/", self_api.own_schema),
     path("api/v1/me/self-assessments/<uuid:assignment_id>/draft/", self_api.draft),

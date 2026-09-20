@@ -123,6 +123,7 @@ def leadership_collections(binding, *, all_groups=False, require_complete=True):
     if not require_complete:
         expected = set(AnnualTarget.objects.filter(plan=target.plan).values_list('pk', flat=True))
     rows = list(PublicCollection.objects.filter(binding__survey_profile__annual_target_id__in=expected,
+        binding__collection_round__data_kind=binding.collection_round.data_kind,
         binding__survey_profile__group_code__in=['ST1', 'ST2']).select_related(
             'binding__collection_round', 'binding__survey_profile').order_by('binding_id'))
     pairs = {(row.binding.survey_profile.annual_target_id, row.binding.survey_profile.group_code) for row in rows}

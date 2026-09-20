@@ -6,7 +6,7 @@ from django.db import transaction
 from apps.accounts.permissions import require_permission
 from apps.catalog.models import TranslationBundle
 from apps.participation.setup import SetupForm
-from apps.participation import public_admission
+from apps.participation import public_admission, collection_mode
 from apps.surveys.models import SurveyProfile
 from .models import AnnualPlan
 
@@ -45,7 +45,9 @@ class StaffCollectionForm(SetupForm):
             instrument_version__instrument__code='F04', instrument_version__instrument__scope=scope)
         self.fields['bundle'].label_from_instance = lambda b: 'F04 · '+b.instrument_version.version+' · '+b.bundle_version
         self.fields['bundle'].help_text = 'ต้องมีคำถามรองรับทั้ง ST1 และ ST2 และทุกตำแหน่งที่ตรึงแล้ว / Must support both staff groups and all frozen positions.'
-        self.fields['code'].help_text = 'เช่น F04 ทดสอบปี 2569 ระบบต่อท้ายตำแหน่งและกลุ่มให้อัตโนมัติ / Example: F04 test 2569; position and group suffixes are added automatically.'
+        self.fields['code'].label = 'ชื่อรอบประเมินผู้บริหาร / Leadership collection name'
+        self.fields['code'].help_text = 'เช่น F04 ปีงบประมาณ 2569 ระบบต่อท้ายตำแหน่งและกลุ่มให้อัตโนมัติ / Example: F04 fiscal year 2569; position and group suffixes are added automatically.'
+        self.fields['confirm'].label = collection_mode.confirm_label()
         self.order_fields(['code', 'bundle', 'group_codes', 'count_st1', 'count_st2'])
 
     def clean(self):
@@ -75,7 +77,8 @@ def create_staff_collections(actor, scope, plan_id, data):
     rows = []
     for target in targets:
         for group, _ in STAFF_GROUPS:
-            existing = SurveyProfile.objects.filter(annual_target=target, group_code=group, intake_method='public').select_related('binding').first()
+            existing = SurveyProfile.objects.filter(annual_target=target, group_code=group, intake_method='public',
+                binding__collection_round__data_kind=collection_mode.data_kind()).select_related('binding').first()
             if existing:
                 rows.append(existing.binding)
                 continue
@@ -101,7 +104,8 @@ def control_plan(actor, scope, plan_id, action, reason=''):
     plan = AnnualPlan.objects.select_for_update().get(pk=plan_id, scope=scope)
     if action not in {'launch', 'withdraw', 'close'}:
         raise ValidationError('คำสั่งไม่ถูกต้อง / Invalid action.')
-    profile = SurveyProfile.objects.filter(annual_target__plan=plan, intake_method='public').select_related('binding').first()
+    profile = SurveyProfile.objects.filter(annual_target__plan=plan, intake_method='public',
+        binding__collection_round__data_kind=collection_mode.data_kind()).select_related('binding').first()
     if not profile:
         raise ValidationError('สร้างรอบประเมินผู้บริหารก่อน / Create leadership collections first.')
     rows = public_admission.leadership_collections(profile.binding, all_groups=True, require_complete=action == 'launch')

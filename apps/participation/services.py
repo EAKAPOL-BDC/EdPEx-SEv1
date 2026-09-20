@@ -61,6 +61,8 @@ def _token_hash(token):
 
 
 def _policy_valid(policy):
+    if getattr(settings, 'PRODUCTION', False) and (policy.realm != 'live' or policy.binding.collection_round.data_kind != 'real'):
+        raise ReceiptError('production_live_only', 403)
     from .lan_preview import enabled as lan_preview_enabled
     if lan_preview_enabled() and (policy.realm != 'test' or policy.binding.collection_round.data_kind != 'synthetic'):
         raise ReceiptError('synthetic_test_only', 403)

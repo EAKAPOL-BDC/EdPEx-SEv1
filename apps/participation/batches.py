@@ -23,7 +23,7 @@ from .models import AssessmentBatch, AssessmentBatchItem, PublicCollection
 from .public_catalog import GROUPS, LEVELS, PROGRAMMES
 from .setup import SetupForm
 from .public_setup import build_public_collection
-from . import public_admission, services
+from . import public_admission, services, collection_mode
 
 SALT = 'nexora.public.batch.v1'
 
@@ -77,7 +77,7 @@ class BatchForm(SetupForm):
             if code != 'F02':
                 self.fields[unit].widget = forms.HiddenInput()
             self.cards.append({'group': group, 'title': group+' · '+ui_wording(GROUPS[group][0]+' / '+GROUPS[group][1], get_language()), 'rows': rows, 'unit': self[unit]})
-        self.fields['confirm'].label = 'ตรวจกลุ่ม หลักสูตร จำนวนอ้างอิง และเข้าใจว่านี่เป็นรอบทดสอบที่ยังไม่เปิดรับ / I reviewed groups, programmes and counts; this test batch will not open automatically'
+        self.fields['confirm'].label = collection_mode.confirm_label()
         for field in self.fields.values():
             field.label = ui_wording(field.label, get_language())
             field.help_text = ui_wording(field.help_text, get_language())
@@ -249,7 +249,9 @@ def manage(request, scope, batch_id):
         rows.append({'state': collection_state(b), 'title':short_context(b.public_collection, get_language().startswith('en')), 'binding': b, 'group': b.survey_profile.group_code, 'context': b.survey_profile.context_en if get_language().startswith('en') else b.survey_profile.context_th,
             'count': b.collection_round.population_snapshot.counts_by_group[b.survey_profile.group_code], 'submitted': b.survey_responses.count(), 'public': b.public_collection})
     states = {row['binding'].collection_round.status for row in rows}
+    kinds = {row['binding'].collection_round.data_kind for row in rows}
     return render(request, 'participation/batch_manage.html', {'scope': scope, 'batch': batch, 'rows': rows, 'error': error, 'state':aggregate_state([row['binding'] for row in rows]), 'total_responses':sum(row['submitted'] for row in rows), 'group_count':len({row['group'] for row in rows}),
+        'data_kind_label': 'REAL' if kinds == {'real'} else 'TEST' if kinds == {'synthetic'} else 'REAL / TEST',
         'can_launch': bool(rows) and states <= {'ready','open'} and all(row['binding'].collection_round.close_at > timezone.now() for row in rows) and any(row['binding'].collection_round.status != 'open' or not row['public'].published for row in rows),
         'can_open': bool(rows) and 'ready' in states and states <= {'ready', 'open'},
         'can_publish': bool(rows) and states <= {'ready', 'open'}, 'can_close': bool(rows) and 'open' in states and states <= {'open', 'closed'}}, status=422 if error else 200)

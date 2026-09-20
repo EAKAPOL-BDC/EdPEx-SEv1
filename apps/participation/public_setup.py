@@ -21,6 +21,7 @@ from . import services, public_admission
 from .models import PublicCollection, PublicSession, ReceiptPolicy
 from .public_catalog import GROUPS, LEVELS, YEARS, PROGRAMMES, validate_context
 from .setup import SetupForm
+from . import collection_mode
 
 SALT = 'nexora.public.setup.2026-09-19'
 
@@ -59,7 +60,7 @@ class PublicSetupForm(SetupForm):
         self.fields['code'].help_text = 'เช่น ประสบการณ์ผู้เรียน สะเต็มศึกษา ปี 2569 / Example: STEM learner experiences 2569.'
         self.fields['count'].label = 'จำนวนผู้มีสิทธิ์ตามแหล่งอ้างอิง / Aggregate reference population'
         self.fields['count'].help_text = 'จำนวนรวมเพื่ออ้างอิงตัวหาร ไม่ใช่จำนวนคนตอบที่ยืนยันตัวตนแล้ว เช่น 120 คน ไม่ต้องแนบรายชื่อ / Reference denominator, e.g. 120 people. This is not an identity-verified respondent count; do not attach a roster.'
-        self.fields['confirm'].label = 'ตรวจข้อมูลและเข้าใจว่าเป็นรอบทดสอบสาธารณะใหม่ที่ยังไม่เปิดรับ / I reviewed this new synthetic public collection; it will not open automatically'
+        self.fields['confirm'].label = collection_mode.confirm_label()
         # Persistent hints, not placeholder-only explanations. Existing setup
         # guidance supplies field examples; these hints remain without JavaScript.
         hints = {
@@ -113,9 +114,9 @@ def create_collection(actor, source, data, *, target_override=None):
     r_source = CollectionRound.objects.select_for_update().get(pk=source.collection_round_id)
     require_manager(actor, source)
     require_permission(actor, 'source.manage', r_source.scope)
-    if (r_source.data_kind != 'synthetic' or source.translation_bundle.status != 'published'
+    if (r_source.data_kind != collection_mode.data_kind() or source.translation_bundle.status != 'published'
             or source.instrument_version.status != 'published'):
-        raise ValidationError('ใช้ต้นแบบที่เผยแพร่แล้วในพื้นที่ทดสอบ / Use a published synthetic template.')
+        raise ValidationError('ใช้ต้นแบบที่เผยแพร่แล้วและมีชนิดข้อมูลตรงกับสภาพแวดล้อมนี้ / Use a published template matching this environment’s data kind.')
     ticket = signing.loads(data['setup_stamp'], salt=SALT, max_age=3600)
     if ticket.get('actor') != str(actor.pk) or ticket.get('source') != str(source.pk):
         raise signing.BadSignature
@@ -128,14 +129,16 @@ def create_collection(actor, source, data, *, target_override=None):
                                    target=target, activity=activity)
 
 
+@transaction.atomic
 def build_public_collection(actor, scope, period, bundle, data, *, target=None, activity):
     # Internal builder; callers validate and lock the batch.
+    kind, realm = collection_mode.creation_contract()
     group = data['group_code']
     validate_context(group, data['level'], data['programme'], YEARS[data['level']][0] if data['level'] in YEARS else '')
     code = bundle.instrument_version.instrument.code
     values = {k: data[k] for k in ('code', 'open_at', 'due_at', 'close_at', 'privacy_notice')}
     r = create_record(actor, CollectionRound, scope=scope, period=period, owner=actor,
-                      data_kind='synthetic', schedule_confirmed=True, **values)
+                      data_kind=kind, schedule_confirmed=True, **values)
     context = 'f04-target-'+str(target.pk) if target else 'public-'+uuid.uuid4().hex
     b = create_record(actor, RoundInstrument, collection_round=r, instrument_version=bundle.instrument_version,
                       translation_bundle=bundle, context=context)
@@ -156,8 +159,8 @@ def build_public_collection(actor, scope, period, bundle, data, *, target=None, 
         counting_unit=profile.counting_unit, counts_by_group={group: data['count']}, captured_at=timezone.now(), source=source_record)
     freeze_population(actor, population)
     services.configure_policy(actor, b.pk, activity_code=activity, label_th=data['label_th'], label_en=data['label_en'],
-        expires_at=data['expires_at'], workload=data['workload'], prize=data['prize'], realm='test')
-    b.collection_round = transition_round(actor, r, 'ready', reason='New public synthetic collection, not yet published or opened')
+        expires_at=data['expires_at'], workload=data['workload'], prize=data['prize'], realm=realm)
+    b.collection_round = transition_round(actor, r, 'ready', reason=f'New public {kind} collection, not yet published or opened')
     return b
 
 
@@ -179,7 +182,8 @@ def create_all_leaders(actor, source, data):
     created = []
     for target in targets:
         for group in groups:
-            old = SurveyProfile.objects.filter(annual_target=target, group_code=group, intake_method='public').first()
+            old = SurveyProfile.objects.filter(annual_target=target, group_code=group, intake_method='public',
+                binding__collection_round__data_kind=collection_mode.data_kind()).first()
             if old:
                 created.append(old.binding)
                 continue
@@ -216,7 +220,7 @@ def setup(request, scope, selected_id):
         else:
             return redirect('public-assessment-manage', scope_id=scope.pk, selected_id=b.pk)
     return form_page(request, scope, form, 'เตรียมรอบประเมินสาธารณะ / Prepare a public assessment collection',
-        notice='รอบทดสอบใหม่ ใช้ข้อมูลสมมุติ สร้างแล้วอยู่สถานะพร้อม ยังไม่เปิดรับและยังไม่เผยแพร่ / New synthetic test collection. Creation does not open or publish it.')
+        notice=collection_mode.setup_notice())
 
 
 @page(['GET', 'POST'])

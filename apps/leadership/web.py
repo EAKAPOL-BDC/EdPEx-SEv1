@@ -171,11 +171,14 @@ def generate(request,scope,plan_id):
     plan=scoped_plan(scope,plan_id)
     if getattr(settings, 'NEXORA_PUBLIC_ASSESSMENTS_ENABLED', False):
         from .public_collections import StaffCollectionForm, create_staff_collections
+        from apps.participation.services import ReceiptError
         form=StaffCollectionForm(request.POST if request.method=='POST' else None,scope=scope)
         if request.method=='POST' and form.is_valid():
             try:
                 rows=create_staff_collections(request.user,scope,plan.pk,form.cleaned_data)
             except (ValidationError,IntegrityError) as exc:errors(form,exc)
+            except ReceiptError:
+                form.add_error(None, 'ยังไม่เปิดใช้งานการสร้างรอบจริง กรุณาตรวจการตั้งค่าระบบ / Live collection creation is not enabled; check the deployment settings.')
             else:
                 messages.success(request,f'เตรียมครบ ST1 และ ST2 รวม {len(rows)} รอบ โดยเก็บรอบที่มีอยู่ไว้ ยังไม่เปิดหรือเผยแพร่อัตโนมัติ / Both staff groups prepared; existing rounds retained, no automatic opening or publication.')
                 return redirect('f04-plan',scope_id=scope.pk,plan_id=plan.pk)

@@ -1,0 +1,29 @@
+/* Shared identity for workspace, surveys and native Django administration. */
+/* Keep the full bilingual name and tagline visible at every width. */
+.nx-identity{display:inline-flex;align-items:center;gap:20px;min-width:0;max-width:100%;text-align:left;white-space:normal}
+.nx-identity .nx-logo{--nx-logo-width:150px;margin:0;flex:none}
+.nx-identity .nx-system-copy{display:flex;flex-direction:column;justify-content:center;gap:3px;min-width:0;max-width:460px;border-inline-start:1px solid #e1dbe9;padding-inline-start:20px;line-height:1.6;color:#63576f;overflow-wrap:anywhere}
+.nx-identity .nx-system-copy strong{font-size:16px;font-weight:600;color:#3b2c4b;line-height:1.6}
+.nx-identity .nx-system-english{font-size:12px;font-weight:500;line-height:1.5;letter-spacing:.1px;color:#63576f}
+.nx-identity .nx-system-tagline{font-size:12px;font-weight:400;line-height:1.6;color:#796044}
+.nx-footer{box-sizing:border-box;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:12px 24px;width:100%;max-width:none;margin:0;padding:10px 24px;border:0;border-top:1px solid #e3deeb;background:#fff;color:#675d73;text-align:left;font:400 12px/1.65 "Leelawadee UI","Noto Sans Thai",Tahoma,system-ui,sans-serif}
+.nx-footer .nx-footer-credit{display:flex;align-items:center;gap:12px;min-width:0}
+.nx-footer .nx-footer-credit>div{min-width:0}.nx-footer p{margin:0;font-size:12px;line-height:1.65;overflow-wrap:anywhere}
+.nx-footer .nx-footer-symbol{width:32px;height:32px;display:grid;place-items:center;flex:none;border:1px solid #e8e1f0;border-radius:9px;background:#f7f4fa;color:#81629f}.nx-footer .nx-footer-symbol svg{width:18px;height:18px}
+.nx-footer .nx-credit-label{font-size:12px;color:#71657c;margin-inline-end:6px}.nx-footer strong{font-size:12px;color:#463155;font-weight:600}.nx-footer .nx-credit-role{font-size:12px;margin-inline-start:10px}.nx-footer .nx-credit-institution{font-size:11px;color:#766b80;line-height:1.7;margin-top:1px}
+.nx-footer .nx-footer-end{display:flex;flex-direction:column;align-items:flex-end;gap:3px}.nx-footer .nx-footer-end>a{font-size:12px;min-height:32px;display:inline-flex;align-items:center;color:#66448e}.nx-footer .nx-copyright{font-size:12px;white-space:normal}.nx-footer .nx-copyright span{font-size:12px;margin-inline-start:8px}
+@media(max-width:1100px){.nx-footer .nx-credit-role{display:block;margin:0}}
+@media(max-width:640px){.nx-footer{grid-template-columns:1fr;gap:5px;padding:8px 16px}.nx-footer .nx-footer-symbol{display:none}.nx-footer .nx-footer-end{flex-direction:row;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:2px 14px}.nx-footer .nx-credit-role{display:inline;margin-inline-start:8px}.nx-footer .nx-credit-institution{font-size:11px}.nx-footer .nx-copyright,.nx-footer .nx-copyright span,.nx-footer .nx-copyright strong{font-size:11px}}
+@media(max-width:370px){.nx-footer .nx-credit-role{display:block;margin:0}}
+@media print{.nx-footer{display:none!important}}
+
+@media(max-width:1100px){.nx-identity{gap:16px}.nx-identity .nx-logo{--nx-logo-width:140px}.nx-identity .nx-system-copy{padding-inline-start:16px}.nx-identity .nx-system-copy strong{font-size:15px}}
+@media(max-width:640px){.nx-identity{flex-direction:column;align-items:flex-start;gap:8px;width:100%}.nx-identity .nx-logo{--nx-logo-width:126px}.nx-identity .nx-system-copy{border:0;padding:0;max-width:100%;gap:2px}.nx-identity .nx-system-copy strong{font-size:14px}.nx-identity .nx-system-english,.nx-identity .nx-system-tagline{font-size:12px}}
+body.nx-admin-frame #header{flex-wrap:wrap}
+body.nx-admin-frame #site-name .nx-identity .nx-logo{--nx-logo-width:150px}
+body.nx-admin-frame .nx-system-copy strong{color:var(--body-loud-color)}
+body.nx-admin-frame .nx-system-copy .nx-system-english,body.nx-admin-frame .nx-system-copy .nx-system-tagline{color:var(--body-quiet-color)}
+body.nx-admin-frame.login .nx-identity{flex-direction:column;align-items:flex-start;gap:10px}
+body.nx-admin-frame.login .nx-system-copy{border:0;padding:0;max-width:100%}
+body.nx-admin-frame.login .nx-system-copy strong{font-size:14px}
+@media(max-width:640px){body.nx-admin-frame #site-name .nx-identity .nx-logo{--nx-logo-width:126px}}

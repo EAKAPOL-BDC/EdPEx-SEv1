@@ -1,0 +1,7 @@
+{% if page.paginator.num_pages > 1 %}
+<nav class="operator-pagination" aria-label="{% if LANGUAGE_CODE == 'en' %}Pages{% else %}หน้า{% endif %}">
+  {% if page.has_previous %}<a href="?page={{ page.previous_page_number }}">{% if LANGUAGE_CODE == 'en' %}Previous{% else %}ก่อนหน้า{% endif %}</a>{% endif %}
+  <span>{{ page.number }} / {{ page.paginator.num_pages }}</span>
+  {% if page.has_next %}<a href="?page={{ page.next_page_number }}">{% if LANGUAGE_CODE == 'en' %}Next{% else %}ถัดไป{% endif %}</a>{% endif %}
+</nav>
+{% endif %}

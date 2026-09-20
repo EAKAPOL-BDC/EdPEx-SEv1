@@ -3,5 +3,13 @@ __pycache__/
 .pytest_cache/
 .coverage
 .env
+.env.*
+!.env.example
 .venv/
 staticfiles/
+# Local exports and database backups must never enter the public repository.
+output/
+outputs/
+*.dump
+*.backup
+*.sqlite3

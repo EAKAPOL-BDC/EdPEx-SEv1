@@ -1,0 +1,54 @@
+/* Public entry pages use one document scrollbar, not the staff workspace shell. */
+body.nx-app-frame.public-page{display:flex;flex-direction:column;height:auto;min-height:100vh;min-height:100dvh;overflow:visible}
+body.nx-app-frame.public-page>.site-header{position:static;flex:none}
+body.nx-app-frame.public-page main.public-main{display:block;flex:1 0 auto;width:100%;height:auto;min-height:0;overflow:visible;padding:0;margin:0}
+body.nx-app-frame.public-page main.public-main .workspace-body{height:auto;overflow:visible;scrollbar-gutter:auto;padding:26px 24px}
+body.nx-app-frame.public-page .workspace-content{min-width:0;max-width:1120px;margin-inline:auto}
+body.nx-app-frame.public-page>footer.nx-unified-footer{position:static;flex:none;max-width:none;width:100%;margin:0;padding:16px 24px;gap:12px 24px;box-sizing:border-box}
+body.nx-app-frame.nx-access-page .workspace-content{max-width:900px}
+.nx-access-page .nx-page-navigation{display:none}
+.nx-access-card{padding:28px;border-radius:18px;border:1px solid #e6dcee;background:#fff}
+.nx-access-card h1{font-size:26px;line-height:1.5;margin:8px 0 14px}
+.nx-access-card>p{font-size:14px;line-height:1.8;color:#74637e}
+.nx-access-notice{margin:22px 0;padding:18px 20px;border-left:3px solid #c8a669;background:#fbf7ef;border-radius:0 12px 12px 0}
+.nx-access-notice p{font-size:13px;line-height:1.8;margin:7px 0 0}
+.nx-access-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+body.nx-app-frame .nx-home .landing-hero{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:48px;align-items:center;min-height:0;padding:26px 0 38px}
+.nx-home .landing-hero>*{min-width:0}
+body.nx-app-frame .nx-home .hero-copy{max-width:none}
+body.nx-app-frame .nx-home .hero-copy h1{font-size:clamp(36px,4.5vw,56px);margin:12px 0;line-height:1.2}
+body.nx-app-frame .nx-home .hero-copy h2{font-size:clamp(23px,2.4vw,30px);line-height:1.6;margin:18px 0}
+.nx-home .hero-copy>p{font-size:14px;line-height:1.9;color:#766580}
+.nx-home .hero-copy .eyebrow{font-size:10px;letter-spacing:1.1px;line-height:1.7;color:#946f34}
+.nx-home .hero-actions{display:flex;flex-wrap:wrap;gap:10px;margin:24px 0 18px}
+.nx-home .hero-actions .button{font-size:13px;white-space:normal;min-height:44px;line-height:1.6;padding:10px 16px}
+.nx-home .hero-promises{display:flex;flex-wrap:wrap;gap:16px;font-size:11px;color:#86718d}
+.nx-home .hero-promises span{display:flex;align-items:center;gap:6px}
+body.nx-app-frame .nx-home .hero-visual{padding:0;margin:0;max-width:100%;width:100%;background:none;box-shadow:none;min-width:0}
+.nx-home .nx-companion{max-width:290px;margin:0 auto 20px;text-align:center}
+.nx-home .nx-mascot-stage{width:170px;height:170px;margin:auto;background:radial-gradient(ellipse,#f1e1f7,transparent 72%)}
+.nx-home .nx-mascot-greet{display:block;width:100%;height:100%;padding:0;border:0;background:transparent;border-radius:24px;box-shadow:none;transition:transform .2s;cursor:pointer}
+.nx-home .nx-mascot-greet img{display:block;width:100%;height:100%;max-width:100%;object-fit:contain}
+.nx-home .nx-mascot-greet:hover{transform:translateY(-3px)}
+.nx-home .nx-companion-message{font-size:12px;line-height:1.7;min-height:40px;margin:8px 0 0;color:#7b6589}
+.nx-home .nx-motion-toggle,.nx-home .nx-mascot-shadow{display:none}
+.nx-home .nx-workflow{background:#fff;border:1px solid #e4d9ec;border-radius:18px;padding:20px;box-shadow:0 10px 28px #43255a05}
+.nx-home .nx-workflow>.eyebrow{font-size:10px;letter-spacing:.8px;color:#8d703e;margin:0 0 12px}
+.nx-home .nx-workflow-controls{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;background:#f7f3fa;border-radius:12px;padding:4px}
+.nx-home .nx-workflow-controls button{display:flex;align-items:center;justify-content:center;gap:6px;min-width:0;min-height:44px;font-size:12px;padding:8px 4px;background:transparent;border:1px solid transparent;box-shadow:none;color:#766380;border-radius:9px;white-space:normal}
+.nx-home .nx-workflow-controls button[aria-pressed=true]{background:#fff;border-color:#e7ddef;color:#653c8e;box-shadow:0 2px 8px #4d296510}
+.nx-home .nx-workflow-controls svg{width:16px;height:16px;flex:none}
+.nx-home .nx-workflow-panels{padding-top:16px;min-height:164px}
+.nx-home .nx-step-label{color:#a07c3f;font-size:11px}
+.nx-home .nx-workflow h3{font-size:16px;line-height:1.7;margin:8px 0}
+.nx-home .nx-workflow section p{font-size:13px;line-height:1.85;color:#786583;margin:0}
+body.nx-app-frame .nx-home .start-section{padding:26px 0;border-top:1px solid #e5deec;scroll-margin-top:20px}
+.nx-home .section-heading{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+.nx-home .section-heading h2{font-size:23px;line-height:1.6}.nx-home .section-heading .muted{font-size:12px}
+body.nx-app-frame .nx-home .landing-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.nx-home .landing-steps .panel{padding:22px;margin:0;border:1px solid #e5deec;border-radius:16px;background:#fff;min-width:0}
+.nx-home .landing-steps h3{font-size:16px;line-height:1.7}.nx-home .landing-steps p{font-size:13px;line-height:1.8;color:#786583}
+.nx-home :is(a,button):focus-visible{outline:3px solid #b18bcf;outline-offset:3px}
+@media(max-width:800px){body.nx-app-frame .nx-home .landing-hero{grid-template-columns:minmax(0,1fr);gap:26px;padding-top:10px}.nx-home .hero-visual{display:grid;grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr);align-items:center;gap:16px}.nx-home .nx-companion{margin:0}.nx-home .nx-mascot-stage{width:120px;height:120px}body.nx-app-frame .nx-home .landing-steps{grid-template-columns:minmax(0,1fr)}.nx-home .hero-copy br{display:none}}
+@media(max-width:600px){body.nx-app-frame.public-page main.public-main .workspace-body{padding:22px 16px}.nx-home .hero-visual{display:block}.nx-home .nx-companion{display:none}.nx-home .hero-actions .button{width:100%}.nx-home .nx-workflow-panels{min-height:150px}.nx-access-card{padding:22px 18px}.nx-access-card h1{font-size:23px}.nx-access-actions .button{width:100%}body.nx-app-frame.public-page .header-inner>.brand{min-width:0;flex-basis:100%}body.nx-app-frame.public-page .header-inner .nx-system-copy{min-width:0}body.nx-app-frame.public-page .header-actions{flex-wrap:wrap;max-width:100%}body.nx-app-frame.public-page>footer.nx-unified-footer{padding:16px}.nx-home .section-heading .muted{display:none}}
+@media(prefers-reduced-motion:reduce){.nx-home .nx-mascot-greet{transition:none;transform:none}}

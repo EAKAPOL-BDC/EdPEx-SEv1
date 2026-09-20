@@ -1,0 +1,449 @@
+{
+  "source_name": "สรุปตัวชี้วัดที่ต้องการเก็บจากการจัดทำแบบฟอร์ม แบบสอบถาม หรือแบบประเมิน.pdf",
+  "source_sha256": "6ede15e0ba0f37d58a483682a4af1a28254a18c8838ddd9c6022b2d6e7243d69",
+  "indicators": [
+    {
+      "code": "7.2-1",
+      "pdf_pages": [
+        1,
+        2
+      ]
+    },
+    {
+      "code": "7.2-10",
+      "pdf_pages": [
+        1,
+        2
+      ]
+    },
+    {
+      "code": "7.2-11",
+      "pdf_pages": [
+        2,
+        3
+      ]
+    },
+    {
+      "code": "7.2-12",
+      "pdf_pages": [
+        2,
+        3
+      ]
+    },
+    {
+      "code": "7.2-13",
+      "pdf_pages": [
+        5
+      ]
+    },
+    {
+      "code": "7.2-14",
+      "pdf_pages": [
+        1,
+        2
+      ]
+    },
+    {
+      "code": "7.2-15",
+      "pdf_pages": [
+        1,
+        2
+      ]
+    },
+    {
+      "code": "7.2-17",
+      "pdf_pages": [
+        4,
+        5
+      ]
+    },
+    {
+      "code": "7.2-18",
+      "pdf_pages": [
+        4,
+        5
+      ]
+    },
+    {
+      "code": "7.2-19",
+      "pdf_pages": [
+        6,
+        7
+      ]
+    },
+    {
+      "code": "7.2-2",
+      "pdf_pages": [
+        1,
+        2
+      ]
+    },
+    {
+      "code": "7.2-20",
+      "pdf_pages": [
+        6,
+        7
+      ]
+    },
+    {
+      "code": "7.2-24",
+      "pdf_pages": [
+        1,
+        2
+      ]
+    },
+    {
+      "code": "7.2-25",
+      "pdf_pages": [
+        1,
+        2
+      ]
+    },
+    {
+      "code": "7.2-3",
+      "pdf_pages": [
+        1,
+        2
+      ]
+    },
+    {
+      "code": "7.2-34",
+      "pdf_pages": [
+        6,
+        7
+      ]
+    },
+    {
+      "code": "7.2-35",
+      "pdf_pages": [
+        4,
+        5
+      ]
+    },
+    {
+      "code": "7.2-36",
+      "pdf_pages": [
+        2,
+        3
+      ]
+    },
+    {
+      "code": "7.2-4",
+      "pdf_pages": [
+        1,
+        2
+      ]
+    },
+    {
+      "code": "7.2-5",
+      "pdf_pages": [
+        1,
+        2
+      ]
+    },
+    {
+      "code": "7.2-6",
+      "pdf_pages": [
+        1,
+        2
+      ]
+    },
+    {
+      "code": "7.2-7",
+      "pdf_pages": [
+        1,
+        2
+      ]
+    },
+    {
+      "code": "7.2-8",
+      "pdf_pages": [
+        1,
+        2
+      ]
+    },
+    {
+      "code": "7.2-9",
+      "pdf_pages": [
+        1,
+        2
+      ]
+    },
+    {
+      "code": "7.3-25",
+      "pdf_pages": [
+        8,
+        11
+      ]
+    },
+    {
+      "code": "7.3-26",
+      "pdf_pages": [
+        8,
+        11
+      ]
+    },
+    {
+      "code": "7.3-27",
+      "pdf_pages": [
+        8,
+        11
+      ]
+    },
+    {
+      "code": "7.3-28",
+      "pdf_pages": [
+        8,
+        11
+      ]
+    },
+    {
+      "code": "7.3-29",
+      "pdf_pages": [
+        8,
+        11
+      ]
+    },
+    {
+      "code": "7.3-36",
+      "pdf_pages": [
+        8,
+        11
+      ]
+    },
+    {
+      "code": "7.3-37",
+      "pdf_pages": [
+        8,
+        11
+      ]
+    },
+    {
+      "code": "7.3-38",
+      "pdf_pages": [
+        8,
+        11
+      ]
+    },
+    {
+      "code": "7.3-39",
+      "pdf_pages": [
+        8,
+        11
+      ]
+    },
+    {
+      "code": "7.3-43",
+      "pdf_pages": [
+        9,
+        12
+      ]
+    },
+    {
+      "code": "7.3-44",
+      "pdf_pages": [
+        9,
+        12
+      ]
+    },
+    {
+      "code": "7.3-45",
+      "pdf_pages": [
+        9,
+        12
+      ]
+    },
+    {
+      "code": "7.3-46",
+      "pdf_pages": [
+        9,
+        12
+      ]
+    },
+    {
+      "code": "7.3-47",
+      "pdf_pages": [
+        9,
+        12
+      ]
+    },
+    {
+      "code": "7.3-48",
+      "pdf_pages": [
+        9,
+        12
+      ]
+    },
+    {
+      "code": "7.3-49",
+      "pdf_pages": [
+        9,
+        12
+      ]
+    },
+    {
+      "code": "7.3-50",
+      "pdf_pages": [
+        9
+      ]
+    },
+    {
+      "code": "7.3-51",
+      "pdf_pages": [
+        12
+      ]
+    },
+    {
+      "code": "7.3-52",
+      "pdf_pages": [
+        9,
+        12
+      ]
+    },
+    {
+      "code": "7.3-53",
+      "pdf_pages": [
+        9,
+        12
+      ]
+    },
+    {
+      "code": "7.3-54",
+      "pdf_pages": [
+        9,
+        12
+      ]
+    },
+    {
+      "code": "7.3-55",
+      "pdf_pages": [
+        9,
+        12
+      ]
+    },
+    {
+      "code": "7.4-1",
+      "pdf_pages": [
+        9,
+        12
+      ]
+    },
+    {
+      "code": "7.4-10",
+      "pdf_pages": [
+        4,
+        5
+      ]
+    },
+    {
+      "code": "7.4-11",
+      "pdf_pages": [
+        6,
+        7
+      ]
+    },
+    {
+      "code": "7.4-12",
+      "pdf_pages": [
+        6,
+        7
+      ]
+    },
+    {
+      "code": "7.4-13",
+      "pdf_pages": [
+        8,
+        11
+      ]
+    },
+    {
+      "code": "7.4-14",
+      "pdf_pages": [
+        8,
+        11
+      ]
+    },
+    {
+      "code": "7.4-15",
+      "pdf_pages": [
+        8,
+        11
+      ]
+    },
+    {
+      "code": "7.4-18A",
+      "pdf_pages": [
+        8,
+        11
+      ]
+    },
+    {
+      "code": "7.4-18B",
+      "pdf_pages": [
+        8,
+        11
+      ]
+    },
+    {
+      "code": "7.4-18C",
+      "pdf_pages": [
+        8,
+        11
+      ]
+    },
+    {
+      "code": "7.4-2",
+      "pdf_pages": [
+        9,
+        12
+      ]
+    },
+    {
+      "code": "7.4-3",
+      "pdf_pages": [
+        10,
+        13
+      ]
+    },
+    {
+      "code": "7.4-4",
+      "pdf_pages": [
+        10,
+        13
+      ]
+    },
+    {
+      "code": "7.4-6",
+      "pdf_pages": [
+        10,
+        13
+      ]
+    },
+    {
+      "code": "7.4-7",
+      "pdf_pages": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "code": "7.4-8",
+      "pdf_pages": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "code": "7.4-9",
+      "pdf_pages": [
+        4,
+        5
+      ]
+    }
+  ],
+  "notes": [
+    "PDF page 1 mentions C3.2 for 7.4-8; other repeated definitions omit it. Scope requires owner clarification; no group or formula was silently added."
+  ]
+}

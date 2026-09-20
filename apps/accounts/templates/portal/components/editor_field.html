@@ -1,0 +1,16 @@
+{% load portal_ui %}
+{% field_guidance field as guide %}
+{% if field.is_hidden %}{{ field }}{{ field.errors }}{% else %}
+<div class="form-field nx-editor-field field-{{ field.name }} {{ field|management_field_class }}">
+  {% if field.field.widget.template_name == 'django/forms/widgets/checkbox.html' %}
+  <label class="nx-check-label" for="{{ field.id_for_label }}">{{ field }}<span>{% if field.name == 'DELETE' %}{% bilingual 'ลบ / Delete' %}{% else %}{{ field.label|ui_wording:LANGUAGE_CODE }}{% endif %}</span></label>
+  {% else %}
+  {% if field.use_fieldset %}<fieldset class="nx-fieldset"><legend>{{ field.label|ui_wording:LANGUAGE_CODE }}</legend>{{ field }}</fieldset>{% else %}
+  <label {% if field.id_for_label %}for="{{ field.id_for_label }}"{% endif %}>{{ field.label|ui_wording:LANGUAGE_CODE }}{% if field.field.required and not field.field.disabled %}<span class="nx-required" aria-hidden="true"> *</span>{% endif %}</label>
+  {{ field }}{% endif %}
+  {% endif %}
+  {% if field.help_text and not guide.help %}<p class="field-help" id="{{ field.auto_id }}_helptext">{{ field.help_text|ui_wording:LANGUAGE_CODE }}</p>{% endif %}
+  {% if guide.help %}<p class="field-help" id="{{ field.auto_id }}_guide">{{ guide.help|ui_wording:LANGUAGE_CODE }}</p>{% endif %}
+  {% if guide.example %}<details class="nx-example"><summary>{% bilingual 'ดูตัวอย่าง / Show example' %}</summary><p>{{ guide.example|ui_wording:LANGUAGE_CODE }}</p></details>{% endif %}
+  {{ field.errors }}
+</div>{% endif %}

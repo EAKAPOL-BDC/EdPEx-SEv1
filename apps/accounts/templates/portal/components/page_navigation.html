@@ -1,0 +1,5 @@
+{% load portal_ui %}{% if page_nav.back or page_nav.next %}
+<nav class="nx-page-navigation" aria-label="{% bilingual 'นำทางระหว่างหน้างาน / Page navigation' %}">
+<div class="nx-page-navigation-back">{% if page_nav.back and page_nav.back.url != page_nav.home.url %}<a class="button button-secondary" href="{{ page_nav.back.url }}" rel="up"><span aria-hidden="true">←</span><span>{% bilingual 'กลับ / Back to' %} {{ page_nav.back.label|ui_wording:LANGUAGE_CODE }}</span></a>{% endif %}<a class="nx-home-link" href="{{ page_nav.home.url }}">{% include 'portal/components/icon.html' with name='home' %}{% bilingual 'กลับหน้าหลัก / Back to home' %}</a></div>
+{% if page_nav.next %}<a class="button" href="{{ page_nav.next.url }}"><span>{{ page_nav.next.label|ui_wording:LANGUAGE_CODE }}</span><span aria-hidden="true">→</span></a>{% endif %}
+</nav>{% endif %}

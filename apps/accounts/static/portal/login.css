@@ -1,0 +1,48 @@
+/* Login scrolls with the document; authenticated workspace layout is unchanged. */
+body.nx-app-frame.nx-login-page{display:flex;flex-direction:column;height:auto;min-height:100vh;min-height:100dvh;overflow:visible;background:#f8f6fb}
+.nx-login-page>.site-header{position:static;flex:none}
+body.nx-app-frame.nx-login-page .header-login,body.nx-app-frame.nx-login-page .public-about{display:none}
+body.nx-app-frame.nx-login-page .header-inner{padding:12px 24px;gap:12px}
+body.nx-app-frame.nx-login-page main.public-main{display:block;flex:1 0 auto;height:auto;min-height:0;overflow:visible;width:100%;padding:0;margin:0}
+body.nx-app-frame.nx-login-page main.public-main .workspace-body{height:auto;min-height:0;overflow:visible;scrollbar-gutter:auto;padding:28px 24px;width:100%;max-width:none}
+body.nx-app-frame.nx-login-page .workspace-content{width:100%;max-width:920px;min-width:0;margin:auto}
+body.nx-app-frame.nx-login-page .nx-breadcrumbs,body.nx-app-frame.nx-login-page .nx-page-navigation{display:none}
+body.nx-app-frame.nx-login-page .login-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,410px);align-items:center;gap:40px;min-height:0;max-width:920px;width:100%;padding:0;margin:0 auto}
+body.nx-app-frame.nx-login-page .login-layout>*{min-width:0}
+body.nx-app-frame.nx-login-page .login-intro{display:block;text-align:center;padding:20px 12px;color:#594568}
+body.nx-app-frame.nx-login-page .login-intro .eyebrow{font-size:10px;letter-spacing:1px;color:#8e6b31;margin:0 0 14px;line-height:1.6}
+body.nx-app-frame.nx-login-page .login-intro h2{font-size:clamp(22px,2.1vw,28px);line-height:1.55;color:#503170;margin:18px 0 10px;letter-spacing:-.3px}
+body.nx-app-frame.nx-login-page .login-intro>p:not(.eyebrow){font-size:14px;line-height:1.8;margin:0;color:#74677e}
+body.nx-app-frame.nx-login-page .login-trust{display:flex;justify-content:center;gap:7px;margin-top:18px;font-size:11px;color:#8e6b31}
+body.nx-app-frame.nx-login-page .nx-companion{width:100%;max-width:300px;margin:auto}
+body.nx-app-frame.nx-login-page .nx-mascot-stage{position:relative;width:156px;height:156px;margin:auto;background:radial-gradient(ellipse,#f4e4f4,transparent 72%)}
+body.nx-app-frame.nx-login-page .nx-mascot-greet{display:block;width:100%;height:100%;padding:0;border:0;border-radius:24px;background:transparent;box-shadow:none;cursor:pointer;transition:transform .2s}
+body.nx-app-frame.nx-login-page .nx-mascot-greet:hover{transform:translateY(-3px)}
+body.nx-app-frame.nx-login-page .nx-mascot-greet img{display:block;width:100%;height:100%;max-width:100%;object-fit:contain}
+body.nx-app-frame.nx-login-page .nx-companion-message{min-height:42px;font-size:12px;line-height:1.7;margin:10px 0 0;color:#7c668b}
+/* Greeting is interactive; no idle animation or redundant pause control. */
+body.nx-app-frame.nx-login-page .nx-motion-toggle,body.nx-app-frame.nx-login-page .nx-mascot-shadow{display:none}
+body.nx-app-frame.nx-login-page .login-panel{width:100%;max-width:none;margin:0;padding:28px;border:1px solid #e5d9ef;border-radius:22px;background:#fff;box-shadow:0 12px 40px #59387509}
+body.nx-app-frame.nx-login-page .access-pill{margin:0;display:inline-flex;align-items:center;gap:7px;border:0;border-radius:20px;padding:6px 10px;background:#f4edf9;color:#765192;font-size:11px;line-height:1.5}
+body.nx-app-frame.nx-login-page .access-pill svg{width:15px;height:15px;flex:none}
+body.nx-app-frame.nx-login-page .login-panel h1{font-size:26px;line-height:1.5;letter-spacing:-.3px;margin:14px 0 4px;color:#332140}
+body.nx-app-frame.nx-login-page .login-description{font-size:13px;line-height:1.7;color:#796b82;margin:0 0 22px}
+body.nx-app-frame.nx-login-page .login-form .form-field{margin:0 0 16px}
+body.nx-app-frame.nx-login-page .login-form label{font-size:13px;font-weight:600;display:block;margin-bottom:7px}
+body.nx-app-frame.nx-login-page .login-input-row{display:flex;align-items:stretch;border:1px solid #d7cce2;border-radius:11px;overflow:hidden;background:#fff}
+body.nx-app-frame.nx-login-page .login-input-row:focus-within{outline:3px solid #eadcf6;border-color:#9470b2}
+body.nx-app-frame.nx-login-page .login-input-row input{display:block;width:100%;min-width:0;min-height:46px;margin:0;padding:11px 12px;border:0;border-radius:0;background:transparent;font-size:16px;box-shadow:none;outline:none}
+body.nx-app-frame.nx-login-page .login-form .nx-password-toggle{flex:none;min-height:46px;padding:6px 10px;border:0;border-left:1px solid #eee5f4;border-radius:0;font-size:11px;background:#faf7fd;color:#704d92;box-shadow:none;white-space:nowrap}
+body.nx-app-frame.nx-login-page .login-form .nx-password-toggle:hover{background:#f0e7f8}
+body.nx-app-frame.nx-login-page .login-form .button-full{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:46px;padding:11px 16px;border-radius:11px;background:linear-gradient(110deg,#69449a,#865078);font-size:14px;line-height:1.5}
+body.nx-app-frame.nx-login-page .login-help{text-align:center;margin:16px 0 6px;font-size:12px;line-height:1.7}
+body.nx-app-frame.nx-login-page .login-help a{color:#6e448d;text-underline-offset:3px}
+body.nx-app-frame.nx-login-page .login-support{padding:0;border:0;text-align:center;margin:0;color:#817388;font-size:12px;line-height:1.7}
+body.nx-app-frame.nx-login-page .login-public-link{display:block;text-align:center;margin-top:18px;padding-top:16px;border-top:1px solid #eee7f3;color:#725090;font-size:12px;line-height:1.7;text-underline-offset:3px}
+body.nx-app-frame.nx-login-page .login-errors{padding:10px 12px;background:#fff3f5;border:1px solid #edc8d1;border-radius:10px;margin-bottom:16px;font-size:13px;color:#983650}
+body.nx-app-frame.nx-login-page .errorlist{padding-left:18px;margin:6px 0;font-size:13px;overflow-wrap:anywhere}
+body.nx-login-page>footer.nx-unified-footer{position:static;flex:none;width:100%;max-width:none;margin:0;padding:14px 24px;gap:10px 24px;box-sizing:border-box;border-top:1px solid #e9e1ef}
+body.nx-app-frame.nx-login-page :is(a,button):focus-visible{outline:3px solid #b18bcf;outline-offset:3px}
+@media(max-width:760px){body.nx-app-frame.nx-login-page .login-layout{grid-template-columns:minmax(0,1fr);max-width:410px;gap:0}body.nx-app-frame.nx-login-page .login-intro{display:none}body.nx-app-frame.nx-login-page main.public-main .workspace-body{padding:22px 16px}body.nx-app-frame.nx-login-page .login-panel{padding:24px}body.nx-app-frame.nx-login-page .header-inner{padding:12px 16px}body.nx-app-frame.nx-login-page .header-actions{gap:10px}body.nx-app-frame.nx-login-page .header-inner>.brand{min-width:0;flex-basis:100%}body.nx-app-frame.nx-login-page .header-inner .nx-system-copy{min-width:0}body.nx-app-frame.nx-login-page .nx-identity{max-width:100%}body.nx-app-frame.nx-login-page .nx-institution{min-width:0}body.nx-app-frame.nx-login-page .nx-institution strong{overflow-wrap:anywhere}body.nx-app-frame.nx-login-page .header-actions{justify-content:space-between;flex:1;margin:0;width:100%}body.nx-login-page>footer.nx-unified-footer{padding:16px}}
+@media(max-width:380px){body.nx-app-frame.nx-login-page .login-panel{padding:20px 16px}body.nx-app-frame.nx-login-page .login-panel h1{font-size:24px}body.nx-app-frame.nx-login-page .login-form .nx-password-toggle{font-size:10px;padding:6px 8px}}
+@media(prefers-reduced-motion:reduce){body.nx-app-frame.nx-login-page .nx-mascot-greet{transition:none;transform:none}}

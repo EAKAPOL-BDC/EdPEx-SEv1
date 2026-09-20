@@ -1,0 +1,23 @@
+{% load portal_ui %}
+<section class="loop-board" aria-labelledby="loop-board-title">
+  <div class="viz-panel-heading"><div><p class="viz-kicker">ENDLESSLOOP / CONNECTED VIEW</p><h2 id="loop-board-title">{% bilingual 'เชื่อมข้อมูล สู่ภาพรวมองค์กร / From connected data to organization insights' %}</h2></div><span class="viz-board-badge">{{ indicator_count }} {% bilingual 'ตัวชี้วัด / indicators' %}</span></div>
+  <p class="viz-board-help">{% bilingual 'เลือกการ์ดเพื่อดูผลรายแบบฟอร์ม วงแหวนแสดงรายการผลที่เปิดเผยค่าได้จากข้อมูลที่เลือก / Select a card to explore a form. Rings show visible result entries within the selected data.' %}</p>
+  <div class="loop-columns">
+    {% for f in form_summaries %}<a class="loop-column viz-color-{{ f.color_index }}" href="?{{ f.filters }}" aria-label="{{ f.code }} · {% bilingual f.label %}">
+      <span class="loop-column-code"><i aria-hidden="true"></i>{{ f.code }}</span><h3>{% bilingual f.label %}</h3>
+      <div class="loop-column-value"><strong>{{ f.indicators }}</strong><span>{% bilingual 'ตัวชี้วัด / indicators' %}</span></div>
+      <div class="loop-column-meter" aria-hidden="true"><span style="width:{{ f.coverage|default_if_none:0 }}%"></span></div>
+      <p>{{ f.visible }} / {{ f.total }} {% bilingual 'รายการแสดงค่าได้ / visible entries' %}</p>
+      <ul>{% for c in f.examples %}<li><span>{{ c.indicator }}</span><small>{{ c.label }}</small></li>{% empty %}<li>{% bilingual 'ไม่มีข้อมูลตามตัวกรอง / No matching data' %}</li>{% endfor %}</ul>
+      <span class="loop-column-link">{% bilingual 'ดูแบบฟอร์ม / Explore form' %} →</span>
+    </a>{% endfor %}
+  </div>
+  <div class="loop-lower">
+    <div class="loop-story"><span class="loop-orbit-symbol" aria-hidden="true">∞</span><h3>{% bilingual 'ทุกมุมมอง เชื่อมถึงข้อมูลต้นทาง / Every view connects to its source' %}</h3><p>{% bilingual 'สำรวจตัวชี้วัดตามแบบฟอร์ม เปรียบเทียบกลุ่มที่ใช้เกณฑ์เดียวกัน และเปิดรายละเอียดผลเพื่อประกอบการตัดสินใจ / Explore indicators by form, compare groups using matching criteria and inspect result details.' %}</p><div class="loop-summary-pair"><span><strong>{{ group_count }}</strong>{% bilingual 'กลุ่มผู้ประเมิน / Assessor groups' %}</span><span><strong>{{ comparison_count }}</strong>{% bilingual 'กราฟเปรียบเทียบ / Comparison charts' %}</span></div><a class="button button-secondary" href="{% url 'visualization-finereport' scope.pk %}?{{ filters }}">{% bilingual 'เปิด Dashboard FineReport / Open FineReport dashboard' %} →</a></div>
+    <figure class="loop-rings">
+      <div class="loop-rings-total"><span>{% bilingual 'รายการผลตามตัวกรอง / Filtered result entries' %}</span><strong>{{ series_count }}</strong></div>
+      <svg viewBox="0 0 560 278" role="img" aria-labelledby="loop-rings-title"><title id="loop-rings-title">{% bilingual 'สัดส่วนรายการที่แสดงค่าได้ แยกตามแบบฟอร์ม / Visible result availability by form' %}</title>{% for f in form_summaries %}<g class="viz-color-{{ f.color_index }}"><path class="loop-arc-track" d="{{ f.arc }}" pathLength="100"/>{% if f.coverage != None %}<path class="loop-arc-value" d="{{ f.arc }}" pathLength="100" stroke-dasharray="{{ f.coverage }} 100"><title>{{ f.code }}: {{ f.visible }} / {{ f.total }}</title></path>{% endif %}</g>{% endfor %}</svg>
+      <figcaption><div class="loop-ring-legend">{% for f in form_summaries %}<span class="viz-color-{{ f.color_index }}"><i aria-hidden="true"></i>{{ f.code }} <strong>{{ f.visible }}/{{ f.total }}</strong></span>{% endfor %}</div><p>{% bilingual 'วงแหวน = ความพร้อมแสดงข้อมูล ไม่ใช่คะแนนหรือความก้าวหน้าของงาน / Rings show data availability, not scores or workflow progress.' %}</p></figcaption>
+    </figure>
+  </div>
+</section>

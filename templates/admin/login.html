@@ -1,0 +1,6 @@
+{% extends "admin/login.html" %}{% load i18n %}
+{% block content %}
+<div class="nx-admin-login-intro nx-page-header"><div><p class="nx-eyebrow">NEXORA / ADMINISTRATION</p><h1>{% if LANGUAGE_CODE == 'en' %}Welcome back{% else %}ยินดีต้อนรับกลับมา{% endif %}</h1><p>{% if LANGUAGE_CODE == 'en' %}Sign in with your administrator account.{% else %}เข้าสู่ระบบด้วยบัญชีผู้ดูแล{% endif %}</p></div>{% include 'portal/components/brand_mascot.html' %}</div>
+{{ block.super }}
+<p class="nx-login-return"><a href="{% url 'login' %}">{% if LANGUAGE_CODE == 'en' %}Sign in to the main workspace{% else %}เข้าสู่ระบบพื้นที่ทำงานหลัก{% endif %} →</a></p>
+{% endblock %}

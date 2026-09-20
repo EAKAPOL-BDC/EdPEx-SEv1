@@ -1,0 +1,18 @@
+{% extends "admin/base_site.html" %}{% load static i18n %}
+{% block title %}{{ title }} · NEXORA{% endblock %}
+{% block bodyclass %}{{ block.super }} nx-admin-frame{% endblock %}
+{% block branding %}
+<div id="site-name" class="nx-admin-brand">
+  <a href="{% url 'admin:index' %}" aria-label="NEXORA · {% translate 'Site administration' %}">{% include 'portal/components/brand_identity.html' %}</a>
+  <span class="nx-admin-context">{% if LANGUAGE_CODE == 'en' %}System administration{% else %}ดูแลระบบ NEXORA{% endif %}</span>
+</div>
+{% endblock %}
+{% block responsive %}{{ block.super }}
+<link rel="stylesheet" href="{% static 'portal/brand.css' %}?v=20260917-brand1">
+<link rel="stylesheet" href="{% static 'portal/admin-theme.css' %}?v=20260917-wayfinding1">
+<link rel="stylesheet" href="{% static 'portal/identity.css' %}?v=20260917-brandname1">
+<link rel="stylesheet" href="{% static 'portal/header-surfaces.css' %}?v=20260917-header2">
+{% endblock %}
+{% block footer %}{% if not is_popup %}<div class="nx-footer">{% include 'portal/components/footer_content.html' %}</div>{% endif %}{% endblock %}
+
+{% block extrabody %}{{ block.super }}{% if not is_popup %}<script src="{% static 'portal/admin-frame.js' %}?v=20260917-shell1" defer></script>{% endif %}{% endblock %}

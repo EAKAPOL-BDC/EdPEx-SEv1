@@ -1,0 +1,12 @@
+<!doctype html><html lang="th"><head><meta charset="utf-8"><title>{{ manual.title }} | NEXORA</title><meta name="author" content="NEXORA · วิทยาลัยการศึกษา มหาวิทยาลัยพะเยา"><meta name="description" content="{{ manual.summary }}"></head><body data-manual-version="คู่มือรุ่น {{ manual.version }}">
+<section class="cover">
+<div class="cover-brand">NEXORA<span>ORGANIZATIONAL EXCELLENCE INFORMATION SYSTEM</span></div>
+<div class="cover-line"></div><p class="cover-kicker">{% if manual.category == 'developer' %}DEVELOPER HANDBOOK{% elif manual.category == 'respondents' %}RESPONDENT GUIDE · {{ manual.group }}{% else %}WORKSPACE HANDBOOK{% endif %}</p>
+<h1>{{ manual.title }}</h1><p class="cover-summary">{{ manual.summary }}</p>
+<div class="cover-audience"><small>จัดทำสำหรับ / PREPARED FOR</small><p>{{ manual.audience }}</p>{% if manual.forms %}<p class="cover-forms">{{ manual.forms|join:' · ' }}</p>{% endif %}</div>
+<div class="cover-features"><span>ภาพประกอบ {{ manual.figure_count }} ภาพ</span><span>ผลที่ควรเห็น</span><span>วิธีแก้ปัญหา</span></div>
+<div class="cover-footer"><strong>วิทยาลัยการศึกษา มหาวิทยาลัยพะเยา</strong><p>รุ่นเอกสาร {{ manual.version }} · {{ manual.updated }}</p><small>ผู้พัฒนาระบบ นายเอกพล โพธิจันทร์</small></div>
+</section>
+<section class="contents"><p class="page-kicker">YOUR GUIDE / CONTENTS</p><h2>สารบัญ</h2><p>เลือกหัวข้อจากสารบัญเพื่อไปยังหน้าที่ต้องการ ลำดับขั้นตอนในแต่ละหัวข้อระบุทั้งสิ่งที่ต้องทำและผลที่ควรเห็น</p><nav><ol>{% for section in manual.sections %}<li><a href="#{{ section.id }}">{{ section.title }}</a></li>{% endfor %}</ol></nav><div class="reading-note"><strong>อ่านคู่มือนี้อย่างไร</strong><p>เริ่มจากกลุ่มหรือหน้าที่ของตน ทำตามลำดับ และตรวจข้อความสำเร็จหลังบันทึก หากหน้าจอไม่ตรง ให้ตรวจรุ่นและสิทธิ์ก่อนดำเนินการต่อ ตัวอย่างในคู่มือเป็นข้อมูลสมมุติ ไม่ใช่ผลดำเนินงานจริง</p><p>หมายเลขสีม่วงในภาพมีคำอธิบายใต้ภาพ เป็นภาพจำลองเพื่ออธิบายการใช้งาน ไม่ใช่ภาพจากบัญชีหรือข้อมูลจริง<br>PDF และหน้าอ่านในเมนูคู่มือใช้ต้นฉบับเดียวกัน ชื่อคำถามอาจต่างตามรุ่นที่หน่วยงานเผยแพร่</p></div></section>
+<main>{% for section in manual.sections %}{% include 'manuals/section.html' %}{% endfor %}</main>
+</body></html>

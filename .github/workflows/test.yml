@@ -38,7 +38,12 @@ jobs:
         with:
           python-version: "3.12"
           cache: pip
-      - run: pip install -r requirements.txt
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: node --test tests/portal_language.test.js
+      - run: pip install -r requirements-production.txt
+      - run: python manage.py collectstatic --noinput --settings=edpex.static_build
       - run: python manage.py check
       - run: python manage.py migrate --noinput
       - run: python manage.py makemigrations --check --dry-run

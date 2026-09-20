@@ -1,0 +1,5 @@
+# Build-time only. Downloading manuals needs only the normal Django runtime.
+Django>=5.2,<5.3
+weasyprint==70.0
+pypdf>=6,<7
+PyMuPDF>=1.26,<2

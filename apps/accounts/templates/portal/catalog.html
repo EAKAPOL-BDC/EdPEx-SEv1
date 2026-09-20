@@ -1,0 +1,44 @@
+{% extends 'portal/base.html' %}{% load static i18n portal_ui %}
+{% block page_assets %}<link rel="stylesheet" href="{% static 'portal/catalog-library.css' %}?v=20260917-library1">{% endblock %}
+{% block content %}{% if can_prepare %}<p><a class="button button-secondary" href="{% url 'anonymous-f05-prepare' scope.pk %}">เตรียมแบบฟอร์ม F05 เชิงปริมาณรายปี</a></p>{% endif %}<nav class="results-tabs"><a href="?versions=current">{% bilingual 'แบบฟอร์มปัจจุบัน / Current forms' %}</a><a href="?versions=history">{% bilingual 'ทุกรุ่นสำหรับเก็บจริง / All real-data versions' %}</a><a href="?versions=simulation">{% bilingual 'รุ่นสำหรับจำลองเท่านั้น / Simulation-only versions' %}</a></nav>
+<div class="catalog-library">
+
+  <header class="cl-heading nx-page-header"><div class="cl-heading-main"><span class="cl-heading-icon">{% include 'portal/components/icon.html' with name='library' %}</span><div><p class="cl-eyebrow">NEXORA / FORM LIBRARY</p><h1>{% bilingual 'คลังแบบฟอร์ม / Form library' %}</h1></div></div><p class="cl-scope">{{ scope.name }}{% if scope.organization.name != scope.name %}<span>{{ scope.organization.name }}</span>{% endif %}</p>
+  <p class="cl-intro">{% bilingual 'เลือกแบบฟอร์มเพื่อตรวจสอบรุ่นและคำถาม หน้านี้สำหรับจัดการแบบฟอร์ม / Choose a form to review its versions and questions. This is the form management library.' %}</p></header>
+  <div class="cl-tools"><section class="cl-overview" aria-labelledby="cl-overview-title">
+    <div class="cl-overview-top"><h2 id="cl-overview-title">{% bilingual 'ภาพรวมคลังแบบฟอร์ม / Library overview' %}</h2><span>{% if has_filters %}{% bilingual 'ตามตัวกรอง · รวมทุกหน้าผลลัพธ์ / Filtered results · all pages' %}{% else %}{% bilingual 'ทุกแบบฟอร์มในพื้นที่นี้ / All forms in this workspace' %}{% endif %}</span></div>
+    <div class="cl-overview-grid">
+      <dl class="cl-metrics">
+        <div><dt>{% include 'portal/components/icon.html' with name='library' %}{% bilingual 'แบบฟอร์ม / Forms' %}</dt><dd>{{ summary.forms }}</dd></div>
+        <div><dt>{% include 'portal/components/icon.html' with name='forms' %}{% bilingual 'รุ่นที่พบ / Versions' %}</dt><dd>{{ summary.total }}</dd></div>
+        <div><dt>{% include 'portal/components/catalog_icon.html' with name='items' %}{% bilingual 'รายการคำถาม / Items' %}</dt><dd>{{ summary.questions }}</dd></div>
+      </dl>
+      <figure class="cl-status-chart"><figcaption>{% bilingual 'สถานะรุ่นแบบฟอร์ม / Form version status' %}</figcaption>
+        {% if summary.total %}<div class="cl-status-track" aria-hidden="true">{% for item in status_breakdown %}{% if item.count %}<span class="cl-segment cl-segment-{{ item.key }}" style="flex-basis:{{ item.width }}%"></span>{% endif %}{% endfor %}</div>{% else %}<p class="cl-chart-empty">{% bilingual 'ยังไม่มีข้อมูลสำหรับกราฟ / No data to chart' %}</p>{% endif %}
+        <ul class="cl-chart-legend">{% for item in status_breakdown %}<li><span class="cl-dot cl-dot-{{ item.key }}" aria-hidden="true"></span><span>{% include 'portal/catalog_status.html' with version=item %}</span><strong>{{ item.count }}</strong></li>{% endfor %}</ul>
+      </figure>
+    </div>
+    <p class="cl-summary-note">{% bilingual 'จำนวนรายการรวมคำถามและช่องข้อมูลจากทุกรุ่นที่ตรงกับตัวกรอง / Items include questions and data fields across all matching versions.' %}</p>
+  </section>
+  <form method="get" class="cl-filters" role="search" aria-label="{% bilingual 'ค้นหาแบบฟอร์ม / Search forms' %}">
+    <div class="cl-search"><label for="catalog-q">{% bilingual 'ค้นหาแบบฟอร์ม / Search forms' %}</label><div class="cl-input-wrap">{% include 'portal/components/catalog_icon.html' with name='search' %}<input id="catalog-q" name="q" type="search" value="{{ query }}" maxlength="200" placeholder="{% bilingual 'ชื่อแบบฟอร์มหรือรุ่น เช่น 1.1 / Form title or version, e.g. 1.1' %}"></div></div>
+    <div><label for="catalog-code">{% bilingual 'แบบฟอร์ม / Form' %}</label><select id="catalog-code" name="code"><option value="">{% bilingual 'ทุกแบบฟอร์ม / All forms' %}</option>{% for code in codes %}<option value="{{ code }}" {% if selected_code == code %}selected{% endif %}>{{ code }}</option>{% endfor %}</select></div>
+    <div><label for="catalog-status">{% bilingual 'สถานะ / Status' %}</label><select id="catalog-status" name="status"><option value="">{% bilingual 'ทุกสถานะ / All statuses' %}</option><option value="draft" {% if selected_status == 'draft' %}selected{% endif %}>{% bilingual 'ฉบับร่าง / Draft' %}</option><option value="published" {% if selected_status == 'published' %}selected{% endif %}>{% bilingual 'เผยแพร่แล้ว / Published' %}</option><option value="retired" {% if selected_status == 'retired' %}selected{% endif %}>{% bilingual 'ยุติการใช้งาน / Retired' %}</option></select></div>
+    <button type="submit" class="cl-search-button">{% include 'portal/components/catalog_icon.html' with name='search' %}{% bilingual 'ค้นหา / Search' %}</button>
+  </form></div>
+  <div class="cl-results-heading"><h2 id="cl-results-title">{% bilingual 'แบบฟอร์มในคลัง / Browse forms' %}<span>{{ page.paginator.count }} {% bilingual 'รุ่น / versions' %}</span></h2><a class="cl-reset" href="{% url 'portal-catalog' scope.pk %}">{% include 'portal/components/catalog_icon.html' with name='reset' %}{% bilingual 'ล้างตัวกรอง / Reset filters' %}</a></div>
+  {% if has_filters %}<p class="cl-filter-summary" role="status">{% bilingual 'กำลังแสดง / Showing' %}{% if query %} · “{{ query }}”{% endif %}{% if selected_code %} · {{ selected_code }}{% endif %}{% if selected_status %} · {% bilingual selected_status_label %}{% endif %}</p>{% endif %}
+  <div class="cl-card-grid" aria-labelledby="cl-results-title">
+  {% for version in page %}
+    <article class="cl-form-card cl-form-{{ version.instrument.code }}">
+      <div class="cl-card-top"><div class="cl-card-identity"><span class="cl-form-icon">{% include 'portal/components/catalog_icon.html' with name=version.instrument.code %}</span><div class="cl-version"><strong>{{ version.instrument.code }}</strong><span>{% bilingual 'รุ่น / Version' %} {{ version.version }}</span></div></div><span class="cl-status cl-status-{{ version.status }}"><span class="cl-dot cl-dot-{{ version.status }}" aria-hidden="true"></span>{% include 'portal/catalog_status.html' %}</span></div>
+      <h3 lang="th">{{ version.title_th|instrument_title }}</h3>
+      <div class="cl-card-bottom"><p>{% include 'portal/components/catalog_icon.html' with name='items' %}<strong>{{ version.question_count }}</strong><span>{% bilingual 'รายการ / items' %}</span></p><a class="cl-details" href="{% url 'portal-catalog-detail' scope.pk version.pk %}" aria-label="{% bilingual 'ดูรายละเอียด / View details' %}: {{ version.title_th|instrument_title }} · {{ version.version }}">{% bilingual 'ดูรายละเอียด / Details' %}{% include 'portal/components/icon.html' with name='arrow' %}</a></div>
+    </article>
+  {% empty %}
+    <section class="cl-empty"><span class="cl-empty-icon">{% include 'portal/components/catalog_icon.html' with name='search' %}</span><h3>{% bilingual 'ไม่พบแบบฟอร์ม / No forms found' %}</h3><p>{% if has_filters %}{% bilingual 'ลองเปลี่ยนคำค้นหรือเลือกสถานะอื่น / Try a different search or status.' %}{% else %}{% bilingual 'พื้นที่นี้ยังไม่มีรุ่นแบบฟอร์ม กรุณาติดต่อผู้ดูแลเพื่อนำเข้าคลังที่ตรวจสอบแล้ว / This workspace has no form versions yet. Ask your administrator to import a reviewed catalog.' %}{% endif %}</p>{% if has_filters %}<a class="button button-secondary" href="{% url 'portal-catalog' scope.pk %}">{% bilingual 'แสดงทั้งหมด / Show all forms' %}</a>{% endif %}</section>
+  {% endfor %}
+  </div>
+  {% if page.paginator.num_pages > 1 %}<nav class="cl-pagination" aria-label="{% bilingual 'หน้ารายการแบบฟอร์ม / Form pages' %}">{% if page.has_previous %}<a href="?{{ filters }}&amp;page={{ page.previous_page_number }}">← {% bilingual 'ก่อนหน้า / Previous' %}</a>{% endif %}<span>{{ page.number }} / {{ page.paginator.num_pages }}</span>{% if page.has_next %}<a href="?{{ filters }}&amp;page={{ page.next_page_number }}">{% bilingual 'ถัดไป / Next' %} →</a>{% endif %}</nav>{% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% load portal_ui %}<aside class="workspace-sidebar" id="workspace-navigation" aria-label="{% bilingual 'เมนูหลัก / Main navigation' %}">
+<div class="sidebar-heading"><span>{% bilingual 'หน้าหลัก / Home' %}</span><button type="button" class="sidebar-close" data-menu-close aria-label="{% bilingual 'ปิดเมนู / Close menu' %}">{% include 'portal/components/icon.html' with name='close' %}</button></div>
+{% if portal_nav.scope %}<div class="sidebar-context"><span class="sidebar-context-icon">{% include 'portal/components/icon.html' with name='building' %}</span><span>{{ portal_nav.scope.name }}</span></div>{% endif %}
+<nav class="sidebar-links" aria-label="{% bilingual 'เมนูงาน / Work menus' %}">
+<a href="{% url 'workspace' %}" {% if portal_nav.active == 'workspace' %}aria-current="page"{% endif %}>{% include 'portal/components/icon.html' with name='home' %}<span>{% bilingual 'หน้าหลัก / Home' %}</span></a>
+{% if portal_nav.round_setup %}<details class="nav-group" data-nav-group="prepare" open><summary>{% bilingual 'เตรียมเก็บข้อมูล / Prepare collection' %}</summary><div class="nav-group-links">
+<a href="{% url 'annual-policy' portal_nav.scope.pk %}">{% bilingual 'ปีและความพร้อม / Years and readiness' %}</a>
+<a href="{% url 'f04-register' portal_nav.scope.pk %}">{% bilingual 'ผู้ถูกประเมินรายปี F04 / Annual F04 evaluatees' %}</a>
+</div></details>{% endif %}
+{% if portal_nav.surveys %}<details class="nav-group" data-nav-group="collect" open><summary>{% bilingual 'ดำเนินการเก็บข้อมูล / Collect responses' %}</summary><div class="nav-group-links">
+<a href="{% url 'survey-list' portal_nav.scope.pk %}" {% if portal_nav.active == 'survey-list' or portal_nav.collect_active %}aria-current="page"{% endif %}>{% include 'portal/components/icon.html' with name='forms' %}<span>{% bilingual 'รอบแบบประเมิน F01–F06 / Assessment collections F01–F06' %}</span></a>
+{% if portal_nav.workflow.invitations %}<a href="{{ portal_nav.workflow.invitations }}"{% if portal_nav.active == 'participation-manage' %} aria-current="page"{% endif %}>{% bilingual 'ศูนย์คำเชิญของรอบนี้ / This collection’s invitations' %}</a>{% endif %}
+{% if portal_nav.workflow.setup %}<a href="{{ portal_nav.workflow.setup }}"{% if portal_nav.active == 'participation-setup' %} aria-current="page"{% endif %}>{% bilingual 'สร้างรอบทดสอบใหม่ / Create a test collection' %}</a>{% endif %}
+</div></details>{% endif %}
+{% if portal_nav.catalog %}<details class="nav-group" data-nav-group="forms" open><summary>{% bilingual 'แบบฟอร์ม / Forms' %}</summary><div class="nav-group-links">
+<a href="{% url 'portal-catalog' portal_nav.scope.pk %}" {% if portal_nav.active|starts_with:'portal-catalog' %}aria-current="page"{% endif %}>{% include 'portal/components/icon.html' with name='library' %}<span>{% bilingual 'คลังแบบฟอร์ม / Form library' %}</span></a>
+<a href="{% url 'indicator-alignment' portal_nav.scope.pk %}" {% if portal_nav.active == 'indicator-alignment' %}aria-current="page"{% endif %}>{% include 'portal/components/icon.html' with name='clipboard' %}<span>{% bilingual 'ตรวจตัวชี้วัดต้นฉบับ / Indicator crosswalk' %}</span></a>
+<a href="{% url 'group-register' portal_nav.scope.pk %}" {% if portal_nav.active == 'group-register' %}aria-current="page"{% endif %}>{% include 'portal/components/icon.html' with name='people' %}<span>{% bilingual 'ทะเบียนกลุ่มและรหัส / Group register' %}</span></a>
+</div></details>
+{% endif %}{% if portal_nav.insights or portal_nav.workflow.results %}<details class="nav-group" data-nav-group="insights" open><summary>{% bilingual 'ผลและรายงาน / Results and reports' %}</summary><div class="nav-group-links">
+{% if portal_nav.workflow.results %}<a href="{{ portal_nav.workflow.results }}"{% if portal_nav.results_active %} aria-current="page"{% endif %}>{% bilingual 'ติดตามผลและส่งตรวจของรอบนี้ / This collection’s results and review' %}</a>{% endif %}
+{% if portal_nav.insights %}<a href="{% url 'insights-list' portal_nav.scope.pk %}" {% if portal_nav.active|starts_with:'insights-' %}aria-current="page"{% endif %}>{% include 'portal/components/icon.html' with name='chart' %}<span>{% bilingual 'สรุปผลที่รับรองแล้ว / Approved results' %}</span></a>
+<a href="{% url 'visualization-home' portal_nav.scope.pk %}" {% if portal_nav.active|starts_with:'visualization-' %}aria-current="page"{% endif %}>{% include 'portal/components/icon.html' with name='dashboard' %}<span>{% bilingual 'กราฟและเปรียบเทียบ / Charts and comparisons' %}</span></a>
+<a href="{% url 'quality-home' portal_nav.scope.pk %}" {% if portal_nav.active|starts_with:'quality-' %}aria-current="page"{% endif %}>{% include 'portal/components/icon.html' with name='check' %}<span>{% bilingual 'คุณภาพข้อมูล / Data quality' %}</span></a>{% endif %}
+</div></details>
+{% endif %}{% if portal_nav.members %}<details class="nav-group" data-nav-group="management" open><summary>{% bilingual 'ดูแลระบบ / Management' %}</summary><div class="nav-group-links">
+<a href="{% url 'access-requests' portal_nav.scope.pk %}"><span>{% bilingual 'คำขอใช้งานและการสมัคร / Access requests' %}</span></a><a href="{% url 'portal-members' portal_nav.scope.pk %}" {% if portal_nav.active == 'portal-members' or portal_nav.active == 'portal-account-new' %}aria-current="page"{% endif %}>{% include 'portal/components/icon.html' with name='people' %}<span>{% bilingual 'สมาชิกและบทบาท / Members and roles' %}</span></a>
+<a href="{% url 'workspace-refresh' portal_nav.scope.pk %}"><span>{% bilingual 'ล้างและเตรียมข้อมูลทดสอบ / Refresh test data' %}</span></a>
+<a href="{% url 'backoffice-home' portal_nav.scope.pk %}" {% if portal_nav.active|starts_with:'backoffice-' %}aria-current="page"{% endif %}>{% include 'portal/components/icon.html' with name='settings' %}<span>{% bilingual 'ศูนย์ผู้ดูแลระบบ / Administrator centre' %}</span></a>
+</div></details>
+{% endif %}<details class="nav-group" data-nav-group="support" open><summary>{% bilingual 'บัญชีและช่วยเหลือ / Account and help' %}</summary><div class="nav-group-links">
+{% if portal_nav.scope %}<a href="{% url 'notifications' portal_nav.scope.pk %}"><span>{% bilingual 'การแจ้งเตือน / Notifications' %}</span></a>{% endif %}<a href="{% url 'password-change' %}" {% if portal_nav.active|starts_with:'password-' %}aria-current="page"{% endif %}>{% include 'portal/components/icon.html' with name='lock' %}<span>{% bilingual 'เปลี่ยนรหัสผ่าน / Change password' %}</span></a>
+<a href="{% url 'manuals-home' %}" {% if portal_nav.active|starts_with:'manuals-' %}aria-current="page"{% endif %}>{% include 'portal/components/icon.html' with name='help' %}<span>{% bilingual 'คู่มือการใช้งาน / User manuals' %}</span></a>
+</div></details>
+</nav>
+<p class="sidebar-hint">{% bilingual 'คลิกชื่อหมวดเพื่อย่อหรือขยายเมนู / Select a section heading to collapse or expand.' %}</p>
+</aside>

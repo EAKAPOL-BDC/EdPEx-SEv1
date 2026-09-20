@@ -1,0 +1,14 @@
+.git
+.venv
+.env
+.env.*
+__pycache__
+*.pyc
+output
+outputs
+*.dump
+*.backup
+*.sqlite3
+staticfiles
+.pytest_cache
+.coverage

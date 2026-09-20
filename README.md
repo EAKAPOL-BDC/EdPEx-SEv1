@@ -1,5 +1,10 @@
 # EdPEx-SEv1
 
+Current NEXORA workspace navigation and the isolated F01 invitation-to-report
+workflow are documented in [คู่มือหน้าหลักและเส้นทางการทำงาน](docs/workspace-workflow.md).
+That guide distinguishes the development demo from real deployment; historical
+milestone notes below are not a statement that every production feature is enabled.
+
 Django foundation for the bilingual Thai–English EdPEx system (F01–F06), based on
 System Blueprint 1.2 and Instruments 1.1. F06 is a self-assessment and evidence
 attachments are optional.
@@ -23,7 +28,8 @@ python -m unittest discover -s tests -p "test_m0*.py" -v
 ```
 
 These commands do not load Django settings, contact Supabase, or seed a database.
-The English content remains pending translation and semantic review. F06 has no
+The seed catalog keeps its original English review status. The web management increment
+provides draft English for all 190 original questions, requiring human semantic review. F06 has no
 evidence upload or reviewer workflow; examples and development plans are optional.
 
 M1 adds Django models, migrations, scoped permissions, version history, reviewed
@@ -34,3 +40,38 @@ migration tests. M1 has not been migrated to Supabase or deployed.
 
 PR #3 review fixes and their PostgreSQL regression coverage are described in
 [ข้อค้นพบ → วิธีแก้ → ไฟล์ → tests](docs/pr3-fixes-th.md).
+
+M2 now has an offline, server-side calculation core for the 20 formula templates
+in version 1.1. It includes CAL-01–18 fixtures, typed answer/status validation,
+frozen population inputs, latest submitted revision selection, F05 deduplication,
+and safe pooling of disjoint groups. The catalog adapter checks all 63 indicator
+bindings, including their group and dimension variants.
+
+```text
+python -m unittest tests.test_m0_catalog tests.test_m0_bindings tests.test_m0_source_semantics tests.test_m2_golden tests.test_m2_validation
+```
+
+See [แกนคำนวณ M2: ผลทดสอบและขอบเขตการใช้งาน](docs/m2-calculation-core-th.md).
+The next increment adds internal persisted calculation runs, source/definition
+snapshots, checksums, replay, scoped source/run/validation permissions, and
+transactional idempotency. See [รอบคำนวณและการตรวจผลย้อนหลัง](docs/m2-snapshots-th.md).
+It includes additive migrations but does not apply them to Supabase automatically.
+The F06 increment adds owner-only draft/submitted revisions, frozen duties and expected
+levels, a stored-response calculation adapter, and independent aggregate approval/return
+with retained correction history. See [F06 intake and result review](docs/f06-stored-collection-th.md).
+The staff workspace now exposes assignment, whole-round open/close, a signed calculation
+preview/commit flow, independent aggregate review and correction history through the existing
+services. See [F06 staff workspace](docs/f06-operator-workspace-th.md). This UI adds no migrations
+or automatic role grants. Its language-switch regression is checked with
+`node --test tests/portal_language.test.js`.
+Anonymous F01–F04 collection, verified F05 intake, historical imports, publication and annual
+aggregation remain pending before the full M2/M4 milestones are complete.
+
+The guided NEXORA workspace refresh adds role-aware navigation, an actual-data overview,
+sectioned F06 forms, and responsive public/workspace layouts while retaining the original
+plum/gold identity. See [การปรับ UX/UI และวิธีทดลอง](docs/nexora-guided-workspace-th.md).
+
+The web management increment adds scoped Thai–English review, reviewed-version publication,
+draft question editing and F06 round/population/account setup.
+See [คู่มือจัดการแบบฟอร์มและรอบผ่านเว็บ](docs/nexora-web-management-th.md).
+It adds no migrations or automatic production changes.

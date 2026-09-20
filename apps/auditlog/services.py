@@ -4,6 +4,7 @@ from apps.accounts.permissions import require_permission
 from .models import AuditEvent
 
 ALLOWED_METADATA = {
+    'administrator_self_review', 'decision_id',
     'before_status', 'after_status', 'version', 'revision', 'source_id',
     'source_hash', 'checksum', 'field_names', 'count', 'locale',
     'instrument_id', 'question_id', 'bundle_id', 'round_id', 'scope_id',

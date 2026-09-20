@@ -139,6 +139,16 @@ def approve_translation(actor, entry, *, reviewed_token):
     entry = _locked_translation(actor, entry, "translation.review")
     version = entry.bundle.instrument_version
     original = source_texts(version).get(entry.content_key)
+    return _approve_locked_translation(actor, entry, original, reviewed_token=reviewed_token)
+
+
+def _approve_locked_translation(actor, entry, original, *, reviewed_token):
+    """Internal operation after authorization and version/bundle/entry locks.
+
+    Keep pair validation, model validation, audit and revision refresh identical
+    for the interactive reviewer and isolated synthetic-copy preparation.
+    """
+    version = entry.bundle.instrument_version
     if original is None or entry.source_hash != source_hash(original) or not entry.text.strip():
         raise ValidationError("Translation must be nonempty and refer to the current source.")
     _check_review_token(reviewed_token, _review_payload(actor, entry, original, entry.text, "translation"))
@@ -182,10 +192,15 @@ def publish_instrument_version(actor, version):
         assert_complete_bundle(bundle)
     if not version.questions.filter(active=True).exists():
         raise ValidationError("An instrument version must contain questions.")
-    for binding in version.bindings.select_related("formula"):
-        if binding.formula.status == "draft":
-            binding.formula.status = "published"
-            binding.formula.save()
+    # Multiple indicator bindings may share a formula. Read and lock each actual
+    # formula once; cached per-binding copies otherwise republish a locked version.
+    from .models import FormulaVersion
+    for formula in FormulaVersion.objects.select_for_update().filter(
+        pk__in=version.bindings.values("formula_id")
+    ).order_by("pk"):
+        if formula.status == "draft":
+            formula.status = "published"
+            formula.save()
     snapshot = {
         "texts": source_texts(version),
         "questions": list(version.questions.order_by("question_id").values("question_id", "answer_type", "required_rule", "visibility_rule", "scale", "group_codes", "answer_statuses", "active")),
@@ -223,7 +238,7 @@ def clone_instrument_version(actor, source, new_version):
               if field.name not in {"id", "version", "revision", "status", "checksum", "created_at", "published_at", "based_on", "instrument"}}
     target = InstrumentVersion.objects.create(instrument=source.instrument, version=new_version, revision=source.revision + 1, based_on=source, **fields)
     question_map = {}
-    for old in source.questions.all():
+    for old in source.questions.prefetch_related('options'):
         values = {f.name: copy.deepcopy(getattr(old, f.name)) for f in old._meta.fields if f.name not in {"id", "created_at", "version"}}
         question = Question.objects.create(version=target, **values)
         question_map[old.pk] = question
@@ -233,7 +248,7 @@ def clone_instrument_version(actor, source, new_version):
     for content in source.contents.all():
         values = {f.name: copy.deepcopy(getattr(content, f.name)) for f in content._meta.fields if f.name not in {"id", "created_at", "version"}}
         InstrumentContent.objects.create(version=target, **values)
-    for binding in source.bindings.all():
+    for binding in source.bindings.select_related('indicator','formula').prefetch_related('questions'):
         new_binding = IndicatorBinding.objects.create(version=target, indicator=binding.indicator, formula=binding.formula,
             group_rules=copy.deepcopy(binding.group_rules), dimensions=copy.deepcopy(binding.dimensions),
             source_metadata=copy.deepcopy(binding.source_metadata), indicator_snapshot=copy.deepcopy(binding.indicator_snapshot))
@@ -241,7 +256,7 @@ def clone_instrument_version(actor, source, new_version):
             BindingQuestion.objects.create(binding=new_binding, question=question_map[question.pk])
     # Explicit re-review preserves history and avoids carrying approval into a changed version.
     reserved_codes = set(source.translation_bundles.values_list("bundle_version", flat=True))
-    for old_bundle in source.translation_bundles.order_by("bundle_version"):
+    for old_bundle in source.translation_bundles.order_by("bundle_version").prefetch_related('translations'):
         code = _clone_bundle_code(old_bundle.bundle_version, reserved_codes)
         reserved_codes.add(code)
         new_bundle = TranslationBundle.objects.create(instrument_version=target, bundle_version=code)

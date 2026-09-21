@@ -15,7 +15,9 @@ def database_failure_category(error):
     """Classify locally without putting raw database error text in logs."""
     text = str(error).lower()
     for category, fragments in (
-        ('authentication_rejected', ('password authentication failed', 'sasl authentication failed', 'authentication failed')),
+        ('authentication_rejected', ('password authentication failed', 'sasl authentication failed', 'authentication failed', 'wrong password')),
+        ('password_missing', ('no password supplied', 'no password provided')),
+        ('pooler_backend_unavailable', ('circuit breaker', 'unable to establish connection', 'database is not accepting')),
         ('pooler_project_not_found', ('tenant or user not found',)),
         ('connection_timeout', ('timeout expired', 'timed out', 'connection timeout')),
         ('dns_failure', ('could not translate host', 'name or service not known', 'getaddrinfo')),
@@ -26,6 +28,19 @@ def database_failure_category(error):
         if any(fragment in text for fragment in fragments):
             return category
     return 'unclassified'
+
+
+def database_failure_signals(error):
+    # Only fixed literal indicators can be returned, never substrings copied
+    # from a message (which might contain a credential or connection string).
+    text = str(error).lower()
+    indicators = ('timeout', 'password', 'authentication', 'sasl', 'circuit',
+                  'tenant', 'user not found', 'ssl', 'certificate', 'resolve',
+                  'name or service', 'network', 'refused', 'closed', 'unexpected',
+                  'invalid', 'option', 'maxclients', 'too many', 'permission',
+                  'not supported', 'parameter', 'address', 'port', 'fatal',
+                  'no password', 'fe_sendauth', 'received', 'server', 'connection')
+    return ','.join(word for word in indicators if word in text) or 'none'
 
 
 class HealthMiddleware:
@@ -55,8 +70,9 @@ class HealthMiddleware:
                 cause = exc.__cause__ or exc
                 state = getattr(cause, 'sqlstate', None)
                 state = state if isinstance(state, str) and len(state) == 5 and state.isalnum() else 'unknown'
-                logger.warning('Readiness unavailable: %s category=%s SQLSTATE=%s',
-                               type(exc).__name__, database_failure_category(cause), state)
+                logger.warning('Readiness unavailable: %s category=%s SQLSTATE=%s signals=%s',
+                               type(exc).__name__, database_failure_category(cause), state,
+                               database_failure_signals(cause))
                 ready = False
         response = JsonResponse({'status': 'ok' if ready else 'unavailable'}, status=200 if ready else 503)
         response['Cache-Control'] = 'no-store'

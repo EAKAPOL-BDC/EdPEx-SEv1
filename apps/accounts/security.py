@@ -1,4 +1,5 @@
 """Shared privacy headers, database-backed login limits and minimal health probes."""
+import logging
 from django.db import DatabaseError, connection
 from django.db.migrations.executor import MigrationExecutor
 from django.db.migrations.exceptions import InconsistentMigrationHistory
@@ -6,6 +7,8 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.utils.crypto import salted_hmac
 from django.utils.deprecation import MiddlewareMixin
+
+logger = logging.getLogger(__name__)
 
 
 class HealthMiddleware:
@@ -27,7 +30,15 @@ class HealthMiddleware:
                 executor = MigrationExecutor(connection)
                 executor.loader.check_consistent_history(connection)
                 ready = not executor.migration_plan(executor.loader.graph.leaf_nodes())
-            except (DatabaseError, InconsistentMigrationHistory):
+                if not ready:
+                    logger.warning('Readiness unavailable: pending migrations')
+            except (DatabaseError, InconsistentMigrationHistory) as exc:
+                # Log only the error class/SQLSTATE, never credentials, SQL,
+                # connection strings or raw server error messages.
+                cause = exc.__cause__ or exc
+                state = getattr(cause, 'sqlstate', None)
+                state = state if isinstance(state, str) and len(state) == 5 and state.isalnum() else 'unknown'
+                logger.warning('Readiness unavailable: %s SQLSTATE=%s', type(exc).__name__, state)
                 ready = False
         response = JsonResponse({'status': 'ok' if ready else 'unavailable'}, status=200 if ready else 503)
         response['Cache-Control'] = 'no-store'

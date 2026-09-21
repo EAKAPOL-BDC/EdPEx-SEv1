@@ -29,4 +29,5 @@ database_schema = os.getenv('NEXORA_DB_SCHEMA', '')
 if database_schema:
     if not re.fullmatch(r'nexora_[a-z0-9_]{1,48}', database_schema):
         raise ImproperlyConfigured('NEXORA_DB_SCHEMA must be a dedicated nexora_ schema name.')
-    DATABASES['default']['OPTIONS']['options'] = '-c search_path=' + database_schema
+    DATABASES['default']['ENGINE'] = 'edpex.db.postgresql'
+    DATABASES['default']['NEXORA_SCHEMA'] = database_schema

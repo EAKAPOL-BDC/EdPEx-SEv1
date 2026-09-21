@@ -23,6 +23,8 @@ services:
         sync: false
       - key: DJANGO_DATABASE_PROFILE
         value: supabase
+      - key: NEXORA_DB_SCHEMA
+        value: nexora_live
       - key: SUPABASE_DEV_DB_HOST
         sync: false
       - key: SUPABASE_DEV_DB_PORT

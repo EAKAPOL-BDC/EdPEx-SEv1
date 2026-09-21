@@ -69,6 +69,13 @@ class LiveCollectionTests(TestCase):
         public_admission.set_published(self.fixture.actor, binding.pk, True)
         context = public_admission.context_for(binding.public_collection, '1')
         secret = public_admission.start(binding.pk, context)
+        # A real C1 collection must not redirect to the test-only prototype.
+        from apps.surveys.web import COOKIE
+        self.client.cookies[COOKIE] = secret
+        for locale in ('th', 'en'):
+            page = self.client.get(reverse('public-assessment-form') + '?lang=' + locale, secure=True)
+            self.assertEqual(page.status_code, 200)
+            self.assertContains(page, 'name="F01-C02"')
         candidate = services.prepare(secret)
         payload = copy.deepcopy(self.fixture.answers['F01'])
         payload['F01-C02'] = {'status': 'answered', 'value': ['option_3']}

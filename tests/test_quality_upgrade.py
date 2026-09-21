@@ -91,6 +91,14 @@ class SecurityUpgradeTests(TestCase):
         self.assertEqual(client.post(reverse('login'),{'username':'x','password':'x'}).status_code,403)
         self.assertEqual(AccessThrottle.objects.count(),0)
 
+    def test_readiness_rejects_pending_database_migrations(self):
+        with patch('apps.accounts.security.MigrationExecutor') as executor:
+            executor.return_value.migration_plan.return_value = [('pending', False)]
+            response = self.client.get('/health/ready/')
+            self.assertEqual(response.status_code, 503)
+            self.assertEqual(response.json(), {'status': 'unavailable'})
+            self.assertEqual(self.client.get('/health/live/').status_code, 200)
+
 
 class QualityHubTests(TestCase):
     @classmethod

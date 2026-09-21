@@ -62,3 +62,11 @@ class RenderSettingsTests(unittest.TestCase):
                 result = self.run_settings(overrides)
                 self.assertNotEqual(result.returncode, 0)
                 self.assertIn('ImproperlyConfigured', result.stderr)
+
+    def test_isolated_database_schema(self):
+        self.assertEqual(self.run_settings({'NEXORA_DB_SCHEMA': 'nexora_live'}).returncode, 0)
+        for schema in ('public', 'nexora_live,public', 'nexora_live -c role=postgres', 'nexora_;DROP SCHEMA public'):
+            with self.subTest(schema=schema):
+                result = self.run_settings({'NEXORA_DB_SCHEMA': schema})
+                self.assertNotEqual(result.returncode, 0)
+                self.assertIn('ImproperlyConfigured', result.stderr)

@@ -1,5 +1,7 @@
 """Shared privacy headers, database-backed login limits and minimal health probes."""
 from django.db import DatabaseError, connection
+from django.db.migrations.executor import MigrationExecutor
+from django.db.migrations.exceptions import InconsistentMigrationHistory
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.utils.crypto import salted_hmac
@@ -22,7 +24,10 @@ class HealthMiddleware:
                 with connection.cursor() as cursor:
                     cursor.execute('SELECT 1 FROM accounts_accessscope LIMIT 0')
                     cursor.execute('SELECT 1 FROM calculations_calculationrun LIMIT 0')
-            except DatabaseError:
+                executor = MigrationExecutor(connection)
+                executor.loader.check_consistent_history(connection)
+                ready = not executor.migration_plan(executor.loader.graph.leaf_nodes())
+            except (DatabaseError, InconsistentMigrationHistory):
                 ready = False
         response = JsonResponse({'status': 'ok' if ready else 'unavailable'}, status=200 if ready else 503)
         response['Cache-Control'] = 'no-store'

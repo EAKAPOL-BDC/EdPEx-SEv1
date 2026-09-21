@@ -1,5 +1,6 @@
 """Production runtime. Requires explicit secrets, database and HTTPS origin."""
 from urllib.parse import urlsplit
+import re
 
 from .settings import *  # noqa: F403
 
@@ -21,3 +22,11 @@ STORAGES = {
 }
 # Small pooler-backed deployments must not pin a connection per idle worker.
 DATABASES['default']['CONN_MAX_AGE'] = 0  # noqa: F405
+# An isolated release schema keeps pre-existing development data out of live
+# reads. No fallback to public: a missing schema must fail readiness, not select
+# historical tables with the same names.
+database_schema = os.getenv('NEXORA_DB_SCHEMA', '')
+if database_schema:
+    if not re.fullmatch(r'nexora_[a-z0-9_]{1,48}', database_schema):
+        raise ImproperlyConfigured('NEXORA_DB_SCHEMA must be a dedicated nexora_ schema name.')
+    DATABASES['default']['OPTIONS']['options'] = '-c search_path=' + database_schema

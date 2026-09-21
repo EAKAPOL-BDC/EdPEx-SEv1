@@ -45,8 +45,20 @@ it against the existing database until the migration and data review is complete
 
 The existing Supabase project contains earlier data and an older schema. Preserve
 it and its backup. Startup deliberately does not run `migrate`, `flush`, `seed` or
-an import. Review and rehearse forward migrations and the approved 61-configuration
-import separately. No deletion or overwrite is authorized by this configuration.
+an import. The selected release uses a new `nexora_live` schema, with
+`NEXORA_DB_SCHEMA=nexora_live`; there is no fallback to historical `public` tables.
+The existing public schema must remain untouched. A private, owner-run import
+backs it up, restores the backup locally and compares every table fingerprint
+before importing the approved 61 configurations into the new schema. It fails if
+the destination schema already exists. No deletion or overwrite is authorized.
+
+The isolated local package contains exactly 61 REAL rounds and no submitted
+answers, with LIVE proof policies, ready/unpublished status and the selected
+catalogue and leadership dependencies. Referenced reviewer accounts are inactive;
+no source password is copied. The owner sets the live administrator password
+privately. The complete 61-round publication rehearsal and 131 Thai/English and
+staff page renders passed with all exercise writes rolled back, including a
+second rehearsal using the isolated schema. This is not a completed cloud import.
 
 The complete regression suite has not passed. The local run completed with
 34 failures and 37 errors; the GitHub run for commit `3aeff38f` also failed at the
@@ -70,8 +82,8 @@ Blueprint values at the same time so a later Blueprint sync does not revert them
 - Only the approved data is presented for real collection; previous test data and
   responses remain preserved and excluded.
 
-The ready endpoint only checks basic database availability. It does not certify
-that migrations or the business workflows are ready. Record the tested HTTPS URL
+The ready endpoint checks database availability and rejects pending or inconsistent
+migration history. It does not certify the business workflows. Record the tested HTTPS URL
 and deployed commit before telling users that the site is live.
 
 References: [Django deployment](https://render.com/docs/deploy-django),

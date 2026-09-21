@@ -92,7 +92,8 @@ def form(request):
     secret = request.COOKIES.get(COOKIE, '')
     session = admission.read_session(secret)
     profile = session.binding.survey_profile
-    if request.method == 'GET' and profile.binding.instrument_version.instrument.code == 'F01' and profile.group_code == 'C1':
+    if (request.method == 'GET' and profile.binding.instrument_version.instrument.code == 'F01'
+            and profile.group_code == 'C1' and profile.binding.receiptpolicy.realm == 'test'):
         return redirect(reverse('participation-form') + ('?lang=en' if request.GET.get('lang') == 'en' else ''))
     locale = 'en' if request.GET.get('lang') == 'en' else 'th'
     payload = posted_payload(profile, request.POST) if request.method == 'POST' else {}

@@ -23,8 +23,6 @@ it against the existing database until the migration and data review is complete
    | Variable | Value |
    | --- | --- |
    | `DJANGO_SECRET_KEY` | A private random secret of at least 50 characters; generate locally or in a password manager. |
-   | `DJANGO_ALLOWED_HOSTS` | The exact hostname assigned to this service, without `https://` or a wildcard. |
-   | `NEXORA_PUBLIC_ORIGIN` | `https://` followed by that same hostname. |
    | `SUPABASE_DEV_DB_HOST` | Session pooler host from the selected project's Connect panel. |
    | `SUPABASE_DEV_DB_USER` | Session pooler username from that panel. |
    | `SUPABASE_DEV_DB_PASSWORD` | The database password, entered privately; never a Supabase API key. |
@@ -35,7 +33,10 @@ it against the existing database until the migration and data review is complete
    Render's Blueprint `generateValue` creates a 44-character base64 value, shorter
    than this application's minimum, so this configuration prompts for the secret.
 
-5. Verify Render's assigned service hostname before the first working deployment;
+5. `DJANGO_SETTINGS_MODULE=edpex.render` uses Render's own assigned hostname and
+   HTTPS URL, validates that they match, and retains all production security checks.
+   For a custom domain, set both `DJANGO_ALLOWED_HOSTS` and `NEXORA_PUBLIC_ORIGIN`
+   explicitly. Verify Render's assigned service hostname before the first working deployment;
    a name such as `nexora-edpex` does not guarantee a particular available URL.
    Render terminates HTTPS and passes the scheme to Gunicorn. The trusted proxy
    setting is specific to this hosted deployment, not a development server.
@@ -54,7 +55,8 @@ schema creation and migration checks passed in that GitHub run. Seven focused
 REAL/LIVE collection tests passed locally. These results do not certify release.
 
 Keep the four participation flags disabled until the full release checks,
-F01 academic-period clarification, selected data import and endpoint tests pass.
+selected data import and endpoint tests pass. The owner has confirmed F01 academic
+year 2568, 1 June 2025 through 31 May 2026 inclusive; collection windows stay unchanged.
 Enable the flags deliberately in Render after those gates are resolved. Review
 Blueprint values at the same time so a later Blueprint sync does not revert them.
 

@@ -14,16 +14,12 @@ services:
     healthCheckPath: /health/ready/
     envVars:
       - key: DJANGO_SETTINGS_MODULE
-        value: edpex.production
+        value: edpex.render
       - key: NEXORA_ENVIRONMENT
         value: production
       - key: DJANGO_DEBUG
         value: "false"
       - key: DJANGO_SECRET_KEY
-        sync: false
-      - key: DJANGO_ALLOWED_HOSTS
-        sync: false
-      - key: NEXORA_PUBLIC_ORIGIN
         sync: false
       - key: DJANGO_DATABASE_PROFILE
         value: supabase

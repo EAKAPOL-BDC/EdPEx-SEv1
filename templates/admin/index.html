@@ -1,0 +1,21 @@
+{% extends "admin/index.html" %}{% load i18n %}
+{% block bodyclass %}{{ block.super }}{% if not app_label %} nexora-admin-index{% endif %}{% endblock %}
+{% block content_title %}
+{% if app_label %}{{ block.super }}{% else %}
+<section class="nx-admin-hero nx-page-header" aria-labelledby="nx-admin-title">
+  <div><p class="nx-eyebrow">NEXORA / ADMINISTRATION</p>
+    <h1 id="nx-admin-title">{% if LANGUAGE_CODE == 'en' %}Your administration workspace{% else %}พื้นที่ดูแลระบบ{% endif %}</h1>
+    <p>{% if LANGUAGE_CODE == 'en' %}Manage accounts and system access. Continue your assessment work in the main workspace.{% else %}จัดการบัญชีและสิทธิ์ของระบบ หรือกลับพื้นที่ทำงานเพื่อดูแลแบบประเมินและผลลัพธ์{% endif %}</p>
+    <div class="nx-admin-actions"><a class="nx-action nx-action-primary" href="{% url 'workspace' %}">{% if LANGUAGE_CODE == 'en' %}Open workspace{% else %}ไปพื้นที่ทำงาน{% endif %}<span aria-hidden="true"> →</span></a><a class="nx-action" href="{% url 'manuals-home' %}">{% if LANGUAGE_CODE == 'en' %}User manuals{% else %}คู่มือการใช้งาน{% endif %}</a></div>
+  </div>
+  {% include 'portal/components/brand_mascot.html' %}
+</section>
+{% endif %}
+{% endblock %}
+{% block content %}
+{% if app_label %}{{ block.super }}{% else %}
+<div id="content-main"><div class="nx-section-heading"><h2>{% if LANGUAGE_CODE == 'en' %}Administration tools{% else %}เครื่องมือจัดการ{% endif %}</h2><p>{% if LANGUAGE_CODE == 'en' %}Available actions follow your access permissions.{% else %}แสดงเฉพาะรายการที่บัญชีของคุณมีสิทธิ์{% endif %}</p></div>
+{% include "admin/app_list.html" with app_list=app_list show_changelinks=True %}
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,24 @@
+<section id="{{ section.id }}" class="manual-section">
+<h2><span class="manual-section-number">{{ forloop.counter|stringformat:'02d' }}</span> {{ section.title }}</h2>
+{% for paragraph in section.paragraphs %}<p>{{ paragraph }}</p>{% endfor %}
+{% for figure in section.figures %}
+<figure class="manual-figure" id="figure-{{ figure.number }}">
+{% if not print_mode %}<a class="manual-figure-link" href="{{ figure.url }}" target="_blank" rel="noopener noreferrer" aria-label="เปิดภาพ {{ figure.number }} ขนาดเต็มในแท็บใหม่: {{ figure.title }}">{% endif %}
+<img src="{% if print_mode %}{{ illustration_base }}{{ figure.filename }}{% else %}{{ figure.url }}{% endif %}" width="{{ figure.width }}" height="{{ figure.height }}" alt="{{ figure.alt }}" {% if not print_mode %}loading="lazy" decoding="async"{% endif %}>
+{% if not print_mode %}</a>{% endif %}
+<figcaption><strong>ภาพ {{ figure.number }} · {{ figure.title }}</strong><span>ภาพจำลองอธิบายขั้นตอน / Illustrative guide{% if not print_mode %} · กดภาพเพื่อขยายในแท็บใหม่{% endif %}</span></figcaption>
+<ol class="manual-figure-keys" aria-label="หมายเลขกำกับในภาพ {{ figure.number }}">{% for key in figure.keys %}<li><b aria-hidden="true">{{ forloop.counter }}</b><span>{{ key }}</span></li>{% endfor %}</ol>
+</figure>
+{% endfor %}
+{% if section.flow %}<ol class="manual-flow">{% for node in section.flow %}<li><strong>{{ node.title }}</strong><span>{{ node.detail }}</span></li>{% endfor %}</ol>{% endif %}
+{% if section.steps %}<ol class="manual-steps">{% for step in section.steps %}<li><div class="manual-step-head"><span>{{ forloop.counter }}</span><h3>{{ step.title }}</h3></div><p>{{ step.action }}</p><p class="manual-expected"><strong>ผลที่ควรเห็น / Expected:</strong> {{ step.expected }}</p></li>{% endfor %}</ol>{% endif %}
+{% if section.columns %}<div class="table-scroll" tabindex="0" role="region" aria-label="{{ section.title }}"><table class="manual-table manual-cols-{{ section.columns|length }}"><thead><tr>{% for column in section.columns %}<th scope="col">{{ column }}</th>{% endfor %}</tr></thead><tbody>{% for row in section.rows %}<tr>{% for cell in row %}{% if forloop.first %}<th scope="row">{{ cell }}</th>{% else %}<td>{{ cell }}</td>{% endif %}{% endfor %}</tr>{% endfor %}</tbody></table></div>{% endif %}
+{% if section.checks %}<ul class="manual-checks">{% for check in section.checks %}<li>{{ check }}</li>{% endfor %}</ul>{% endif %}
+{% if section.code %}<pre class="manual-code"><code>{{ section.code }}</code></pre>{% endif %}
+{% if section.note %}<aside class="manual-note"><strong>ข้อควรรู้ / Note</strong><p>{{ section.note }}</p></aside>{% endif %}
+{% if not print_mode %}<nav class="manual-chapter-navigation" aria-label="{% if LANGUAGE_CODE == 'en' %}Guide chapter navigation{% else %}นำทางบทคู่มือ{% endif %}">
+{% if section.previous %}<a href="#{{ section.previous.id }}"><span aria-hidden="true">←</span><span><small>{% if LANGUAGE_CODE == 'en' %}Previous chapter{% else %}บทก่อนหน้า{% endif %}</small>{{ section.previous.title }}</span></a>{% endif %}
+<a class="manual-contents-link" href="#manual-contents">{% if LANGUAGE_CODE == 'en' %}Contents{% else %}สารบัญ{% endif %}</a>
+{% if section.next %}<a href="#{{ section.next.id }}"><span><small>{% if LANGUAGE_CODE == 'en' %}Next chapter{% else %}บทถัดไป{% endif %}</small>{{ section.next.title }}</span><span aria-hidden="true">→</span></a>{% endif %}
+</nav>{% endif %}
+</section>

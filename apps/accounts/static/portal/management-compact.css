@@ -1,0 +1,126 @@
+/* Scoped management patterns: readable content, fewer nested surfaces. */
+.nx-management{--nx-edit-line:#ddd6e8;--nx-edit-muted:#635b70;font-size:14px;min-width:0}
+.nx-management [hidden]{display:none!important}
+.workspace-content .nx-management .nx-page-header{padding:12px 18px;margin-bottom:14px}
+.workspace-content .nx-management .nx-page-header h1{font-size:clamp(21px,1.7vw,24px);line-height:1.5;margin:2px 0 4px}
+.workspace-content .nx-management .nx-page-header p{margin:2px 0;font-size:13px}
+.workspace-content .nx-management .nx-page-header .eyebrow{font-size:10px;margin:0}
+.workspace-content .nx-management .nx-page-header .nx-scope{font-size:12px}
+.nx-management h2{font-size:17px;line-height:1.6;margin:0}
+.nx-management .notice{margin:0 0 14px;padding:10px 14px;font-size:13px}
+.nx-management .manage-actions{margin:0;gap:8px}
+.nx-management .button{min-height:44px;font-size:13px;padding:9px 13px;line-height:1.6;white-space:normal;width:auto;display:inline-flex;align-items:center;justify-content:center;gap:7px}
+.nx-management .button:hover{transform:none}
+.nx-management .nx-workflow-actions{gap:8px;padding:0 0 14px;align-items:stretch}
+.nx-management .nx-workflow-actions form{display:flex;max-width:100%}
+.nx-workflow-actions .button{flex-wrap:wrap;border-color:var(--nx-edit-line)}
+.nx-step{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:6px;background:#efe9f7;color:#613d8c;font-size:12px;flex-shrink:0;font-variant-numeric:tabular-nums}
+.nx-tool-meta{font-size:11px;color:var(--nx-edit-muted)}
+.nx-management .nx-version-link{margin-inline-start:auto}
+.nx-question-directory{background:white;border:1px solid var(--nx-edit-line);border-radius:12px;overflow:clip}
+.nx-section-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:14px 16px}
+.nx-section-bar h2 span{font-size:13px;font-weight:400;color:var(--nx-edit-muted);margin-inline-start:10px}
+.nx-filter-bar{display:flex;align-items:end;gap:8px 12px;flex-wrap:wrap;padding:12px 16px;background:#f8f7fb;border:1px solid var(--nx-edit-line);border-radius:10px;margin:0 0 12px}
+.nx-question-directory .nx-filter-bar{border:0;border-top:1px solid var(--nx-edit-line);border-bottom:1px solid var(--nx-edit-line);border-radius:0;margin:0}
+.nx-search-field{display:flex;flex:1 1 220px;flex-direction:column;gap:5px;min-width:0;font-size:13px;font-weight:600}
+.nx-management .nx-search-field input{width:100%;min-height:44px;font-size:15px;box-sizing:border-box}
+.nx-management .nx-check-label{display:flex;align-items:center;gap:9px;min-height:44px;margin:0;cursor:pointer;font-size:14px;line-height:1.6}
+.nx-management .nx-check-label input{margin:0;flex:0 0 20px;width:20px;height:20px;min-height:20px}
+.nx-management .nx-question-row{margin:0;border:0;border-bottom:1px solid #e9e4ef;border-radius:0;padding:0;background:#fff;box-shadow:none}
+.nx-management .nx-question-row:last-child{border-bottom:0}
+.nx-question-row>summary{position:relative;list-style:none;padding:12px 16px 12px 38px;min-height:48px;box-sizing:border-box;line-height:1.65;cursor:pointer}
+.nx-question-row>summary::-webkit-details-marker{display:none}
+.nx-question-row>summary:before{content:'›';position:absolute;left:16px;top:11px;font-size:20px;line-height:24px;color:#73558d;transition:transform .12s}
+.nx-question-row[open]>summary:before{transform:rotate(90deg)}
+.nx-question-row>summary:hover,.nx-question-row[open]>summary{background:#f7f3fc}
+.nx-question-row>summary:focus-visible{outline:3px solid #8b5c1e;outline-offset:-3px}
+.nx-question-summary{display:grid;grid-template-columns:minmax(108px,auto) minmax(0,1fr) auto;gap:6px 16px;align-items:baseline}
+.nx-question-summary strong{font-size:13px;color:#684b8c;margin:0!important;overflow-wrap:anywhere}
+.nx-question-summary>span[lang]{font-size:14px;overflow-wrap:anywhere}
+.nx-row-status{font-size:12px;color:var(--nx-edit-muted);white-space:nowrap}
+.nx-management .question-body{padding:12px 16px 14px 38px;border-top:1px solid #ebe4f2}
+.nx-management .nx-question-meta{font-size:13px;margin:0 0 10px;color:var(--nx-edit-muted)}
+.nx-option-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 18px;padding:0;margin:0 0 12px;list-style:none}
+.nx-option-list li{display:flex;align-items:baseline;gap:8px;font-size:14px;line-height:1.65;overflow-wrap:anywhere}
+.nx-option-code{font-size:12px;min-width:22px;color:#655778;background:#f1edf7;padding:1px 5px;text-align:center;border-radius:4px}
+.nx-management .nx-delete-link{color:#912d43}
+.nx-empty{padding:22px 16px;margin:0;color:var(--nx-edit-muted)}
+/* Shared editor is used by catalog, reporting periods, rosters and accounts. */
+.workspace-content .nx-management .nx-editor{padding:18px;max-width:none;margin:14px 0;border:1px solid var(--nx-edit-line);border-radius:12px}
+.nx-form-key{font-size:12px;color:var(--nx-edit-muted);margin:0 0 12px}
+.nx-field-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 18px;align-items:start}
+.nx-management .nx-editor-field{min-width:0;margin:0}
+.nx-field-grid>.is-wide{grid-column:1/-1}
+.nx-management .nx-editor-field>label{margin:0 0 5px;font-size:14px;line-height:1.6}
+.nx-required{color:#9b334c}
+.nx-management .nx-editor input:not([type=checkbox]):not([type=radio]):not([type=hidden]),.nx-management .nx-editor select,.nx-management .nx-editor textarea{padding:9px 11px;border-radius:8px;font-size:15px;line-height:1.6;min-height:44px}
+.nx-management .nx-editor textarea{min-height:76px;resize:vertical}
+.nx-management .nx-editor .field-help{font-size:12px;line-height:1.7;margin:4px 0 0}
+.nx-management .nx-editor .errorlist{margin:6px 0 0;padding:8px 12px;font-size:13px}
+.nx-management .nx-editor .is-check .nx-check-label{margin:0;padding:6px 0;display:flex;font-weight:500}
+.nx-management .nx-editor .is-check input{width:20px;height:20px;min-height:20px;margin:0;display:inline-block}
+.nx-fieldset{min-width:0;padding:0;margin:0;border:0}
+.nx-fieldset legend{font-size:14px;font-weight:600;margin:0 0 5px;padding:0}
+.nx-fieldset>div{display:flex;flex-wrap:wrap;gap:6px 16px}
+.nx-fieldset label{display:flex;gap:8px;align-items:center;min-height:44px;margin:0;font-size:14px}
+.nx-fieldset input[type=checkbox]{margin:0}
+.nx-management .nx-editor-actions{margin:18px 0 0;border-top:1px solid var(--nx-edit-line);padding-top:14px}
+.nx-choice-section{margin-top:20px;border-top:1px solid var(--nx-edit-line);padding-top:12px}
+.nx-choice-section .nx-section-bar{padding:0}
+.nx-choice-section>.field-help{margin:4px 0 12px!important}
+.nx-management .choice-edit-list{display:grid;grid-template-columns:minmax(0,1fr);gap:12px}
+.nx-management .choice-editor{padding:10px 12px 12px;margin:0;border:1px solid var(--nx-edit-line);border-radius:9px;background:#fcfbfe}
+.nx-management .choice-editor legend{font-size:12px;padding:0 6px}
+.nx-choice-fields{display:grid;grid-template-columns:80px minmax(180px,1fr) 90px minmax(145px,180px) 62px;gap:10px;align-items:start}
+.nx-management .nx-choice-fields .field-label_th{grid-column:auto}
+.nx-management .nx-choice-fields textarea{min-height:68px;height:68px}
+.nx-management .nx-choice-fields .field-DELETE{align-self:center}
+.nx-management .nx-choice-fields .nx-editor-field>label{font-size:13px}
+.nx-management [data-add-choice]{margin-top:12px}
+/* Publication readiness and translation review keep full text and approval controls. */
+.nx-readiness{background:white;border:1px solid var(--nx-edit-line);border-radius:12px;margin:14px 0}
+.nx-readiness-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px 24px;padding:14px 18px;border-bottom:1px solid var(--nx-edit-line)}
+.nx-readiness-row:last-child{border-bottom:0}
+.nx-readiness-row p{font-size:13px;margin:4px 0 8px}
+.nx-management progress{display:block;height:7px;max-width:100%;margin:8px 0 0}
+.nx-review-progress{display:flex;align-items:center;gap:12px 24px;background:#fff;border:1px solid var(--nx-edit-line);border-radius:10px;padding:12px 16px;margin:0 0 12px}
+.nx-review-progress>div{flex:1 1 65%;font-size:14px}
+.nx-review-progress p{font-size:12px;color:var(--nx-edit-muted);margin:3px 0 0}
+.nx-review-progress progress{flex:1 1 35%;width:auto;margin:0}
+.nx-review-selection{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px 16px;margin:12px 0;font-size:13px;color:var(--nx-edit-muted)}
+.nx-management .review-check{display:flex;gap:8px;align-items:center;min-height:44px;font-size:13px;color:#42354e}
+.nx-management .review-check input{margin:0;width:20px;height:20px;min-height:20px}
+.workspace-content .nx-management .bilingual-card{padding:12px 16px;margin:0 0 10px;border:1px solid var(--nx-edit-line);border-radius:10px;box-shadow:none}
+.nx-management .bilingual-card .section-heading{display:flex;gap:8px;align-items:center;justify-content:space-between;margin:0 0 10px;flex-wrap:wrap}
+.nx-management .bilingual-card .section-heading strong{font-size:13px;overflow-wrap:anywhere}
+.nx-management .status-pill{font-size:12px;padding:2px 8px;border-radius:5px;line-height:1.7}
+.nx-management .status-pill.is-approved{background:#eaf5ef;color:#286246}
+.nx-management .status-pill.is-pending{background:#fff3de;color:#795216}
+.nx-management .bilingual-pair{gap:16px;font-size:15px;line-height:1.75}
+.nx-management .bilingual-pair>div{min-width:0}
+.nx-management .bilingual-pair>div+div{padding-left:16px}
+.nx-management .bilingual-pair p{margin:0;font-size:15px;line-height:1.75}
+.nx-management .bilingual-pair .eyebrow{font-size:10px;color:var(--nx-edit-muted);margin:0 0 3px}
+.nx-management .bilingual-card .manage-actions{border-top:1px solid #eee8f3;margin:10px 0 0;padding:8px 0 0;justify-content:space-between}
+.nx-management .bilingual-card .manage-actions p{font-size:12px;margin:0;color:var(--nx-edit-muted)}
+.nx-management .review-submit{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:12px 0;padding:12px 16px;background:white;border:1px solid var(--nx-edit-line);position:static}
+.nx-management [data-review-count]{font-size:13px;color:var(--nx-edit-muted)}
+.nx-management .pagination{display:flex;gap:12px;justify-content:space-between;align-items:center;flex-wrap:wrap;font-size:14px;margin:14px 0}
+.nx-management .pagination a{display:inline-flex;min-height:44px;align-items:center}
+@media(max-width:1100px){.nx-choice-fields{grid-template-columns:80px minmax(140px,1fr) 80px minmax(130px,160px)}.nx-management .nx-choice-fields .field-DELETE{grid-column:1/-1}.nx-management .nx-choice-fields .field-DELETE label{min-height:44px}}
+@media(max-width:900px){.nx-choice-fields{grid-template-columns:repeat(2,minmax(0,1fr))}.nx-management .nx-choice-fields .field-label_th{grid-column:1/-1}.nx-question-summary{grid-template-columns:minmax(0,1fr) auto;gap:3px 10px}.nx-question-summary>span[lang]{grid-row:2;grid-column:1/-1}.nx-row-status{grid-column:2;grid-row:1}}
+@media(max-width:600px){
+ .workspace-content .nx-management .nx-page-header{padding:12px 14px}
+ .workspace-content .nx-management .nx-editor{padding:14px}
+ .nx-field-grid,.nx-readiness-row,.nx-option-list{grid-template-columns:minmax(0,1fr)}
+ .nx-management .nx-workflow-actions .button{flex:1 1 145px}.nx-workflow-actions form{flex:1 1 145px}.nx-management .nx-version-link{margin-inline-start:0}
+ .nx-filter-bar,.nx-section-bar{padding:12px}.nx-search-field{flex-basis:100%}
+ .nx-management .nx-editor input:not([type=checkbox]):not([type=radio]):not([type=hidden]),.nx-management .nx-editor select,.nx-management .nx-editor textarea,.nx-management .nx-search-field input{font-size:16px}
+ .nx-management .question-body{padding:12px 14px}.nx-question-row>summary{padding-inline-end:12px}
+ .nx-review-progress{flex-direction:column;align-items:stretch}.nx-review-progress progress{flex:none;width:100%}
+ .nx-management .bilingual-pair{grid-template-columns:minmax(0,1fr);gap:10px}
+ .nx-management .bilingual-pair>div+div{border-left:0;border-top:1px solid #e9e2f0;padding:10px 0 0}
+ .nx-management .review-submit .button{width:100%}
+}
+@media(prefers-reduced-motion:reduce){.nx-question-row>summary:before{transition:none}}
+@media print{.nx-management .nx-workflow-actions,.nx-management .nx-filter-bar,.nx-management .nx-editor-actions{display:none}.nx-management .bilingual-card{break-inside:avoid}}

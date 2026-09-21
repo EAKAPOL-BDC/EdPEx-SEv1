@@ -1,0 +1,5 @@
+{% extends 'portal/base.html' %}
+{% block content %}<div class="operator-page">
+
+<p class="scope-context">{{ scope.name }}{% if selected %}<span>{{ selected.instrument_version.instrument.code }} · v{{ selected.instrument_version.version }}</span>{% endif %}</p>
+{% block operator_content %}{% endblock %}</div>{% endblock %}

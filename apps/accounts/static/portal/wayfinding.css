@@ -1,0 +1,75 @@
+/* Shared navigation and compact content headers. Loaded after the app shell. */
+.nx-breadcrumbs{margin:0 0 18px;color:#686778;font-size:13px;line-height:1.7}
+.nx-breadcrumbs ol{list-style:none;display:flex;align-items:center;flex-wrap:wrap;gap:4px 0;margin:0;padding:0}
+.nx-breadcrumbs li{display:inline-flex;align-items:center;min-width:0;max-width:100%;overflow-wrap:anywhere}
+.nx-breadcrumbs li+li:before{content:'›';color:#9994a8;margin:0 10px;flex:none}
+.nx-breadcrumbs a{display:inline-flex;align-items:center;gap:7px;color:#605082;text-decoration:none;min-height:36px;border-radius:5px}
+.nx-breadcrumbs a:hover{text-decoration:underline;text-underline-offset:3px}
+.nx-breadcrumbs svg,.nx-page-navigation svg{width:16px;height:16px;flex:none}
+.nx-breadcrumbs [aria-current=page]{color:#30263e;font-weight:600}
+.nx-page-navigation{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;border-top:1px solid #e3e2ed;margin-top:28px;padding:18px 0 4px}
+.nx-page-navigation-back{display:flex;align-items:center;gap:12px 20px;flex-wrap:wrap}
+.nx-page-navigation .button{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-size:14px;min-height:42px;white-space:normal;text-align:start}
+.nx-home-link{display:inline-flex;align-items:center;gap:7px;min-height:42px;color:#605082;font-size:14px;text-underline-offset:3px}
+.nx-breadcrumbs a:focus-visible,.nx-page-navigation a:focus-visible,.manual-reader a:focus-visible,.manual-toc summary:focus-visible{outline:3px solid #7752b3;outline-offset:3px}
+
+/* One visual hierarchy for task headings; marketing home/login stay distinct. */
+.signed-in .workspace-content h1,.manual-hero h1,.survey-main h1{font-size:clamp(22px,1.8vw,26px);font-weight:700;line-height:1.5;letter-spacing:-.015em;overflow-wrap:anywhere}
+.workspace-content :is(.nx-list-heading,.page-intro,.results-hero,.page-heading,.cl-heading,.viz-hero,.nx-content-header,.page-title-row,.assessment-intro){margin:0 0 20px;padding:0;background:transparent;border:0;border-radius:0;box-shadow:none;min-height:0;gap:14px}
+.workspace-content :is(.nx-list-heading,.page-intro,.results-hero,.page-heading,.cl-heading,.viz-hero,.nx-content-header,.assessment-intro) h1{margin:3px 0 6px}
+.workspace-content :is(.nx-list-heading,.page-intro,.results-hero,.page-heading,.cl-heading,.viz-hero,.nx-content-header,.assessment-intro) p{margin:4px 0;font-size:14px;line-height:1.75;max-width:84ch;color:#606476}
+.workspace-content :is(.nx-list-heading,.page-intro,.results-hero,.page-heading,.cl-heading,.viz-hero,.nx-content-header,.assessment-intro) :is(.eyebrow,.cl-eyebrow,.viz-kicker,.assessment-caption){font-size:10px;line-height:1.5;font-weight:600;letter-spacing:.09em;color:#77618f;margin:0 0 4px}
+.workspace-content :is(.nx-list-heading,.cl-heading)>.nx-icon,.workspace-content .cl-heading-icon{width:40px;height:40px;border-radius:11px;flex:none;align-self:flex-start;margin-top:4px}
+.workspace-content .nx-list-heading .nx-scope,.workspace-content .scope-context{font-size:12px;color:#697080;margin:4px 0 12px}
+.workspace-content .nx-page-top{align-items:flex-start;gap:12px;margin-bottom:20px}
+.workspace-content .nx-page-top>.nx-list-heading{margin:0}
+.workspace-content .page-title-row{align-items:center;flex-wrap:wrap}
+.workspace-content .page-title-row h1{margin:0}
+.workspace-content .welcome-banner{padding:18px 22px;margin:0 0 22px;min-height:0;border-radius:12px}
+.workspace-content .welcome-banner h1{margin:4px 0 8px}
+.workspace-content .nx-brand-welcome .nx-mascot{max-width:108px;max-height:108px}
+.workspace-content .heading-emblem{width:42px;height:42px}
+.workspace-content .nx-collection-summary{margin-bottom:20px}
+.workspace-content>.nx-content-header+form{margin-top:0}
+.survey-main .nx-content-header{margin:0 0 18px}
+.survey-main .nx-breadcrumbs{margin-bottom:14px}
+.survey-main .assessment-intro h1{font-size:24px;line-height:1.5}
+
+/* Manuals use the same task header, with comfortable reading typography. */
+.workspace-content .manual-hub,.workspace-content .manual-reader{max-width:1180px}
+.workspace-content .manual-hero{padding:0 0 18px;margin:0 0 20px;border:0;border-bottom:1px solid #e3e2ed;border-radius:0;background:none;box-shadow:none}
+.workspace-content .manual-hero h1{margin:4px 0 8px;max-width:38em}
+.workspace-content .manual-hero>p{font-size:14px;line-height:1.75;margin:6px 0;max-width:85ch}
+.workspace-content .manual-hero>.eyebrow{font-size:10px;letter-spacing:.09em;color:#77618f}
+.workspace-content .manual-hero .button{min-height:42px;font-size:14px;margin-top:4px}
+.manual-counts,.manual-metadata{gap:6px 12px;margin:12px 0;font-size:12px}
+.manual-counts span{padding:4px 9px;border-radius:6px;background:#f2eef8;color:#544071;border-color:#e5ddef}
+.manual-hub .manual-scope-note{font-size:13px;line-height:1.7;margin:18px 0;padding-left:12px}
+.manual-hub .manual-grid{gap:14px}
+.manual-hub .manual-card{padding:18px;gap:9px;border-radius:10px;box-shadow:0 2px 5px #2b174003}
+.manual-hub .manual-card h2{font-size:17px;line-height:1.6}
+.manual-hub .manual-card>p{font-size:14px;line-height:1.75}
+.manual-hub .manual-card .nx-icon{width:34px;height:34px;border-radius:9px}
+.manual-hub .manual-card-meta{align-items:center;gap:8px}
+.manual-hub .manual-card-actions{padding-top:10px}
+.manual-hub .manual-card-actions a{min-height:40px;display:inline-flex;align-items:center}
+.manual-reader .manual-reading-layout{grid-template-columns:210px minmax(0,1fr);gap:22px}
+.manual-reader .manual-toc{padding:14px;scroll-margin-top:18px}
+.manual-toc summary{cursor:pointer;font-size:14px;font-weight:600;padding:4px 0;min-height:32px}
+.manual-toc ol{padding:8px 0 0 20px}
+.manual-toc a{font-size:13px;line-height:1.7;padding:7px 0}
+.manual-reader .manual-section{padding:22px;margin-bottom:18px;border-radius:10px;scroll-margin-top:18px}
+.manual-reader .manual-section h2{font-size:20px;line-height:1.6;margin-bottom:14px}
+.manual-reader .manual-section p,.manual-reader .manual-checks li{font-size:15px;line-height:1.85}
+.manual-reader .manual-step-head h3{font-size:16px;line-height:1.7}
+.manual-reader .manual-work-links{padding:12px 16px;margin-bottom:18px;font-size:13px;gap:10px 16px}
+.manual-chapter-navigation{border-top:1px solid #e8e6ef;padding-top:16px;margin-top:24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.manual-chapter-navigation a{display:flex;align-items:center;gap:8px;min-height:42px;max-width:44%;font-size:13px;color:#604781;text-decoration:none;overflow-wrap:anywhere}
+.manual-chapter-navigation a:hover{text-decoration:underline}
+.manual-chapter-navigation small{display:block;font-size:11px;color:#737082;line-height:1.8}
+.manual-chapter-navigation .manual-contents-link{font-size:12px}
+
+@media(max-width:1100px){.manual-reader .manual-reading-layout{grid-template-columns:180px minmax(0,1fr);gap:16px}}
+@media(max-width:850px){.manual-reader .manual-reading-layout{display:block}.manual-reader .manual-toc{position:static;max-height:none}.manual-toc ol{columns:2}.workspace-content .nx-page-top{flex-wrap:wrap}.nx-breadcrumbs{font-size:12px}}
+@media(max-width:600px){.nx-breadcrumbs li+li:before{margin:0 7px}.nx-breadcrumbs a{min-height:40px}.nx-page-navigation{gap:12px;margin-top:22px;padding-top:16px}.nx-page-navigation-back{gap:8px 14px}.workspace-content .manual-section{padding:18px 16px}.manual-toc ol{columns:1}.manual-chapter-navigation a{max-width:100%;flex:1 1 100%}.manual-chapter-navigation .manual-contents-link{order:3;flex:0 1 auto}.manual-reader .manual-hero h1{font-size:22px}.workspace-content .nx-brand-welcome .nx-mascot{max-width:76px;max-height:76px}}
+@media print{.nx-breadcrumbs,.nx-page-navigation,.manual-chapter-navigation{display:none!important}.workspace-content .manual-hero{border:0}.workspace-content .manual-section{border:0;padding:0}.manual-reader .manual-reading-layout{display:block}}

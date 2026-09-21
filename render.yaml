@@ -1,0 +1,47 @@
+# Deployment candidate; complete docs/render-deployment.md before applying.
+# No database is provisioned, migrated, seeded, reset or imported by this file.
+services:
+  - type: web
+    name: nexora-edpex
+    runtime: docker
+    repo: https://github.com/EAKAPOL-BDC/EdPEx-SEv1
+    branch: codex/release-2026-09-21
+    region: singapore
+    plan: free
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    autoDeployTrigger: off
+    healthCheckPath: /health/ready/
+    envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: edpex.render
+      - key: NEXORA_ENVIRONMENT
+        value: production
+      - key: DJANGO_DEBUG
+        value: "false"
+      - key: DJANGO_SECRET_KEY
+        sync: false
+      - key: DJANGO_DATABASE_PROFILE
+        value: supabase
+      - key: NEXORA_DB_SCHEMA
+        value: nexora_live
+      - key: SUPABASE_DEV_DB_HOST
+        sync: false
+      - key: SUPABASE_DEV_DB_PORT
+        value: "5432"
+      - key: SUPABASE_DEV_DB_NAME
+        value: postgres
+      - key: SUPABASE_DEV_DB_USER
+        sync: false
+      - key: SUPABASE_DEV_DB_PASSWORD
+        sync: false
+      - key: NEXORA_TRUST_HTTPS_PROXY
+        value: "true"
+      - key: NEXORA_PARTICIPATION_ENABLED
+        value: "false"
+      - key: NEXORA_PARTICIPATION_ALLOW_LIVE
+        value: "false"
+      - key: NEXORA_UNLINKED_ACCESS_ENABLED
+        value: "false"
+      - key: NEXORA_PUBLIC_ASSESSMENTS_ENABLED
+        value: "false"

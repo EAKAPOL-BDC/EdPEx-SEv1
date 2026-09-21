@@ -1,0 +1,423 @@
+{
+  "version": 1,
+  "source": {
+    "file": "docs/source/group-register.pdf",
+    "name": "ทะเบียนตัวย่อ.pdf",
+    "page": 1,
+    "sha256": "05a03b16e3b4f436dcd422a5950e9e7dbb5b0c46464c7654b4b2efb15ec53844",
+    "notes": [
+      "ชื่อภาษาไทยอ้างอิงเอกสารแนบ; แก้คำสะกด รัฐศาสร์ เป็น รัฐศาสตร์ ใน CO-1",
+      "ชื่อภาษาอังกฤษและชื่อย่อสำหรับหน้าจอเป็นคำอธิบายประกอบ ไม่ใช่คำแปลแบบประเมินที่ผ่านการรับรอง",
+      "S3-1/S3-2 เป็นกลุ่มเดิมในแบบฟอร์มที่เชื่อมกับ S3 ตามความหมาย ไม่ใช่รหัสกลุ่มย่อยที่เอกสารนี้กำหนด",
+      "ไม่อนุมานการจัดผู้ตอบเข้า M1/M2 และไม่เชื่อม M1/M2 กับมิติสมรรถนะ F06"
+    ]
+  },
+  "categories": [
+    {
+      "key": "learners",
+      "th": "ผู้เรียน",
+      "en": "Learners"
+    },
+    {
+      "key": "customers",
+      "th": "ลูกค้ากลุ่มอื่น",
+      "en": "Other customers"
+    },
+    {
+      "key": "stakeholders",
+      "th": "ผู้มีส่วนได้ส่วนเสีย",
+      "en": "Stakeholders"
+    },
+    {
+      "key": "markets",
+      "th": "ส่วนตลาด",
+      "en": "Market segments"
+    },
+    {
+      "key": "suppliers",
+      "th": "ผู้ส่งมอบ",
+      "en": "Suppliers"
+    },
+    {
+      "key": "partners",
+      "th": "คู่ความร่วมมือทางการ",
+      "en": "Partners"
+    },
+    {
+      "key": "collaborators",
+      "th": "คู่ความร่วมมือไม่เป็นทางการ",
+      "en": "Collaborators"
+    },
+    {
+      "key": "staff",
+      "th": "บุคลากร (กลุ่มเดิมในระบบ)",
+      "en": "Staff (existing system groups)"
+    }
+  ],
+  "groups": [
+    {
+      "code": "C1",
+      "category": "learners",
+      "name": {
+        "th": "นิสิตระดับปริญญาตรี",
+        "en": "Undergraduate students"
+      },
+      "description": {
+        "th": "นิสิตระดับปริญญาตรี",
+        "en": "Undergraduate students"
+      },
+      "parent": "",
+      "source": "register"
+    },
+    {
+      "code": "C2",
+      "category": "learners",
+      "name": {
+        "th": "นิสิตระดับบัณฑิตศึกษา",
+        "en": "Graduate students"
+      },
+      "description": {
+        "th": "นิสิตระดับบัณฑิตศึกษา",
+        "en": "Graduate students"
+      },
+      "parent": "",
+      "source": "register"
+    },
+    {
+      "code": "C2.1",
+      "category": "learners",
+      "name": {
+        "th": "นิสิตชาวไทย",
+        "en": "Thai students"
+      },
+      "description": {
+        "th": "นิสิตชาวไทย",
+        "en": "Thai students"
+      },
+      "parent": "C2",
+      "source": "register"
+    },
+    {
+      "code": "C2.2",
+      "category": "learners",
+      "name": {
+        "th": "นิสิตชาวต่างชาติ",
+        "en": "International students"
+      },
+      "description": {
+        "th": "นิสิตชาวต่างชาติ",
+        "en": "International students"
+      },
+      "parent": "C2",
+      "source": "register"
+    },
+    {
+      "code": "C3",
+      "category": "learners",
+      "name": {
+        "th": "ผู้เรียนหลักสูตร Non degree (Reskill/Upskill)",
+        "en": "Non-degree learners (Reskill/Upskill)"
+      },
+      "description": {
+        "th": "ผู้เรียนหลักสูตร Non degree (Reskill/Upskill)",
+        "en": "Non-degree learners (Reskill/Upskill)"
+      },
+      "parent": "",
+      "source": "register"
+    },
+    {
+      "code": "C3.1",
+      "category": "learners",
+      "name": {
+        "th": "บุคลากรทางการศึกษา/ผู้ที่ทำงาน",
+        "en": "Education personnel / working professionals"
+      },
+      "description": {
+        "th": "บุคลากรทางการศึกษา/ผู้ที่ทำงาน",
+        "en": "Education personnel / working professionals"
+      },
+      "parent": "C3",
+      "source": "register"
+    },
+    {
+      "code": "C4",
+      "category": "customers",
+      "name": {
+        "th": "ผู้ให้ทุนวิจัย",
+        "en": "Research funders"
+      },
+      "description": {
+        "th": "ผู้ให้ทุนวิจัย",
+        "en": "Research funders"
+      },
+      "parent": "",
+      "source": "register"
+    },
+    {
+      "code": "C4.1",
+      "category": "customers",
+      "name": {
+        "th": "ภาครัฐ",
+        "en": "Public sector"
+      },
+      "description": {
+        "th": "ภาครัฐ",
+        "en": "Public sector"
+      },
+      "parent": "C4",
+      "source": "register"
+    },
+    {
+      "code": "C5",
+      "category": "customers",
+      "name": {
+        "th": "ผู้รับบริการวิชาการ",
+        "en": "Academic service recipients"
+      },
+      "description": {
+        "th": "ผู้รับบริการวิชาการ",
+        "en": "Academic service recipients"
+      },
+      "parent": "",
+      "source": "register"
+    },
+    {
+      "code": "C5.1",
+      "category": "customers",
+      "name": {
+        "th": "ภาครัฐ",
+        "en": "Public sector"
+      },
+      "description": {
+        "th": "ภาครัฐ",
+        "en": "Public sector"
+      },
+      "parent": "C5",
+      "source": "register"
+    },
+    {
+      "code": "C5.2",
+      "category": "customers",
+      "name": {
+        "th": "บุคคลทั่วไป/ครู",
+        "en": "General public / teachers"
+      },
+      "description": {
+        "th": "บุคคลทั่วไป/ครู",
+        "en": "General public / teachers"
+      },
+      "parent": "C5",
+      "source": "register"
+    },
+    {
+      "code": "C5.3",
+      "category": "customers",
+      "name": {
+        "th": "ชุมชนต่าง ๆ",
+        "en": "Communities"
+      },
+      "description": {
+        "th": "ชุมชนต่าง ๆ",
+        "en": "Communities"
+      },
+      "parent": "C5",
+      "source": "register"
+    },
+    {
+      "code": "S1",
+      "category": "stakeholders",
+      "name": {
+        "th": "ผู้ปกครอง",
+        "en": "Parents and guardians"
+      },
+      "description": {
+        "th": "ผู้ปกครอง",
+        "en": "Parents and guardians"
+      },
+      "parent": "",
+      "source": "register"
+    },
+    {
+      "code": "S2",
+      "category": "stakeholders",
+      "name": {
+        "th": "ผู้ใช้บัณฑิต",
+        "en": "Graduate employers"
+      },
+      "description": {
+        "th": "ผู้ใช้บัณฑิต",
+        "en": "Graduate employers"
+      },
+      "parent": "",
+      "source": "register"
+    },
+    {
+      "code": "S3",
+      "category": "stakeholders",
+      "name": {
+        "th": "ศิษย์เก่า",
+        "en": "Alumni"
+      },
+      "description": {
+        "th": "ศิษย์เก่า",
+        "en": "Alumni"
+      },
+      "parent": "",
+      "source": "register"
+    },
+    {
+      "code": "M1",
+      "category": "markets",
+      "name": {
+        "th": "กลุ่มผู้เรียน",
+        "en": "Learner market"
+      },
+      "description": {
+        "th": "กลุ่มผู้เรียน",
+        "en": "Learner market"
+      },
+      "parent": "",
+      "source": "register"
+    },
+    {
+      "code": "M2",
+      "category": "markets",
+      "name": {
+        "th": "กลุ่มผู้รับบริการวิจัย การบริการวิชาการ และทำนุบำรุงศิลปวัฒนธรรม",
+        "en": "Research, academic service, and arts and culture service recipients"
+      },
+      "description": {
+        "th": "กลุ่มผู้รับบริการวิจัย การบริการวิชาการ และทำนุบำรุงศิลปวัฒนธรรม",
+        "en": "Research, academic service, and arts and culture service recipients"
+      },
+      "parent": "",
+      "source": "register"
+    },
+    {
+      "code": "SP1",
+      "category": "suppliers",
+      "name": {
+        "th": "บริษัทร้านค้า",
+        "en": "Companies and vendors"
+      },
+      "description": {
+        "th": "บริษัทร้านค้า",
+        "en": "Companies and vendors"
+      },
+      "parent": "",
+      "source": "register"
+    },
+    {
+      "code": "CO-1",
+      "category": "partners",
+      "name": {
+        "th": "คณะร่วมผลิต",
+        "en": "Co-producing faculties"
+      },
+      "description": {
+        "th": "คณะร่วมผลิต คือ คณะวิทยาศาสตร์, คณะศิลปศาสตร์, คณะรัฐศาสตร์และสังคมศาสตร์, คณะสถาปัตยกรรมศาสตร์และศิลปกรรมศาสตร์",
+        "en": "Co-producing faculties: Science; Liberal Arts; Political and Social Science; Architecture and Fine Arts."
+      },
+      "parent": "",
+      "source": "register"
+    },
+    {
+      "code": "CO-2",
+      "category": "partners",
+      "name": {
+        "th": "คู่ความร่วมมือในประเทศที่มี MOU",
+        "en": "Domestic partners with an MOU"
+      },
+      "description": {
+        "th": "สถานศึกษา สถาบันการศึกษาหรือหน่วยงานทางการศึกษา หน่วยงานภาครัฐและเอกชนภายในประเทศที่มี MOU ร่วมกัน เช่น แหล่งฝึกประสบการณ์วิชาชีพทางการศึกษาสำหรับนิสิตชั้นปีที่ 4",
+        "en": "Domestic schools, educational institutions or agencies, public and private organizations with an MOU, including year 4 education practicum hosts."
+      },
+      "parent": "",
+      "source": "register"
+    },
+    {
+      "code": "CO-3",
+      "category": "partners",
+      "name": {
+        "th": "คู่ความร่วมมือต่างประเทศที่มี MOU",
+        "en": "International partners with an MOU"
+      },
+      "description": {
+        "th": "สถาบันการศึกษา หรือภาคธุรกิจในต่างประเทศที่มี MOU ร่วมกัน",
+        "en": "Overseas educational institutions or businesses with an MOU."
+      },
+      "parent": "",
+      "source": "register"
+    },
+    {
+      "code": "CO-4",
+      "category": "collaborators",
+      "name": {
+        "th": "แหล่งฝึกปี 1–3 และเครือข่ายความร่วมมือ",
+        "en": "Year 1–3 practicum hosts and collaboration networks"
+      },
+      "description": {
+        "th": "สถานศึกษา สถาบันการศึกษาหรือหน่วยงานทางการศึกษา หน่วยงานภาครัฐและเอกชนภายในประเทศที่นิสิตออกฝึกประสบการณ์วิชาชีพทางการศึกษาสำหรับนิสิตชั้นปีที่ 1–3 รวมถึงองค์กรปกครองส่วนท้องถิ่น ชุมชน",
+        "en": "Domestic schools, educational institutions or agencies, public and private organizations hosting year 1–3 education practicums, including local administrative organizations and communities."
+      },
+      "parent": "",
+      "source": "register"
+    },
+    {
+      "code": "S3-1",
+      "category": "stakeholders",
+      "name": {
+        "th": "ศิษย์เก่าปริญญาตรี",
+        "en": "Undergraduate alumni"
+      },
+      "description": {
+        "th": "ศิษย์เก่าปริญญาตรี",
+        "en": "Undergraduate alumni"
+      },
+      "parent": "S3",
+      "source": "existing_instruments"
+    },
+    {
+      "code": "S3-2",
+      "category": "stakeholders",
+      "name": {
+        "th": "ศิษย์เก่าบัณฑิตศึกษา",
+        "en": "Graduate alumni"
+      },
+      "description": {
+        "th": "ศิษย์เก่าบัณฑิตศึกษา",
+        "en": "Graduate alumni"
+      },
+      "parent": "S3",
+      "source": "existing_instruments"
+    },
+    {
+      "code": "ST1",
+      "category": "staff",
+      "name": {
+        "th": "สายวิชาการ",
+        "en": "Academic staff"
+      },
+      "description": {
+        "th": "สายวิชาการ",
+        "en": "Academic staff"
+      },
+      "parent": "",
+      "source": "existing_instruments"
+    },
+    {
+      "code": "ST2",
+      "category": "staff",
+      "name": {
+        "th": "สายสนับสนุน",
+        "en": "Support staff"
+      },
+      "description": {
+        "th": "สายสนับสนุน",
+        "en": "Support staff"
+      },
+      "parent": "",
+      "source": "existing_instruments"
+    }
+  ]
+}

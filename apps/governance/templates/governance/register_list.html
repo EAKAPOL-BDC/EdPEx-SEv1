@@ -1,0 +1,15 @@
+{% extends 'portal/base.html' %}{% load i18n %}
+{% block body_class %}nx-access-page{% endblock %}
+{% block content %}
+<section class="panel nx-access-card">
+<p class="eyebrow">NEXORA · STAFF ACCESS</p>
+<h1>{% if LANGUAGE_CODE == 'en' %}Request staff access{% else %}ขอสิทธิ์ใช้งานสำหรับเจ้าหน้าที่{% endif %}</h1>
+<p>{% if LANGUAGE_CODE == 'en' %}This page is for staff who manage assessments or review results. Assessment respondents do not need a staff account.{% else %}สำหรับเจ้าหน้าที่ที่จัดการแบบประเมินหรือตรวจผล ผู้ตอบแบบประเมินไม่ต้องสมัครบัญชีเจ้าหน้าที่{% endif %}</p>
+{% for policy in policies %}
+<a class="button button-secondary" href="{% url 'access-register-scope' policy.scope_id %}">{{ policy.scope.name }}</a>
+{% empty %}
+<div class="nx-access-notice"><strong>{% if LANGUAGE_CODE == 'en' %}Contact your administrator{% else %}ติดต่อผู้ดูแลเพื่อขอสิทธิ์{% endif %}</strong><p>{% if LANGUAGE_CODE == 'en' %}Online staff requests are not open yet. Contact your organization's administrator to arrange an account and the appropriate role.{% else %}ขณะนี้ยังไม่เปิดรับคำขอออนไลน์ กรุณาติดต่อผู้ดูแลของหน่วยงานเพื่อจัดเตรียมบัญชีและบทบาทที่เหมาะสม{% endif %}</p></div>
+{% endfor %}
+<div class="nx-access-actions"><a class="button" href="{% url 'login' %}">{% if LANGUAGE_CODE == 'en' %}Back to sign in{% else %}กลับหน้าเข้าสู่ระบบ{% endif %}</a><a class="button button-secondary" href="{% url 'home' %}">{% if LANGUAGE_CODE == 'en' %}Back to home{% else %}กลับหน้าหลัก{% endif %}</a></div>
+</section>
+{% endblock %}

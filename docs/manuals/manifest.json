@@ -1,0 +1,188 @@
+{
+  "version": "1.2",
+  "baseline": "056124d96c109c51826505f6d9c03f3652a4fc60",
+  "manuals": {
+    "respondent-c1": {
+      "filename": "nexora-respondent-c1.pdf",
+      "pages": 10,
+      "bytes": 552270,
+      "sha256": "c95bf6b33bbf1c4af10de6417cbec00436be4336c0c9611843b6768386eb4427",
+      "source_sha256": "0d57b41cbecb40c6df2dc508ff84cd49cca05848662eea05dc80235fa4fcb834"
+    },
+    "respondent-c2-1": {
+      "filename": "nexora-respondent-c2-1.pdf",
+      "pages": 10,
+      "bytes": 552669,
+      "sha256": "1fc723d18117af914c3461a571ab0f51afb35b084432ffc27f145682aa1bb0c7",
+      "source_sha256": "1f0b3368ce5979b551d27fa1cc4385c2e5ac1ddc0dbc6584faea3ae58af1bad6"
+    },
+    "respondent-c2-2": {
+      "filename": "nexora-respondent-c2-2.pdf",
+      "pages": 12,
+      "bytes": 561822,
+      "sha256": "95fcc0097ac9cda1fe1dbbb0e2c1a58dd5495d36f73c520510739d09fd1af6e6",
+      "source_sha256": "1dadf56fd8d54353d342e3749765b863b1ab54472c90c3f9e190e8e9b2f6972a"
+    },
+    "respondent-c3-1": {
+      "filename": "nexora-respondent-c3-1.pdf",
+      "pages": 10,
+      "bytes": 552616,
+      "sha256": "23f6daaca097e39ccbbf27b82bb3a72dbd7d226cca64be95e5fd76e328c35e12",
+      "source_sha256": "49968f550abdbd5e35c74eb5d32b411a24b945f84d1209834facc93e59adedcc"
+    },
+    "respondent-c4-1": {
+      "filename": "nexora-respondent-c4-1.pdf",
+      "pages": 10,
+      "bytes": 552278,
+      "sha256": "8e3d274e806c0a22b70e5c1632b44b2e053e651fca6917a0544c3d7cb593f8f2",
+      "source_sha256": "372845e112a91234c5d0c3ef6a062516050827f028418bea283f596da00f4399"
+    },
+    "respondent-c5-1": {
+      "filename": "nexora-respondent-c5-1.pdf",
+      "pages": 10,
+      "bytes": 552114,
+      "sha256": "d32bb52202e8ae8fcd096680a2343e8df4ea3913983af2d2c85ae7d4fe7f5216",
+      "source_sha256": "9563b6136cdd2640f2b6b8a98398b64a9b9b3d8716567dbd5fba7cc8af62a603"
+    },
+    "respondent-c5-2": {
+      "filename": "nexora-respondent-c5-2.pdf",
+      "pages": 10,
+      "bytes": 552321,
+      "sha256": "217df2116933688a7d28df9e4b9859a0e9b942b68b24fa78119c127f5cbf696e",
+      "source_sha256": "d737f1fc52b341221afda8a704c2121d7fb71078d2871b5306dd6f65397f9d31"
+    },
+    "respondent-c5-3": {
+      "filename": "nexora-respondent-c5-3.pdf",
+      "pages": 10,
+      "bytes": 552364,
+      "sha256": "461c97f15c267ad07b840a4cbe32faad40fa1c9461ccbd6ce9e9355619b2bec5",
+      "source_sha256": "69428808783c270a1d7d1d8890133b2b1a277fcfbf486e6c5ef0e2610508b745"
+    },
+    "respondent-s1": {
+      "filename": "nexora-respondent-s1.pdf",
+      "pages": 10,
+      "bytes": 552260,
+      "sha256": "c06765f7320733b805637c10c4fa605a993ff569d632093c830ea497c3c5dee2",
+      "source_sha256": "8f39c02c93327e9f6c28566cbe9f1bcdcd91240fdfde6aecfb2996bf6d8ac866"
+    },
+    "respondent-s3-1": {
+      "filename": "nexora-respondent-s3-1.pdf",
+      "pages": 10,
+      "bytes": 552382,
+      "sha256": "8b701abb9a51eb9de84a44f4cf181d7f31e26deae49814a26542534fc62b5040",
+      "source_sha256": "b4ac6a96e0b6465198d6d163ce24121a3047aa54d4f9193ea2dd68d8b9e79074"
+    },
+    "respondent-s3-2": {
+      "filename": "nexora-respondent-s3-2.pdf",
+      "pages": 10,
+      "bytes": 552782,
+      "sha256": "6cca9dee086b65da37000fcff5cb352089583429ee43d09332d88061e6956fa8",
+      "source_sha256": "c32638795922ca4c598486ede95cc08ac4620a2089e6dc1bff567063a3dd862c"
+    },
+    "respondent-co-1": {
+      "filename": "nexora-respondent-co-1.pdf",
+      "pages": 10,
+      "bytes": 552345,
+      "sha256": "f843fd29f92a9f9bfd40a3d165ef57c5b6f4194a85f205fe679d18066db269e6",
+      "source_sha256": "84538cd39e85a699194473feef8ee4fec7e003d4561f0096d72edaee4d3cc6ba"
+    },
+    "respondent-co-2": {
+      "filename": "nexora-respondent-co-2.pdf",
+      "pages": 10,
+      "bytes": 552461,
+      "sha256": "52953fe77f16340b95e01705505bd089354e32890c17a81b6a5a1a254b0e4f14",
+      "source_sha256": "74583c9666f7ac15099c0662f376740442992a20cfa6573c03cdb79e1f4a2291"
+    },
+    "respondent-co-3": {
+      "filename": "nexora-respondent-co-3.pdf",
+      "pages": 12,
+      "bytes": 561612,
+      "sha256": "cc34fe3f24963a03742fd29f6ad0f8d62b68abbb5417c7e6c8fad97c7fb5b06d",
+      "source_sha256": "20807b4092b56cf5242501337dedd332c9341a78b228b4d9a0e3e6f749ee05d7"
+    },
+    "respondent-co-4": {
+      "filename": "nexora-respondent-co-4.pdf",
+      "pages": 10,
+      "bytes": 552633,
+      "sha256": "796b5333a976a9b274f2b71e2f8d91501382da65c65cb81580e81c072372298b",
+      "source_sha256": "302c586adc1ad212f0617e3b01874fe039c43b52779da07b530a40d63e20c156"
+    },
+    "respondent-st1": {
+      "filename": "nexora-respondent-st1.pdf",
+      "pages": 13,
+      "bytes": 921415,
+      "sha256": "bf6bfd6e7dde908426d63bf242ad2abf4e4772106873283ce7bf08447116da68",
+      "source_sha256": "402db849214030b665e998deadbe78a1bb97b5147518626f57976c8df42e2795"
+    },
+    "respondent-st2": {
+      "filename": "nexora-respondent-st2.pdf",
+      "pages": 13,
+      "bytes": 921411,
+      "sha256": "f92dfbd3fd182aba518d647a303f369069be67f39c82687e6bf0c9498ab70265",
+      "source_sha256": "c020136ce895cd28484889841aa109c08f67601a5a599d254431e7e2b6ee052e"
+    },
+    "system-administrator": {
+      "filename": "nexora-system-administrator.pdf",
+      "pages": 12,
+      "bytes": 738146,
+      "sha256": "66cfe1cf34846e5dcd5684eaf877b47a5f1c605954e0a0628549a54657518c59",
+      "source_sha256": "1d83d3589f5f093ed3d0c0c4caabfdc927bd050aa550032a108bc63ce8fe780c"
+    },
+    "form-manager": {
+      "filename": "nexora-form-manager.pdf",
+      "pages": 12,
+      "bytes": 579612,
+      "sha256": "261ca5cb3eacdf6533b5811c5d326a5d9174d26d34a0ab466ea7120f2d1b0d5d",
+      "source_sha256": "2f430e1ab87ca9493c8bd8bf0b0d28ae5affa3168178c1390dfa7637bc07a0b7"
+    },
+    "collection-officer": {
+      "filename": "nexora-collection-officer.pdf",
+      "pages": 13,
+      "bytes": 780172,
+      "sha256": "19d3ef4fde6e677a5f52924abd6d09aac383c6d4a1c19a61342685e0338e217d",
+      "source_sha256": "06cf4419e98f00f3a49c036e84363a700c79ea2be66698a826d9d3c0bbad5586"
+    },
+    "activity-officer": {
+      "filename": "nexora-activity-officer.pdf",
+      "pages": 11,
+      "bytes": 606766,
+      "sha256": "0ceb730f0f9e178d720bc3e8d8f29b7c9734ae672fe1dd787a185c1861145cdb",
+      "source_sha256": "00ac528ad27d9bb047d00be46a9e11c044218fbfb87ffb172551207fe8395bf4"
+    },
+    "calculation-operator": {
+      "filename": "nexora-calculation-operator.pdf",
+      "pages": 11,
+      "bytes": 621545,
+      "sha256": "b6b19b105fc3f92c1007df0071e32ea37fc177928043f5f866cd9a9c4e10c709",
+      "source_sha256": "c2df66e633cc187d130475e696ec4fce2e3a85c661c291f2710f59818244446a"
+    },
+    "result-reviewer": {
+      "filename": "nexora-result-reviewer.pdf",
+      "pages": 10,
+      "bytes": 597105,
+      "sha256": "a6a65073652c5c3dd0469380d4a6c17c87dcb3cde4ad0f263d43a284b5500e47",
+      "source_sha256": "6eed4f0773d53dbb2e028594077183057f7134827104c553e67cebcce0e17a00"
+    },
+    "executive-reader": {
+      "filename": "nexora-executive-reader.pdf",
+      "pages": 10,
+      "bytes": 612542,
+      "sha256": "2b4c85c2dc5c96821b0f5733e08556bd15c2f4aa1caae9b4796fe06db7354a00",
+      "source_sha256": "e8b06ea28b6925985a2919815c52f509011bdbef177b6e0f4a27dc13293683d7"
+    },
+    "audit-reader": {
+      "filename": "nexora-audit-reader.pdf",
+      "pages": 10,
+      "bytes": 568910,
+      "sha256": "b6bc25f62827ae91fb75d3a1f54e8976e3bd9a7a557306652f1727070991515d",
+      "source_sha256": "04f4dba237e5ae49fee74f4e4b30672991537f4408206615a1485f78a10353fc"
+    },
+    "developer": {
+      "filename": "nexora-developer.pdf",
+      "pages": 21,
+      "bytes": 670875,
+      "sha256": "d796ca9cab46c9a31bc77f54ac20cdc968bcef9aeced8ff0e19b13c3d47e13b9",
+      "source_sha256": "3c7db55926b4da82b048d1a0e58d96638718f3f21ad9f7b014e62dd0d78ef25d"
+    }
+  }
+}

@@ -1,0 +1,6 @@
+<div class="nx-footer-credit">
+  <span class="nx-footer-symbol" aria-hidden="true">{% include 'portal/components/icon.html' with name='code' %}</span>
+  <div><p><span class="nx-credit-label">{% if LANGUAGE_CODE == 'en' %}Developed by{% else %}ผู้พัฒนาระบบ{% endif %}</span> <strong>{% if LANGUAGE_CODE == 'en' %}Mr.Eakapol Bodhichandra{% else %}นายเอกพล โพธิจันทร์{% endif %}</strong><span class="nx-credit-role">{% if LANGUAGE_CODE == 'en' %}Computer Technical Officer{% else %}นักวิชาการคอมพิวเตอร์{% endif %}</span></p>
+  <p class="nx-credit-institution">{% if LANGUAGE_CODE == 'en' %}School of Education · University of Phayao{% else %}วิทยาลัยการศึกษา มหาวิทยาลัยพะเยา{% endif %}</p></div>
+</div>
+<div class="nx-footer-end">{% if show_manuals %}<a href="{% url 'manuals-home' %}" target="_blank" rel="noopener noreferrer">{% if LANGUAGE_CODE == 'en' %}User manuals (new tab){% else %}คู่มือการใช้งาน (เปิดแท็บใหม่){% endif %}</a>{% endif %}<p class="nx-copyright">© {% now "Y" %} <strong>NEXORA</strong><span>{% if LANGUAGE_CODE == 'en' %}All rights reserved.{% else %}สงวนลิขสิทธิ์{% endif %}</span></p></div>

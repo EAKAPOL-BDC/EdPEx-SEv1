@@ -1,0 +1,72 @@
+/* Questionnaire-only rules: keep the management layout unchanged. */
+.questionnaire{--answer-accent:#573676;--answer-border:#d5cedf;--answer-ink:#282237;color:var(--answer-ink);font-size:17px;line-height:1.75}
+.questionnaire [hidden]{display:none!important}
+.questionnaire .assessment-layout,.assessment-layout.questionnaire{display:grid;grid-template-columns:230px minmax(0,1fr);gap:28px;align-items:start;margin-top:24px}
+.questionnaire .assessment-nav{position:sticky;top:104px;border:1px solid #e2dbea;border-radius:18px;padding:20px;background:#fff}
+.questionnaire .assessment-nav nav{display:flex;flex-direction:column;align-items:stretch;gap:6px}
+.questionnaire .assessment-nav nav a{display:flex;align-items:center;gap:10px;min-height:48px;border-radius:10px;padding:10px;color:#51465f;text-decoration:none;font-size:15px;font-weight:500;line-height:1.5}
+.questionnaire .assessment-nav nav a>span{font-size:13px;min-width:24px;color:inherit}
+.questionnaire .assessment-nav nav a:hover{background:#f5f1fa}
+.questionnaire .assessment-nav nav a[aria-current=step]{background:#573676;color:#fff}
+.questionnaire .section-caption{font-size:12px;letter-spacing:1px;font-weight:700;color:#70527c;margin-bottom:10px}
+.questionnaire .assessment-content{min-width:0}
+.questionnaire .question-section-heading{padding:10px 0 18px;background:none;border:0}
+.questionnaire .question-section-heading h2{font-size:27px;line-height:1.5;margin:0 0 8px}
+.questionnaire .question-section-heading p:last-child{font-size:16px;color:#63596c;margin-bottom:0}
+.questionnaire .question-card{min-width:0;margin:0 0 22px;padding:22px 24px 26px;border:1px solid #ded6e8;border-radius:18px;background:#fff;box-shadow:0 4px 18px #2d1a3f05}
+.questionnaire .question-label{display:block;float:left;width:100%;font-size:18px;font-weight:650;line-height:1.65;padding:0;margin:0 0 10px;color:#292033}
+.questionnaire .question-label+*{clear:both}
+.questionnaire .question-number{display:inline-grid;place-items:center;background:#f0e9f7;color:#573676;border-radius:50%;width:29px;height:29px;font-size:14px;margin-right:9px}
+.questionnaire .question-code{font-size:12px;color:#76667e;margin:0 0 14px}
+.questionnaire .question-heading{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.questionnaire .expected-hint{font-size:14px;color:#573676;background:#f4eff8;padding:3px 10px;border-radius:7px}
+.questionnaire .answer-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.questionnaire .answer-options>div{min-width:0;display:flex}
+.questionnaire .answer-options label{width:100%;display:flex;align-items:flex-start;gap:12px;min-height:54px;border:1px solid var(--answer-border);border-radius:11px;padding:13px 14px;font-size:16px;line-height:1.65;font-weight:400;background:#fff;cursor:pointer;overflow-wrap:anywhere;color:#312b3b}
+.questionnaire .answer-options label:hover{background:#f8f5fb;border-color:#947aa9}
+.questionnaire .answer-options label:has(input:checked){background:#f0e8f8;border:2px solid #684285;padding:12px 13px;color:#3b2153;font-weight:600}
+.questionnaire input[type=radio],.questionnaire input[type=checkbox]{flex-shrink:0;width:20px;height:20px;margin:4px 0 0;accent-color:#603b80}
+.questionnaire .answer-options label:has(input:focus-visible){outline:3px solid #8b651b;outline-offset:3px}
+.questionnaire input:disabled{cursor:default}
+.questionnaire textarea,.questionnaire input:not([type=radio]):not([type=checkbox]):not([type=hidden]),.questionnaire select{width:100%;font:inherit;color:#292033;min-height:48px;padding:12px;border:1px solid var(--answer-border);border-radius:10px;background:#fff}
+.questionnaire textarea{min-height:110px;resize:vertical;line-height:1.7}
+.questionnaire textarea:focus-visible{outline:3px solid #8b651b;outline-offset:3px}
+.questionnaire .field-help,.questionnaire .condition-note{font-size:15px;color:#5d5269;margin:12px 0 0}
+.questionnaire .condition-note{border-left:3px solid #b48d49;background:#faf6ed;padding:10px 14px;margin:0 0 16px}
+.questionnaire .answer-extras{margin-top:18px;padding-top:14px;border-top:1px solid #e6dfec}
+.questionnaire summary{cursor:pointer;min-height:44px;font-size:17px;font-weight:600;padding:8px 0}
+.questionnaire .answer-extras .form-field{margin-top:14px}
+.questionnaire .answer-extras label{font-size:16px}
+.questionnaire .form-progress{border-top:1px solid #e6dfec;margin-top:18px;padding-top:18px;display:grid;gap:8px}
+.questionnaire .form-progress label,.questionnaire .form-progress small{font-size:14px;color:#62556e}
+.questionnaire .form-progress strong{font-size:25px;line-height:1.3}
+.questionnaire progress{width:100%;height:9px;border:0;border-radius:8px;accent-color:#674281;overflow:hidden}
+.questionnaire progress::-webkit-progress-bar{background:#eee7f4}
+.questionnaire progress::-webkit-progress-value{background:#674281}
+.questionnaire .section-paging{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:22px 0}
+.questionnaire button:disabled{cursor:default;opacity:.45}
+.questionnaire .button{min-height:48px;font-size:16px}
+.questionnaire .assessment-draft{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin:28px 0;padding:20px 24px;border:1px solid #e1d7ea;border-radius:15px;background:#f7f3fb}
+.questionnaire .assessment-draft span{font-size:15px;color:#5d4e6b}
+.questionnaire .submit-panel{border-top:4px solid #684285;margin-top:20px}
+.questionnaire .confirm-answer{display:flex;align-items:flex-start;gap:12px;padding:16px;background:#f7f5fa;border-radius:12px;margin:18px 0;font-size:16px;cursor:pointer}
+.questionnaire .assessment-intro{margin:20px 0 24px}
+.questionnaire .assessment-intro h1{font-size:clamp(26px,3vw,34px);line-height:1.5}
+.questionnaire .assessment-intro p{max-width:85ch}
+.questionnaire .assessment-guide{font-size:16px;background:#eee8f6;border-radius:12px;padding:14px 18px;color:#513968}
+.questionnaire .assessment-language{justify-content:flex-end;gap:6px}
+.questionnaire .assessment-language a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;min-width:70px;border-radius:8px;padding:8px 15px;border:1px solid #d8cce3}
+.questionnaire .assessment-language a[aria-current=true]{background:#573676;color:#fff}
+.questionnaire .assessment-help{font-size:15px;color:#62556e}
+.survey-main:has(.questionnaire){max-width:1160px}
+.survey-main .questionnaire .assessment-nav{top:20px}
+.preview-group-links{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0}
+.preview-group-links a{font-size:14px;min-height:44px;padding:9px 13px;border:1px solid #dcd0e7;border-radius:9px;text-decoration:none;color:#54376b}
+.preview-group-links a:hover{background:#f2ebf8}
+.preview-banner{border-left:4px solid #836019;background:#fff8e8;padding:16px 20px;border-radius:12px;color:#624914;margin:16px 0}
+.questionnaire .preview-actions{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px}
+@media(max-width:1050px){.questionnaire .assessment-layout,.assessment-layout.questionnaire{grid-template-columns:190px minmax(0,1fr);gap:20px}.questionnaire .answer-options{grid-template-columns:1fr}.questionnaire .assessment-nav{padding:14px}}
+@media(max-width:760px){.questionnaire .assessment-layout,.assessment-layout.questionnaire{display:block}.questionnaire .assessment-nav{position:static;padding:16px;margin-bottom:24px}.questionnaire .assessment-nav nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.questionnaire .assessment-nav nav a{font-size:14px}.questionnaire .question-card{padding:19px 17px}.questionnaire .question-label{font-size:18px}.questionnaire .question-section-heading h2{font-size:23px}.questionnaire .assessment-draft{padding:16px}.questionnaire .section-paging{flex-wrap:wrap}.questionnaire .section-paging .button{padding:10px 12px}.questionnaire .instructions-panel{padding:18px}.questionnaire .form-progress{display:grid;grid-template-columns:1fr auto}.questionnaire .form-progress progress,.questionnaire .form-progress small{grid-column:1/-1}}
+@media(prefers-reduced-motion:reduce){.questionnaire *{scroll-behavior:auto;transition:none}}
+@media print{.questionnaire [data-question-section][hidden]{display:block!important}.questionnaire .assessment-nav,.questionnaire .section-paging,.questionnaire .assessment-draft,.questionnaire .submit-panel{display:none}.questionnaire .assessment-layout{display:block}.questionnaire .question-card{break-inside:avoid}}
+.questionnaire .assessment-input-label{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}

@@ -1,0 +1,4 @@
+{% load portal_ui %}{% if page_nav.crumbs %}
+<nav class="nx-breadcrumbs" aria-label="{% bilingual 'ลำดับหน้าปัจจุบัน / Breadcrumb' %}"><ol>
+{% for crumb in page_nav.crumbs %}<li>{% if crumb.url %}<a href="{{ crumb.url }}">{% if forloop.first %}{% include 'portal/components/icon.html' with name='home' %}{% endif %}<span>{{ crumb.label|ui_wording:LANGUAGE_CODE }}</span></a>{% else %}<span {% if forloop.last %}aria-current="page"{% endif %}>{{ crumb.label|ui_wording:LANGUAGE_CODE }}</span>{% endif %}</li>{% endfor %}
+</ol></nav>{% endif %}

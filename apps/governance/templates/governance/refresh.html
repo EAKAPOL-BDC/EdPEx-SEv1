@@ -1,0 +1,11 @@
+{% extends 'portal/base.html' %}{% load portal_ui %}{% block content %}
+<section class="panel"><h1>{% bilingual 'ล้างและเตรียมข้อมูลทดสอบ / Refresh collection data' %}</h1>
+<p>{% bilingual 'ขั้นตอนนี้ลบคำตอบ คำเชิญ ผลคำนวณ ผลรับรอง และรอบเดิมของพื้นที่ที่เลือกทั้งหมด แล้วสร้างข้อมูลสมมุติปี 2565–2567 ปี 2568 ไม่มีคำตอบและยังเปิดรับไม่ได้จนกว่าผู้ดูแลจะจัดเตรียมครบ / This removes answers, invitations, calculations, approvals and collection rounds in the selected workspace, then generates fictional 2565–2567 data. Year 2568 remains empty and requires administrator setup.' %}</p>
+<p>{% bilingual 'บัญชีผู้ใช้ สิทธิ์ แบบฟอร์ม ทะเบียนผู้ถูกประเมิน และประวัติการดำเนินงานยังคงอยู่ / Accounts, permissions, form versions, annual registers and audit history are retained.' %}</p>
+<h2>{% bilingual 'วิธีดำเนินการ / How to run' %}</h2>
+<ol><li>{% bilingual 'หยุดเว็บก่อน และจัดเก็บสำเนาฐานข้อมูลหากต้องการย้อนกลับ / Stop the server and retain a database backup if rollback may be needed.' %}</li>
+<li>{% bilingual 'เปิดไฟล์ refresh_nexora_workspace.py จากชุดอัปเดต อ่านรายการและจำนวนที่จะลบ ระบบจะแสดงตัวอย่างก่อนเสมอ / Run refresh_nexora_workspace.py from the release. Review the deletion counts; the first step is always a preview.' %}</li>
+<li>{% bilingual 'ตรวจพื้นที่ให้ตรง แล้วพิมพ์คำยืนยันที่แสดงเพื่อเริ่มล้างและสร้างข้อมูลใหม่ การลบสำเร็จแล้วจะย้อนกลับได้จากสำเนาฐานข้อมูลเท่านั้น / Check the workspace and type the displayed confirmation. After completion, deleted data can only be recovered from your database backup.' %}</li></ol>
+<p>{% bilingual 'รหัสพื้นที่ / Scope code' %}: <strong>{{ scope.code }}</strong><br>UUID: <code>{{ scope.pk }}</code></p>
+{% if latest_refresh %}<h2>{% bilingual 'การดำเนินการล่าสุด / Latest refresh' %}</h2><p>{{ latest_refresh.created_at }} · {{ latest_refresh.status }} · {{ latest_refresh.actor.username }}</p><p>{{ latest_refresh.reason }}</p><p>{% bilingual 'รอบสมมุติ / Synthetic rounds' %}: {{ latest_refresh.summary.created.synthetic_rounds }} · {% bilingual 'คำตอบสมมุติ / Synthetic responses' %}: {{ latest_refresh.summary.created.synthetic_responses }}</p>{% endif %}
+</section>{% endblock %}

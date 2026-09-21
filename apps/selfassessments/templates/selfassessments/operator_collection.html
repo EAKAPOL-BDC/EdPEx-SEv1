@@ -1,0 +1,37 @@
+{% extends 'selfassessments/operator_base.html' %}
+{% block operator_content %}
+<header class="nx-page-header"><div class="page-title-row"><h1>{% if LANGUAGE_CODE == 'en' %}Manage collection{% else %}จัดการรอบเก็บข้อมูล{% endif %}</h1>
+{% include 'selfassessments/operator_status.html' with status=selected.collection_round.status %}</div><p class="lead">{{ selected.collection_round.code }}</p></header>{% include 'selfassessments/components_steps.html' %}
+<section class="panel">
+  <h2>{% if LANGUAGE_CODE == 'en' %}Collection window{% else %}ช่วงเวลารับคำตอบ{% endif %}</h2>
+  <p>{{ scope.organization.timezone }} · {{ selected.collection_round.open_at|date:'Y-m-d H:i' }} → {{ selected.collection_round.close_at|date:'Y-m-d H:i' }}</p>
+  <div class="form-actions">
+    {% if can_assign %}<a class="button button-secondary" href="{% url 'operator-roster' scope.pk selected.pk %}">{% if LANGUAGE_CODE == 'en' %}Assignment roster{% else %}รายชื่อสำหรับมอบหมาย{% endif %}</a>{% endif %}
+    {% if can_calculate %}<a class="button" href="{% url 'operator-calculate' scope.pk selected.pk %}">{% if LANGUAGE_CODE == 'en' %}Prepare calculation{% else %}เตรียมคำนวณ{% endif %}</a>{% endif %}
+  </div>
+</section>
+{% if can_manage %}
+  {% if selected.collection_round.status == 'ready' or selected.collection_round.status == 'open' %}
+  <section class="panel">
+    <h2>{% if LANGUAGE_CODE == 'en' %}Change status for the whole round{% else %}เปลี่ยนสถานะทั้งรอบ{% endif %}</h2>
+    <p>{% if LANGUAGE_CODE == 'en' %}This action affects every form and context in {{ selected.collection_round.code }}.{% else %}การดำเนินการนี้มีผลกับทุกแบบฟอร์มและทุกบริบทในรอบ {{ selected.collection_round.code }}{% endif %}</p>
+    {% if selected.collection_round.status == 'ready' %}<p>{% if LANGUAGE_CODE == 'en' %}Complete assignments and expected levels before opening. Assignments cannot be added or changed after opening.{% else %}ตรวจการมอบหมายและระดับที่คาดหวังให้ครบก่อนเปิดรอบ หลังเปิดแล้วจะเพิ่มหรือแก้การมอบหมายไม่ได้{% endif %}</p>{% endif %}
+    <form method="post">{% csrf_token %}{% include 'selfassessments/operator_fields.html' with form=reason_form %}
+    {% if selected.collection_round.status == 'ready' %}<button name="action" value="open">{% if LANGUAGE_CODE == 'en' %}Open the whole round{% else %}เปิดรับคำตอบทั้งรอบ{% endif %}</button>
+    {% else %}<button name="action" value="closed">{% if LANGUAGE_CODE == 'en' %}Close the whole round{% else %}ปิดรับคำตอบทั้งรอบ{% endif %}</button>{% endif %}
+    </form>
+  </section>
+  {% else %}{{ reason_form.non_field_errors }}{% endif %}
+{% endif %}
+{% if history is not None %}
+<section class="panel"><h2>{% if LANGUAGE_CODE == 'en' %}Result history for this context{% else %}ประวัติชุดผลในบริบทนี้{% endif %}</h2>
+<p>{% if LANGUAGE_CODE == 'en' %}Approved sets remain unpublished. Each calculation retains its original cutoff and history.{% else %}ชุดผลที่รับรองแล้วยังคงไม่เผยแพร่ ทุกการคำนวณเก็บ cutoff และประวัติเดิมไว้{% endif %}</p>
+<div class="table-scroll"><table class="grants-table"><thead><tr>
+<th>{% if LANGUAGE_CODE == 'en' %}Result set{% else %}ชุดผล{% endif %}</th><th>Cutoff · {{ scope.organization.timezone }}</th><th>{% if LANGUAGE_CODE == 'en' %}Status{% else %}สถานะ{% endif %}</th>
+</tr></thead><tbody>{% for item in runs %}<tr>
+<td><a href="{% url 'operator-run' scope.pk item.id %}">{{ item.created_at|date:'Y-m-d H:i:s' }}</a></td><td>{{ item.cutoff|date:'Y-m-d H:i:s' }}</td>
+<td>{% include 'selfassessments/operator_status.html' with status=item.status %}{% if item.superseded %} · {% if LANGUAGE_CODE == 'en' %}Superseded{% else %}มีรุ่นรับรองใหม่แล้ว{% endif %}{% endif %}</td>
+</tr>{% empty %}<tr><td colspan="3">{% if LANGUAGE_CODE == 'en' %}No calculated result sets yet.{% else %}ยังไม่มีชุดผลที่คำนวณแล้ว{% endif %}</td></tr>{% endfor %}</tbody></table></div>
+{% include 'selfassessments/operator_pagination.html' with page=history %}</section>
+{% endif %}
+{% endblock %}

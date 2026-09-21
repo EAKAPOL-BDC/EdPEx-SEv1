@@ -159,6 +159,10 @@ def freeze_population(actor, snapshot):
 
 
 def _check_ready(collection_round):
+    if not collection_round.schedule_confirmed:
+        raise ValidationError('กำหนดและยืนยันวันเปิด–ปิดรับคำตอบก่อน / Confirm the collection window first.')
+    from apps.governance.policies import validate_current_round
+    validate_current_round(collection_round)
     if not collection_round.period.approved:
         raise ValidationError("Approve the real reporting period before activating a round.")
     if not collection_round.privacy_notice.strip():
@@ -176,6 +180,8 @@ def _check_ready(collection_round):
         snapshot = collection_round.population_snapshots.filter(status=PopulationSnapshot.Status.FROZEN).order_by("-version").first()
     if snapshot is None:
         raise ValidationError("Freeze the actual population before activating the round.")
+    from apps.surveys.validation import validate_round
+    validate_round(collection_round, snapshot)
     collection_round.population_snapshot = snapshot
 
 
@@ -189,6 +195,10 @@ def transition_round(actor, collection_round, target_status, *, reason=""):
     collection_round = CollectionRound.objects.select_for_update().get(pk=collection_round.pk)
     _authorize(actor, collection_round)
     source_status = collection_round.status
+    if target_status == CollectionRound.Status.DRAFT:
+        from apps.surveys.models import Invitation
+        if Invitation.objects.filter(binding__collection_round=collection_round).exists():
+            raise ValidationError('ออกคำเชิญแล้ว กลับไปแก้บริบทไม่ได้ กรุณาสร้างรอบใหม่ / Invitations have been issued; create a new round to change the context.')
     allowed = {
         CollectionRound.Status.DRAFT: {CollectionRound.Status.READY},
         CollectionRound.Status.READY: {CollectionRound.Status.DRAFT, CollectionRound.Status.OPEN},

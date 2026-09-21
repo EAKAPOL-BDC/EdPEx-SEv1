@@ -1,0 +1,1 @@
+{% if version.status == 'draft' %}{% if LANGUAGE_CODE == 'en' %}Draft{% else %}ฉบับร่าง{% endif %}{% elif version.status == 'published' %}{% if LANGUAGE_CODE == 'en' %}Published{% else %}เผยแพร่แล้ว{% endif %}{% else %}{% if LANGUAGE_CODE == 'en' %}Retired{% else %}ยุติการใช้งาน{% endif %}{% endif %}

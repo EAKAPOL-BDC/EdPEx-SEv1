@@ -1,0 +1,13 @@
+.receipt-info code{display:block;overflow-wrap:anywhere;white-space:normal;font-size:.82rem;line-height:1.8}
+.connection-panel{border:1px solid #d8c7eb;background:#fcf8ff;border-radius:20px;padding:24px;margin:20px 0}
+.connection-panel p{line-height:1.8}.connection-panel a{overflow-wrap:anywhere}
+.connection-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:16px}
+.connection-panel input{display:block;width:100%;padding:14px;border:1px solid #baa3d5;border-radius:12px;font:inherit;box-sizing:border-box}
+.connection-panel button:disabled{opacity:.6;cursor:wait}
+.holder-main{max-width:820px;margin:40px auto;padding:0 20px}
+.holder-brand{width:180px;max-width:50%}.holder-main h1{font-size:clamp(24px,5vw,36px)}
+.receipt-qr img{display:block;width:100%;height:auto}.receipt-qr:empty{display:none}
+.connected-locked .workspace aside,.connected-locked .pager,.connected-locked #review-panel,.connected-locked #question-panel{display:none!important}
+.connected-locked .workspace{display:block}.connection-panel:focus{outline:3px solid #ad81cd;outline-offset:4px}
+.receipt-actions a{align-self:center}.connection-error{color:#842953;font-weight:600}
+@media(max-width:600px){.connection-panel{padding:18px}.receipt-card{grid-template-columns:1fr}.receipt-qr{max-width:280px;margin:auto}}

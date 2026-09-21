@@ -1,0 +1,2 @@
+{% load portal_ui %}{% group_reference code language=locale as group_info %}
+<div class="nx-group-caption">{% group_badge code language=locale %}{% if group_info.description and group_info.description != group_info.name %}<details><summary>{% if locale == 'en' or LANGUAGE_CODE == 'en' %}Group definition{% else %}รายละเอียดกลุ่ม{% endif %}</summary><p>{{ group_info.description }}</p></details>{% endif %}</div>

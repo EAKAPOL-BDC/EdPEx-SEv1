@@ -195,6 +195,8 @@ class CollectionRound(DomainRecord):
     close_at = models.DateTimeField(help_text="Exclusive collection cutoff")
     status = models.CharField(max_length=12, choices=Status.choices, default=Status.DRAFT)
     privacy_notice = models.TextField(blank=True)
+    data_kind = models.CharField(max_length=12, default='real', choices=[('real','ข้อมูลจริง'),('synthetic','ข้อมูลสมมุติ')])
+    schedule_confirmed = models.BooleanField(default=True)
     population_snapshot = models.ForeignKey("PopulationSnapshot", on_delete=models.PROTECT, null=True, blank=True, related_name="pinned_by_rounds")
 
     class Meta:
@@ -227,6 +229,8 @@ class CollectionRound(DomainRecord):
         self.period = ReportingPeriod.objects.select_for_update().get(pk=self.period_id)
 
     def check_history(self, previous):
+        if self.data_kind != previous.data_kind:
+            raise ValidationError('เปลี่ยนข้อมูลสมมุติเป็นข้อมูลจริงไม่ได้ / Collection data kind is immutable.')
         if self.scope_id != previous.scope_id:
             raise ValidationError("Round scope is a stable identity; create a new round.")
         if self.period_id != previous.period_id and (previous.round_instruments.exists() or previous.population_snapshots.exists() or previous.responsibilities.exists()):
@@ -269,6 +273,8 @@ class RoundInstrument(DomainRecord):
 
     def clean(self):
         super().clean()
+        if self.instrument_version.source_metadata.get('synthetic_only') and self.collection_round.data_kind!='synthetic':
+            raise ValidationError('แบบฟอร์มจำลองใช้เก็บข้อมูลจริงไม่ได้ / Simulation-only form.')
         if self.instrument_version.instrument.scope_id != self.collection_round.scope_id:
             raise ValidationError("Instrument and round must share the same scope.")
         if self.translation_bundle.instrument_version_id != self.instrument_version_id:
@@ -277,6 +283,9 @@ class RoundInstrument(DomainRecord):
             "collection_round_id", "instrument_version_id", "translation_bundle_id",
         ).first()
         selected = (self.collection_round_id, self.instrument_version_id, self.translation_bundle_id)
+        if previous is None or selected != tuple(previous[k] for k in ('collection_round_id','instrument_version_id','translation_bundle_id')):
+            from apps.governance.policies import validate_period
+            validate_period(self.instrument_version.instrument.code,self.collection_round.period)
         changing_selection = previous is None or selected != tuple(previous[field] for field in (
             "collection_round_id", "instrument_version_id", "translation_bundle_id",
         ))

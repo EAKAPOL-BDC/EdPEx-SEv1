@@ -1,0 +1,44 @@
+NEXORA Quality Upgrade — verification record
+
+Result: 114 distinct Python test cases and 5 JavaScript test cases passed.
+Tests use an isolated temporary database, not the user's database.
+
+Python suite A: 92 passed (99.723 seconds)
+node ../survey-qa/run.mjs tests.test_quality_upgrade tests.test_m2_golden tests.test_m2_validation tests.test_visualization.ChartProjectionTests tests.test_visualization.VisualizationDemoTests tests.test_visualization.VisualizationActualTests tests.test_f05_stored.ComparisonDefinitionTests tests.test_backoffice tests.test_survey_http_guards tests.test_settings tests.test_survey_upgrade tests.test_assessment_presentation tests.test_assessment_preview
+
+Python suite B: 23 passed (67.930 seconds)
+node ../survey-qa/run.mjs tests.test_quality_upgrade.BackupUtilityTests tests.test_management_web
+
+Python final changed-path verification: 17 passed (31.183 seconds)
+node ../survey-qa/run.mjs tests.test_quality_upgrade tests.test_management_web.ManagementWebTests.test_complete_web_journey_including_account_assignment_and_submission
+
+The final verification includes the last login-throttle ordering change,
+backup environment guard, password guidance and account creation journey.
+The suite counts overlap. The union contains 114 distinct Python tests.
+The initial audit run found a test fixture that did not exercise the intended
+weak-password case; it was corrected before the passing suites above.
+
+JavaScript: 5 passed, 0 failed
+NODE_PATH=../survey-qa/node_modules node --test tests/usability.test.cjs tests/visualization_controls.test.cjs
+Covers unsaved POST data, canceled submit behavior, GET filter behavior,
+keyboard focus/error summaries, menu Escape, and visualization controls.
+
+Additional checks:
+- manage.py check: no issues.
+- 64 Django templates parsed; admin base template renders the new theme.
+- New design-system.css and admin-theme.css parsed without syntax errors.
+- Account password guidance reflects the active 15-character policy.
+- git diff --check: clean.
+- Indicator source PDF: 63 unique codes; catalog: 63 unique codes; no code delta.
+
+Limits:
+- CSS syntax and rendered HTML checks are not visual browser verification.
+- Browser localhost navigation was blocked (ERR_BLOCKED_BY_CLIENT).
+- No Windows/device UAT, screen-reader audit, usability participant study,
+  production penetration test, load test or production deployment was performed.
+- Backup tests simulate pg_dump; no real database restore was performed.
+- No production data, account, role or reporting-period change was made here.
+
+The survey-qa runner is a local QA harness outside the delivered application.
+Application tests are included in the git bundle. Production operation requires
+its own configured PostgreSQL environment and deployment checks.

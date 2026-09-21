@@ -1,0 +1,58 @@
+{% extends 'portal/base.html' %}{% load static portal_ui %}
+{% block title %}Data Visualization · NEXORA{% endblock %}
+{% block page_assets %}<link rel="stylesheet" href="{% static 'portal/visualization.css' %}?v=20260919-reference"><script src="{% static 'portal/visualization.js' %}?v=20260919-reference" defer></script>{% endblock %}
+{% block content %}
+<div class="viz {% if mode == 'finereport' %}viz-theme-report{% endif %}" data-viz-root>
+  <header class="viz-hero nx-page-header">
+    <div><p class="viz-kicker">NEXORA / DATA VISUALIZATION</p><h1>{% if mode == 'endlessloop' %}Endlessloop{% elif mode == 'finereport' %}FineReport{% else %}{% bilingual 'มองเห็นข้อมูล เข้าใจภาพรวม / See the data. Understand the picture.' %}{% endif %}</h1>
+      <p>{% if mode == 'endlessloop' %}{% bilingual 'การ์ดข้อมูลเชื่อมโยงกับวงแหวนภาพรวม พร้อมสำรวจผลรายกลุ่ม / Connected data cards, overview rings and group comparisons.' %}{% elif mode == 'finereport' %}{% bilingual 'Dashboard สีน้ำเงินเข้ม รวมกราฟแท่ง วงแหวน และรายละเอียดรายกลุ่ม / A dark blue dashboard with bars, rings and group details.' %}{% else %}{% bilingual 'เลือกวิธีดูข้อมูลที่เหมาะกับงานของคุณ / Choose a view that fits your work.' %}{% endif %}</p>
+    </div><span class="viz-source {% if source == 'demo' %}is-demo{% endif %}">{% if source == 'demo' %}{% bilingual 'ข้อมูลสาธิต · ไม่ใช่ผลจริง / DEMO · Not actual results' %}{% else %}{% bilingual 'ผลรับรอง · ใช้ภายใน / Approved · Internal use' %}{% endif %}</span>
+  </header>
+  <nav class="viz-tabs" aria-label="{% bilingual 'รูปแบบการแสดงผล / Visualization modes' %}">
+    <a href="{% url 'visualization-home' scope.pk %}?{{ filters }}" {% if mode == 'home' %}aria-current="page"{% endif %}>{% bilingual 'ภาพรวม / Overview' %}</a>
+    <a href="{% url 'visualization-endlessloop' scope.pk %}?{{ filters }}" {% if mode == 'endlessloop' %}aria-current="page"{% endif %}>Endlessloop</a>
+    <a href="{% url 'visualization-finereport' scope.pk %}?{{ filters }}" {% if mode == 'finereport' %}aria-current="page"{% endif %}>FineReport</a>
+  </nav>
+  <form class="viz-filter" method="get">
+    <label>{% bilingual 'แหล่งข้อมูล / Data source' %}<select name="source"><option value="actual" {% if source == 'actual' %}selected{% endif %}>{% bilingual 'ผลจริงที่รับรองแล้ว / Approved actual results' %}</option><option value="demo" {% if source == 'demo' %}selected{% endif %}>{% bilingual 'ข้อมูลสมมุติ / Synthetic data' %}</option></select></label>
+    {% if source == 'actual' or current_simulation %}<label>{% bilingual 'ช่วงรายงาน / Reporting period' %}<select name="period"><option value="">{% bilingual 'ช่วงล่าสุด / Latest period' %}</option>{% for p in periods %}<option value="{{ p.pk }}" {% if p.pk == selected_period.pk %}selected{% endif %}>{{ p.code }} · {{ p.reporting_year_be }}</option>{% endfor %}</select></label>{% endif %}
+    <label>{% bilingual 'แบบฟอร์ม / Form' %}<select name="form"><option value="">{% bilingual 'ทุกแบบฟอร์ม / All forms' %}</option>{% for f in form_codes %}<option {% if form_code == f %}selected{% endif %}>{{ f }}</option>{% endfor %}</select></label>
+    <label>{% bilingual 'กลุ่มผู้ประเมิน / Assessor group' %}<select name="group"><option value="">{% bilingual 'ทุกกลุ่ม · เปรียบเทียบ / All groups · Compare' %}</option>{% for code,label in groups %}<option value="{{ code }}" {% if code == group_code %}selected{% endif %}>{{ code }} · {{ label }}</option>{% endfor %}</select></label>
+    <label class="viz-search">{% bilingual 'ค้นหาตัวชี้วัด / Find an indicator' %}<input name="q" value="{{ query }}" maxlength="100" placeholder="{% bilingual 'รหัสหรือชื่อตัวชี้วัด / Indicator code or name' %}"></label>
+    <div class="viz-filter-actions"><button class="button" type="submit">{% bilingual 'แสดงผล / Apply' %}</button><a href="?source={{ source }}">{% bilingual 'ล้างตัวกรอง / Reset' %}</a></div>
+  </form>
+  <div class="viz-context"><span>{{ scope.name }}</span><span>{% if selected_period %}{{ selected_period.code }} · {{ selected_period.reporting_year_be }}{% else %}{% bilingual 'ยังไม่มีช่วงรายงานที่เลือก / No reporting period selected' %}{% endif %}</span></div>
+  {% if error_count %}<p class="viz-alert" role="status">{% bilingual 'มีชุดผลที่ตรวจสอบไม่ผ่านและไม่ได้แสดง / Result sets failed validation and were excluded' %}: {{ error_count }}. {% bilingual 'กรุณาตรวจชุดผลต้นทางก่อนส่งออก / Review the source results before exporting.' %}</p>{% endif %}
+  <section class="viz-stats" aria-label="{% bilingual 'สรุปข้อมูลตามตัวกรอง / Summary of filtered data' %}">
+    <article><span>{% bilingual 'ตัวชี้วัด / Indicators' %}</span><strong>{{ indicator_count }}</strong><small>{% bilingual 'ตามตัวกรองที่เลือก / Matching your filters' %}</small></article>
+    <article><span>{% bilingual 'กลุ่มผู้ประเมิน / Assessor groups' %}</span><strong>{{ group_count }}</strong><small>{% bilingual 'กลุ่มที่มีรายการผล / Groups with result entries' %}</small></article>
+    <article><span>{% bilingual 'รายการที่แสดงค่าได้ / Visible values' %}</span><strong>{{ visible_count }} <small>/ {{ series_count }}</small></strong><small>{% bilingual 'รายการผลรายกลุ่มและมิติ / Group and dimension results' %}</small></article>
+    <article><span>{% bilingual 'กราฟที่เปรียบเทียบกลุ่มได้ / Group comparisons' %}</span><strong>{{ comparison_count }}</strong><small>{% bilingual 'เฉพาะนิยามและเกณฑ์เดียวกัน / Matching definitions and criteria' %}</small></article>
+  </section>
+  {% if mode == 'home' %}
+    <div class="viz-mode-grid">
+      <a class="viz-mode-card viz-mode-loop" href="{% url 'visualization-endlessloop' scope.pk %}?{{ filters }}"><span class="viz-mode-number">01 / CONNECT</span><span class="viz-orbit" aria-hidden="true">∞</span><h2>Endlessloop</h2><p>{% bilingual 'การ์ดแบบฟอร์ม F01–F06 เชื่อมต่อกับวงแหวนโทนม่วง และกราฟเปรียบเทียบกลุ่ม / F01–F06 form cards connected to purple rings and group comparison charts.' %}</p><span class="viz-open">{% bilingual 'เปิดมุมมอง Endlessloop / Open Endlessloop' %} →</span></a>
+      <a class="viz-mode-card viz-mode-report" href="{% url 'visualization-finereport' scope.pk %}?{{ filters }}"><span class="viz-mode-number">02 / ANALYZE</span><span class="viz-report-mark" aria-hidden="true"><i></i><i></i><i></i></span><h2>FineReport</h2><p>{% bilingual 'Dashboard สีน้ำเงินเข้ม กราฟแท่ง วงแหวนหลายชั้น มาตรวัดรายกลุ่ม และตารางผล / Dark blue dashboard with bars, nested rings, group gauges and result tables.' %}</p><span class="viz-open">{% bilingual 'เปิดมุมมองรายงาน / Open report' %} →</span></a>
+    </div>
+    <section class="viz-readiness">
+      <div class="viz-ring" style="--coverage:{{ coverage }}%"><span>{% if series_count %}{{ coverage }}%{% else %}—{% endif %}</span></div><div><h2>{% bilingual 'ความพร้อมในการแสดงผล / Display availability' %}</h2><p>{% bilingual 'แสดงค่าได้ / Visible' %} {{ visible_count }} · {% bilingual 'ซ่อนค่าหรือยังไม่มีผล / Restricted or unavailable' %} {{ hidden_count }}</p><p>{% bilingual 'สัดส่วนนี้บอกความพร้อมของข้อมูล ไม่ใช่คะแนนผลการประเมิน / This is data availability, not an assessment score.' %}</p></div>
+    </section>
+  {% endif %}
+  {% if not chart_count %}
+    <section class="viz-empty"><h2>{% bilingual 'ยังไม่มีข้อมูลที่ตรงกับตัวกรอง / No matching data yet' %}</h2><p>{% if source == 'demo' %}{% bilingual 'เลือกช่วงรายงานปี 2565–2567 และลองล้างตัวกรอง หากยังไม่มีข้อมูล ให้ผู้ดูแลตรวจสถานะการเตรียมข้อมูลทดสอบ / Select a 2565–2567 reporting period and reset the filters. If empty, ask the administrator to check the workspace refresh status.' %}{% else %}{% bilingual 'เลือกช่วงรายงานอื่น หรือไปตรวจสถานะการรับรองผล หากต้องการทดลองกราฟให้เลือกข้อมูลสาธิตแล้วกดแสดงผล / Choose another period or check result approval. To explore the charts, select Demo data and Apply.' %}{% endif %}</p><a class="button button-secondary" href="{% url 'insights-list' scope.pk %}">{% bilingual 'ไปหน้าชุดผล / View result sets' %}</a></section>
+  {% elif mode != 'home' %}
+    {% if mode == 'endlessloop' %}{% include 'calculations/visualization_loop_board.html' %}{% else %}{% include 'calculations/visualization_report_board.html' %}{% endif %}
+    <div class="viz-report-tools"><h2>{% bilingual 'ผลตามตัวกรอง / Filtered results' %} <span>{{ chart_count }} {% bilingual 'กราฟ / charts' %}</span></h2>{% if not error_count %}<a class="button button-secondary" href="{% url 'visualization-export' scope.pk %}?{{ filters }}">{% bilingual 'ส่งออก CSV / Export CSV' %}</a>{% endif %}</div>
+    <section class="viz-stage {% if mode == 'endlessloop' %}viz-stage-loop{% endif %}" {% if mode == 'endlessloop' %}data-viz-carousel aria-label="Endlessloop"{% endif %}>
+      {% if mode == 'endlessloop' %}<div class="viz-controls" data-viz-controls hidden>
+        <div><button type="button" class="button button-secondary" data-viz-prev>{% bilingual 'ก่อนหน้า / Previous' %}</button><output data-viz-counter aria-live="polite" aria-atomic="true"></output><button type="button" class="button button-secondary" data-viz-next>{% bilingual 'ถัดไป / Next' %}</button></div>
+        <div><button type="button" class="button" data-viz-play data-play="{% bilingual 'เล่นวนทุก 15 วินาที / Play every 15 seconds' %}" data-pause="{% bilingual 'หยุดเล่น / Pause' %}" aria-pressed="false">{% bilingual 'เล่นวนทุก 15 วินาที / Play every 15 seconds' %}</button><button type="button" class="button button-secondary" data-viz-fullscreen hidden data-open="{% bilingual 'เต็มจอ / Fullscreen' %}" data-close="{% bilingual 'ออกจากเต็มจอ / Exit fullscreen' %}">{% bilingual 'เต็มจอ / Fullscreen' %}</button></div>
+      </div><p class="viz-stage-note">{% if source == 'demo' %}{% bilingual 'ข้อมูลสาธิต · ไม่ใช่ผลการประเมินจริง / DEMO DATA · Not actual assessment results' %}{% else %}{% bilingual 'ผลรับรองสำหรับใช้งานภายใน / Approved results for internal use' %}{% endif %} · {% bilingual 'ใช้ปุ่มก่อนหน้าและถัดไปเพื่อเลือกกราฟ / Use Previous and Next to browse charts' %}</p>{% endif %}
+      {% for c in cards %}{% include 'calculations/visualization_chart.html' %}{% endfor %}
+    </section>
+    {% if mode == 'finereport' %}<nav class="demo-pagination" aria-label="{% bilingual 'หน้ารายงาน / Report pages' %}">{% if cards.has_previous %}<a href="?{{ filters }}&amp;page={{ cards.previous_page_number }}">← {% bilingual 'ก่อนหน้า / Previous' %}</a>{% endif %}<span>{{ cards.number }} / {{ cards.paginator.num_pages }}</span>{% if cards.has_next %}<a href="?{{ filters }}&amp;page={{ cards.next_page_number }}">{% bilingual 'ถัดไป / Next' %} →</a>{% endif %}</nav>{% endif %}
+  {% endif %}
+  <details class="viz-method"><summary>{% bilingual 'วิธีอ่านและเงื่อนไขการเปรียบเทียบ / How to read and compare' %}</summary><p>{% bilingual 'แต่ละกราฟแยกตามช่วงรายงาน รุ่นแบบฟอร์ม สูตร มิติ หน่วย บริบท และวันเวลาตัดข้อมูล เปรียบเทียบระหว่างกลุ่มได้เมื่อเกณฑ์ตรงกันและมีค่าที่แสดงได้อย่างน้อยสองกลุ่ม ไม่รวมคะแนนข้ามรอบ และส่วนต่างไม่ใช่การทดสอบนัยสำคัญทางสถิติ / Charts keep reporting periods, form versions, formulas, dimensions, units, contexts and cutoff timestamps separate. Group comparisons require matching criteria and at least two visible group values. Scores are not pooled across rounds. Differences do not imply statistical significance.' %}</p><p>{% bilingual 'ขีด — หมายถึงซ่อนค่าหรือยังไม่มีผล ไม่ใช่ศูนย์ กราฟชั่วโมงต่อคนปรับสเกลตามค่าสูงสุดในกราฟนั้น / A dash means restricted or unavailable, not zero. Hours-per-person charts scale to their own maximum.' %}</p></details>
+  <p class="viz-native-note">{% bilingual 'Endlessloop และ FineReport เป็นชื่อมุมมองที่พัฒนาภายใน NEXORA รุ่นนี้ไม่ได้เชื่อมต่อซอฟต์แวร์ FineReport ภายนอก / Endlessloop and FineReport are native NEXORA views in this release, without an external FineReport software connection.' %}</p>
+</div>
+{% endblock %}

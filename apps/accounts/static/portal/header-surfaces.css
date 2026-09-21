@@ -1,0 +1,68 @@
+/* One bounded surface for content headers. Keep application chrome separate. */
+:root{--nx-heading-bg:#f2eef9;--nx-heading-border:#d8cce9;--nx-heading-accent:#8060ad;--nx-heading-text:#30213f;--nx-heading-muted:#5e566e}
+.nx-page-header,.workspace-content .nx-page-header,.survey-main .nx-page-header,body.nx-admin-frame .nx-page-header{
+  box-sizing:border-box;min-width:0;max-width:100%;min-height:0;height:auto;
+  margin:0 0 20px;padding:18px 22px;
+  background:linear-gradient(110deg,var(--nx-heading-bg),#faf8fd);
+  border:1px solid var(--nx-heading-border);border-inline-start:4px solid var(--nx-heading-accent);
+  border-radius:12px;box-shadow:0 2px 5px #39204d05;color:var(--nx-heading-text);
+}
+.nx-page-header h1,.workspace-content .nx-page-header h1,.survey-main .nx-page-header h1,body.nx-admin-frame .nx-page-header h1{
+  font-size:clamp(22px,1.8vw,26px);line-height:1.5;letter-spacing:-.015em;
+  color:var(--nx-heading-text);margin:3px 0 6px;overflow-wrap:anywhere;max-width:100%;
+}
+.nx-page-header h1:only-child{margin:0}
+.nx-page-header>div,.nx-page-header .nx-list-heading,.nx-page-header .cl-heading-main,.nx-page-header .heading-content{min-width:0;max-width:100%}
+.workspace-content .nx-page-header p,.survey-main .nx-page-header p{font-size:14px;line-height:1.75;margin:4px 0;color:var(--nx-heading-muted);overflow-wrap:anywhere}
+.workspace-content .nx-page-header :is(.eyebrow,.cl-eyebrow,.viz-kicker,.section-caption,.section-kicker){font-size:10px;line-height:1.6;letter-spacing:.08em;color:#745a90;margin:0 0 4px}
+.workspace-content .nx-page-header .nx-scope{font-size:12px;margin:6px 0 0;color:#696176}
+.workspace-content .nx-page-header .page-title-row{margin:0;padding:0;gap:8px 14px}
+.workspace-content .nx-page-header .page-title-row h1{margin:0}
+.workspace-content .nx-page-header .lead{margin:6px 0 0;font-size:14px}
+
+/* A directory's title and actions share ONE surface, not two nested cards. */
+.workspace-content .nx-page-top.nx-page-header{display:flex;align-items:center;flex-flow:row wrap;gap:14px 22px}
+.workspace-content .nx-page-top>.nx-list-heading{flex:1 1 340px;min-width:0;max-width:100%;padding:0;margin:0;background:none;border:0;box-shadow:none;gap:12px}
+.workspace-content .nx-page-top>.nx-actions{display:flex;flex:0 1 auto;align-items:center;flex-wrap:wrap;gap:8px;min-width:0;max-width:100%;margin:0}
+.workspace-content .nx-page-header .nx-actions .button{min-height:42px;margin:0;font-size:13px;line-height:1.6;white-space:normal;overflow-wrap:anywhere;text-align:center}
+.workspace-content .nx-page-header .nx-list-heading>div{min-width:0}
+.workspace-content .nx-page-header .nx-icon,.workspace-content .nx-page-header .cl-heading-icon{background:#fff9;border-color:#dbd0ea;flex-shrink:0}
+.workspace-content .nx-page-header .cl-heading-main{flex:1 1 300px}
+.workspace-content .cl-heading.nx-page-header{display:flex;flex-wrap:wrap;align-items:center;gap:8px 20px}
+.workspace-content .cl-heading.nx-page-header .cl-intro{flex-basis:100%;max-width:90ch;margin:0}
+.workspace-content .nx-page-header .cl-scope{font-size:12px;max-width:100%}
+.workspace-content .viz-hero.nx-page-header{flex-wrap:wrap;gap:12px 20px}
+.workspace-content .viz-hero.nx-page-header>div{flex:1 1 320px}
+.workspace-content .nx-page-header :is(.viz-source,.role-badge){max-width:100%;white-space:normal;overflow-wrap:anywhere}
+.workspace-content .nx-page-header .manual-metadata{margin:10px 0;font-size:12px}
+.workspace-content .nx-page-header .manual-counts{margin:12px 0 0}
+.workspace-content .nx-page-header .manual-counts span{background:#fff9}
+.workspace-content .manual-hero.nx-page-header>.button{min-height:42px;font-size:13px;margin-top:4px}
+.workspace-content .nx-brand-welcome.nx-page-header{gap:14px 22px}
+.workspace-content .nx-brand-welcome.nx-page-header>div:first-child{flex:1 1 auto;min-width:0}
+.nx-breadcrumbs{margin-bottom:12px}
+.nx-page-header a:focus-visible,.nx-page-header button:focus-visible{outline:3px solid #6d469e;outline-offset:3px}
+
+/* Native admin retains Django's navigation and action behavior. */
+body.nx-admin-frame #content>h1{box-sizing:border-box;background:var(--nx-heading-bg);border:1px solid var(--nx-heading-border);border-inline-start:4px solid var(--nx-heading-accent);border-radius:12px;padding:16px 20px;color:var(--nx-heading-text);overflow-wrap:anywhere}
+body.nx-admin-frame .nx-page-header .nx-eyebrow{color:#745a90}
+body.nx-admin-frame .nx-page-header p{color:var(--nx-heading-muted)}
+html[data-theme=dark]{--nx-heading-bg:#30293e;--nx-heading-border:#655477;--nx-heading-accent:#bda0e3;--nx-heading-text:#f2eafc;--nx-heading-muted:#d4c7e1}
+html[data-theme=dark] body.nx-admin-frame .nx-page-header{background:var(--nx-heading-bg)}
+html[data-theme=dark] body.nx-admin-frame .nx-page-header .nx-eyebrow{color:#d4c7e1}
+@media(prefers-color-scheme:dark){html[data-theme=auto]{--nx-heading-bg:#30293e;--nx-heading-border:#655477;--nx-heading-accent:#bda0e3;--nx-heading-text:#f2eafc;--nx-heading-muted:#d4c7e1}html[data-theme=auto] body.nx-admin-frame .nx-page-header{background:var(--nx-heading-bg)}html[data-theme=auto] body.nx-admin-frame .nx-page-header .nx-eyebrow{color:#d4c7e1}}
+@media(max-width:760px){
+ .nx-page-header,.workspace-content .nx-page-header,.survey-main .nx-page-header,body.nx-admin-frame .nx-page-header{padding:16px 18px;border-radius:10px;margin-bottom:18px}
+ .workspace-content .nx-page-top.nx-page-header{gap:14px;align-items:flex-start}
+ .workspace-content .nx-page-top>.nx-list-heading{flex-basis:100%}
+ .workspace-content .nx-page-top>.nx-actions{flex-basis:100%;padding-top:12px;border-top:1px solid var(--nx-heading-border)}
+ .workspace-content .nx-page-header .nx-actions .button{flex:1 1 160px}
+ .workspace-content .cl-heading.nx-page-header .cl-scope{text-align:start;margin:0}
+}
+@media(max-width:420px){
+ .nx-page-header,.workspace-content .nx-page-header,.survey-main .nx-page-header,body.nx-admin-frame .nx-page-header{padding:14px}
+ .workspace-content .nx-page-header .nx-icon,.workspace-content .nx-page-header .cl-heading-icon{width:34px;height:34px;border-radius:9px}
+ .workspace-content .nx-page-header .nx-actions .button{flex-basis:100%}
+}
+@media(forced-colors:active){.nx-page-header,.workspace-content .nx-page-header,.survey-main .nx-page-header,body.nx-admin-frame .nx-page-header{background:Canvas;color:CanvasText;border:1px solid CanvasText;border-inline-start-width:4px;box-shadow:none}}
+@media print{.nx-page-header,.workspace-content .nx-page-header,.survey-main .nx-page-header,body.nx-admin-frame .nx-page-header{background:none;box-shadow:none;border:0;border-bottom:1px solid #aaa;border-radius:0;padding:0 0 12px;break-inside:avoid}.nx-page-header .nx-actions{display:none}}
